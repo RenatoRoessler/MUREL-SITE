@@ -1,8 +1,10 @@
 import "server-only";
+import nodemailer from "nodemailer";
 import type { CamposContato, TipoNegocio } from "@/types/contato";
 
-const URL_PROVEDOR = "https://api.resend.com/emails";
 const TIMEOUT_MS = 10_000;
+const HOST_PADRAO = "smtp.zoho.com";
+const PORTA_PADRAO = 465;
 
 const ROTULO_TIPO: Record<TipoNegocio, string> = {
   estacionamento: "Estacionamento",
@@ -35,42 +37,44 @@ function montarCorpo(campos: CamposContato) {
 }
 
 export async function enviarEmail(campos: CamposContato): Promise<ResultadoEnvio> {
-  const chave = process.env.EMAIL_API_KEY;
-  const remetente = process.env.EMAIL_REMETENTE;
+  const usuario = process.env.SMTP_USER;
+  const senha = process.env.SMTP_PASSWORD;
   const destino = process.env.CONTATO_DESTINO;
 
-  if (!chave || !remetente || !destino) {
+  if (!usuario || !senha || !destino) {
     console.error("[contato] envio não configurado: faltam variáveis de ambiente");
     return { ok: false };
   }
 
+  const host = process.env.SMTP_HOST || HOST_PADRAO;
+  const porta = Number(process.env.SMTP_PORT) || PORTA_PADRAO;
+  const remetente = process.env.EMAIL_REMETENTE || usuario;
   const email = linhaUnica(campos.email);
 
   try {
-    const resposta = await fetch(URL_PROVEDOR, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${chave}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: remetente,
-        to: [destino],
-        subject: montarAssunto(campos),
-        text: montarCorpo(campos),
-        ...(email ? { reply_to: email } : {}),
-      }),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
+    const transporte = nodemailer.createTransport({
+      host,
+      port: porta,
+      secure: porta === 465,
+      auth: { user: usuario, pass: senha },
+      connectionTimeout: TIMEOUT_MS,
+      greetingTimeout: TIMEOUT_MS,
+      socketTimeout: TIMEOUT_MS,
     });
 
-    if (!resposta.ok) {
-      console.error(`[contato] provedor recusou o envio: status ${resposta.status}`);
-      return { ok: false };
-    }
+    await transporte.sendMail({
+      from: remetente,
+      to: destino,
+      subject: montarAssunto(campos),
+      text: montarCorpo(campos),
+      ...(email ? { replyTo: email } : {}),
+    });
     return { ok: true };
   } catch (erro) {
+    const codigo =
+      erro instanceof Error && "code" in erro ? String((erro as { code: unknown }).code) : "";
     const motivo = erro instanceof Error ? erro.name : "desconhecido";
-    console.error(`[contato] falha ao chamar o provedor: ${motivo}`);
+    console.error(`[contato] falha ao enviar pelo SMTP: ${motivo} ${codigo}`.trim());
     return { ok: false };
   }
 }

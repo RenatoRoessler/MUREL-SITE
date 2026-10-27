@@ -1,6 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CamposContato } from "@/types/contato";
-import { enviarEmail } from "./enviarEmail";
+
+const sendMail = vi.fn();
+const createTransport = vi.fn(() => ({ sendMail }));
+
+vi.mock("nodemailer", () => ({ default: { createTransport } }));
+
+const { enviarEmail } = await import("./enviarEmail");
 
 const campos: CamposContato = {
   nome: "Maria Souza",
@@ -11,80 +17,93 @@ const campos: CamposContato = {
   mensagem: "Quero conhecer o sistema.",
 };
 
-const fetchMock = vi.fn();
-
 beforeEach(() => {
-  vi.stubEnv("EMAIL_API_KEY", "chave-secreta");
+  vi.stubEnv("SMTP_USER", "site@murel.com.br");
+  vi.stubEnv("SMTP_PASSWORD", "senha-de-app");
+  vi.stubEnv("SMTP_HOST", "");
+  vi.stubEnv("SMTP_PORT", "");
   vi.stubEnv("EMAIL_REMETENTE", "Murel <site@murel.com.br>");
   vi.stubEnv("CONTATO_DESTINO", "contato@murel.com.br");
-  vi.stubGlobal("fetch", fetchMock);
   vi.spyOn(console, "error").mockImplementation(() => {});
-  fetchMock.mockReset();
+  sendMail.mockReset().mockResolvedValue({});
+  createTransport.mockClear();
 });
 
 afterEach(() => {
   vi.unstubAllEnvs();
-  vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
 
-function corpoEnviado() {
-  return JSON.parse(fetchMock.mock.calls[0][1].body as string);
-}
-
 describe("enviarEmail", () => {
-  it("envia ao destino com reply_to e todos os campos", async () => {
-    fetchMock.mockResolvedValue({ ok: true, status: 200 });
+  it("usa o SMTP do Zoho por padrão, com SSL na porta 465", async () => {
+    await enviarEmail(campos);
+    expect(createTransport).toHaveBeenCalledWith(
+      expect.objectContaining({
+        host: "smtp.zoho.com",
+        port: 465,
+        secure: true,
+        auth: { user: "site@murel.com.br", pass: "senha-de-app" },
+      }),
+    );
+  });
 
+  it("aceita outro host e usa STARTTLS na porta 587", async () => {
+    vi.stubEnv("SMTP_HOST", "smtppro.zoho.com");
+    vi.stubEnv("SMTP_PORT", "587");
+    await enviarEmail(campos);
+    expect(createTransport).toHaveBeenCalledWith(
+      expect.objectContaining({ host: "smtppro.zoho.com", port: 587, secure: false }),
+    );
+  });
+
+  it("envia ao destino com replyTo e todos os campos", async () => {
     const resultado = await enviarEmail(campos);
 
     expect(resultado).toEqual({ ok: true });
-    const [url, opcoes] = fetchMock.mock.calls[0];
-    expect(url).toBe("https://api.resend.com/emails");
-    expect(opcoes.headers.Authorization).toBe("Bearer chave-secreta");
-    const corpo = corpoEnviado();
-    expect(corpo.to).toEqual(["contato@murel.com.br"]);
-    expect(corpo.reply_to).toBe("maria@exemplo.com.br");
-    expect(corpo.subject).toBe("Contato pelo site: Maria Souza (Estacionamento Central)");
-    expect(corpo.text).toContain("Tipo de negócio: Valet");
-    expect(corpo.text).toContain("Telefone: (11) 99999-9999");
-    expect(corpo.text).toContain("Quero conhecer o sistema.");
+    const mensagem = sendMail.mock.calls[0][0];
+    expect(mensagem.from).toBe("Murel <site@murel.com.br>");
+    expect(mensagem.to).toBe("contato@murel.com.br");
+    expect(mensagem.replyTo).toBe("maria@exemplo.com.br");
+    expect(mensagem.subject).toBe("Contato pelo site: Maria Souza (Estacionamento Central)");
+    expect(mensagem.text).toContain("Tipo de negócio: Valet");
+    expect(mensagem.text).toContain("Telefone: (11) 99999-9999");
+    expect(mensagem.text).toContain("Quero conhecer o sistema.");
   });
 
-  it("omite reply_to quando não há e-mail", async () => {
-    fetchMock.mockResolvedValue({ ok: true, status: 200 });
+  it("usa o usuário SMTP como remetente quando EMAIL_REMETENTE não existe", async () => {
+    vi.stubEnv("EMAIL_REMETENTE", "");
+    await enviarEmail(campos);
+    expect(sendMail.mock.calls[0][0].from).toBe("site@murel.com.br");
+  });
+
+  it("omite replyTo quando não há e-mail", async () => {
     await enviarEmail({ ...campos, email: "" });
-    expect(corpoEnviado()).not.toHaveProperty("reply_to");
+    expect(sendMail.mock.calls[0][0]).not.toHaveProperty("replyTo");
   });
 
   it("não deixa quebra de linha no assunto", async () => {
-    fetchMock.mockResolvedValue({ ok: true, status: 200 });
     await enviarEmail({ ...campos, nome: "Maria\r\nBcc: alguem@x.com", patio: "" });
-    expect(corpoEnviado().subject).toBe("Contato pelo site: Maria Bcc: alguem@x.com");
+    expect(sendMail.mock.calls[0][0].subject).toBe("Contato pelo site: Maria Bcc: alguem@x.com");
   });
 
-  it("falha de forma controlada quando o provedor recusa", async () => {
-    fetchMock.mockResolvedValue({ ok: false, status: 422 });
+  it("falha de forma controlada quando o SMTP recusa", async () => {
+    sendMail.mockRejectedValue(Object.assign(new Error("535 autenticação"), { code: "EAUTH" }));
     expect(await enviarEmail(campos)).toEqual({ ok: false });
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining("EAUTH"));
   });
 
-  it("falha de forma controlada em erro de rede ou timeout", async () => {
-    fetchMock.mockRejectedValue(new DOMException("tempo esgotado", "TimeoutError"));
+  it("falha sem tentar enviar quando faltam credenciais", async () => {
+    vi.stubEnv("SMTP_PASSWORD", "");
     expect(await enviarEmail(campos)).toEqual({ ok: false });
+    expect(createTransport).not.toHaveBeenCalled();
   });
 
-  it("falha sem chamar o provedor quando a chave não está configurada", async () => {
-    vi.stubEnv("EMAIL_API_KEY", "");
-    expect(await enviarEmail(campos)).toEqual({ ok: false });
-    expect(fetchMock).not.toHaveBeenCalled();
-  });
-
-  it("não registra dados pessoais nos logs", async () => {
-    fetchMock.mockResolvedValue({ ok: false, status: 500 });
+  it("não registra dados pessoais nem a senha nos logs", async () => {
+    sendMail.mockRejectedValue(new Error("falhou para maria@exemplo.com.br"));
     await enviarEmail(campos);
     const registrado = JSON.stringify(vi.mocked(console.error).mock.calls);
     expect(registrado).not.toContain("Maria");
     expect(registrado).not.toContain("maria@exemplo.com.br");
-    expect(registrado).not.toContain("chave-secreta");
+    expect(registrado).not.toContain("senha-de-app");
   });
 });

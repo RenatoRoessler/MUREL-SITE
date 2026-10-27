@@ -21,7 +21,7 @@ echo [2/4] Enviando para o servidor...
 scp %SSH_OPCOES% "%PACOTE%" %SERVIDOR%:/tmp/murel-site-deploy.tgz
 if errorlevel 1 goto erro
 
-rem O .env.production so e criado na primeira vez: no servidor ele guarda tambem EMAIL_API_KEY e EMAIL_REMETENTE
+rem O .env.production so e criado na primeira vez: no servidor ele guarda tambem SMTP_USER e SMTP_PASSWORD
 rem (formulario de contato), que o deploy nao envia nem apaga.
 echo [3/4] Instalando dependencias e gerando o build de producao (leva alguns minutos)...
 ssh %SSH_OPCOES% %SERVIDOR% "set -e; mkdir -p %DESTINO% && tar -xzf /tmp/murel-site-deploy.tgz -C %DESTINO% && rm /tmp/murel-site-deploy.tgz && cd %DESTINO% && ([ -f .env.production ] || printf 'NEXT_PUBLIC_APP_URL=https://app.murel.com.br\nNEXT_PUBLIC_SITE_URL=https://murel.com.br\nCONTATO_DESTINO=contato@murel.com.br\n' > .env.production) && npm ci && npm run build"
