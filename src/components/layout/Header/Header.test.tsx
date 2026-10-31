@@ -18,6 +18,7 @@ describe("Header", () => {
 
   it("tem os links de seção e o atalho para o conteúdo", () => {
     renderComTema(<Header />);
+    expect(screen.getByRole("link", { name: "Sistema", hidden: true })).toHaveAttribute("href", "#sistema");
     expect(screen.getByRole("link", { name: "Como funciona", hidden: true })).toHaveAttribute("href", "#como-funciona");
     expect(screen.getByRole("link", { name: "Perguntas", hidden: true })).toHaveAttribute("href", "#perguntas");
     expect(screen.getByRole("link", { name: "Contato", hidden: true })).toHaveAttribute("href", "#contato");

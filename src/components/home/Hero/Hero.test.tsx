@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { urlAdesao } from "@/lib/config";
 import { renderComTema } from "@/test/render";
 import { Hero } from "./Hero";
 
@@ -17,8 +18,9 @@ describe("Hero", () => {
     expect(screen.getByText(/sem impressora e sem pedir e-mail ou telefone/i)).toBeInTheDocument();
   });
 
-  it("destaca a chamada para falar com a equipe", () => {
+  it("destaca a chamada para a adesão e mantém o contato com a equipe", () => {
     renderComTema(<Hero />);
+    expect(screen.getByRole("link", { name: "Ir para adesão" })).toHaveAttribute("href", urlAdesao);
     expect(screen.getByRole("link", { name: "Falar com a equipe" })).toHaveAttribute("href", "#contato");
   });
 });

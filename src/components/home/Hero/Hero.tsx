@@ -1,6 +1,7 @@
 import { Simbolo } from "@/components/brand/Simbolo";
 import { Button } from "@/components/ui/Button/Button";
 import { Container } from "@/components/ui/Section/Section.styles";
+import { urlAdesao } from "@/lib/config";
 import { Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
 
 export function Hero() {
@@ -17,9 +18,9 @@ export function Hero() {
             telefone do cliente. O ticket é 100% digital.
           </Subtitulo>
           <Chamadas>
-            <Button href="#contato">Falar com a equipe</Button>
-            <Button href="#como-funciona" variante="ghost">
-              Ver como funciona
+            <Button href={urlAdesao}>Ir para adesão</Button>
+            <Button href="#contato" variante="ghost">
+              Falar com a equipe
             </Button>
           </Chamadas>
         </Texto>

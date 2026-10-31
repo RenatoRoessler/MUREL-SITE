@@ -16,6 +16,7 @@ import {
 } from "./Header.styles";
 
 const secoes = [
+  { href: "#sistema", rotulo: "Sistema" },
   { href: "#como-funciona", rotulo: "Como funciona" },
   { href: "#perguntas", rotulo: "Perguntas" },
   { href: "#contato", rotulo: "Contato" },

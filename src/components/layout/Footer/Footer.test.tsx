@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { urlAcesso, urlWhatsapp } from "@/lib/config";
+import { urlAcesso, urlAdesao, urlWhatsapp } from "@/lib/config";
 import { renderComTema } from "@/test/render";
 import { Footer } from "./Footer";
 
@@ -24,5 +24,10 @@ describe("Footer", () => {
   it("repete o botão de acesso ao sistema", () => {
     renderComTema(<Footer />);
     expect(screen.getByRole("link", { name: "Acessar o sistema" })).toHaveAttribute("href", urlAcesso);
+  });
+
+  it("repete a chamada para a adesão", () => {
+    renderComTema(<Footer />);
+    expect(screen.getByRole("link", { name: "Ir para adesão" })).toHaveAttribute("href", urlAdesao);
   });
 });

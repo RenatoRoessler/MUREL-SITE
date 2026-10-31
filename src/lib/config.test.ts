@@ -22,6 +22,16 @@ describe("config", () => {
     expect(urlAcesso).toBe("https://app.murel.com.br");
   });
 
+  it("monta a URL de adesão a partir da base, com ou sem barra final", async () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://app.murel.com.br/");
+    const { urlAdesao } = await carregar();
+    expect(urlAdesao).toBe("https://app.murel.com.br/adesao");
+
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://app.murel.com.br");
+    const outra = await carregar();
+    expect(outra.urlAdesao).toBe("https://app.murel.com.br/adesao");
+  });
+
   it("cai para localhost quando a variável não existe", async () => {
     vi.stubEnv("NEXT_PUBLIC_APP_URL", undefined);
     const { urlAcesso } = await carregar();

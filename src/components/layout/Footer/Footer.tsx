@@ -1,6 +1,6 @@
 import { LogoMurel } from "@/components/brand/LogoMurel";
 import { Button } from "@/components/ui/Button/Button";
-import { emailContato, numeroWhatsappExibicao, urlAcesso, urlWhatsapp } from "@/lib/config";
+import { emailContato, numeroWhatsappExibicao, urlAcesso, urlAdesao, urlWhatsapp } from "@/lib/config";
 import { Acoes, Base, Contato, Linha } from "./Footer.styles";
 
 export function Footer() {
@@ -16,6 +16,7 @@ export function Footer() {
           <a href="#contato">Enviar uma mensagem pelo formulário</a>
         </Contato>
         <Acoes>
+          <Button href={urlAdesao}>Ir para adesão</Button>
           <Button href={urlAcesso} variante="ghost">
             Acessar o sistema
           </Button>
