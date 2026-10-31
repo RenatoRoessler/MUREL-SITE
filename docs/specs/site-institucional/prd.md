@@ -39,7 +39,7 @@ Apresentar a Murel (sistema de gestão para estacionamentos, valets e lava-rápi
 
 ### Fora do Escopo
 - Preços e planos públicos (a Murel não exibe valores no site nesta entrega).
-- Agendamento de demonstração, blog, área de conteúdo, chat e WhatsApp.
+- Agendamento de demonstração, blog, área de conteúdo e chat. (O contato por WhatsApp foi tratado depois, em `docs/specs/whatsapp-contato/prd.md`.)
 - Resposta automática ao interessado e acompanhamento das mensagens (a equipe responde pelo e-mail, fora do site).
 - Login, cadastro ou qualquer funcionalidade do sistema dentro do site (o site apenas encaminha).
 - Depoimentos e casos de clientes (não há conteúdo real disponível).
