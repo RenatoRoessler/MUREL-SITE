@@ -1,7 +1,19 @@
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 
+// Imagens estáticas viram o mesmo objeto que o Next entrega (src, width, height).
+const imagensEstaticas = {
+  name: "imagens-estaticas",
+  enforce: "pre" as const,
+  load(id: string) {
+    if (/\.(webp|png|jpe?g|avif)$/.test(id)) {
+      return `export default { src: ${JSON.stringify(id)}, width: 1280, height: 800 };`;
+    }
+  },
+};
+
 export default defineConfig({
+  plugins: [imagensEstaticas],
   esbuild: { jsx: "automatic" },
   resolve: {
     alias: {
