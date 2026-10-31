@@ -2,6 +2,30 @@
 
 import styled from "styled-components";
 
+export const Whatsapp = styled.div`
+  display: grid;
+  justify-items: start;
+  gap: ${({ theme }) => theme.space[2]}px;
+  max-width: 720px;
+  margin-bottom: ${({ theme }) => theme.space[4]}px;
+
+  h3 {
+    font-size: 20px;
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors.nevoa};
+  }
+`;
+
+export const Divisor = styled.p`
+  max-width: 720px;
+  margin-bottom: ${({ theme }) => theme.space[4]}px;
+  padding-top: ${({ theme }) => theme.space[4]}px;
+  border-top: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
+  color: ${({ theme }) => theme.colors.nevoa};
+`;
+
 export const Formulario = styled.form`
   display: grid;
   gap: ${({ theme }) => theme.space[3]}px;

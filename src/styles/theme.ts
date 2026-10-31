@@ -12,6 +12,9 @@ export const theme = {
     nevoa: "#9AA3B5",
     ok: "#3CCB7F",
     alerta: "#FF5A5F",
+    // Cor de terceiro: mantém o reconhecimento do WhatsApp, fora da paleta Murel.
+    whatsapp: "#25D366",
+    whatsappEscuro: "#1EBE5B",
   },
   fontFamilies: {
     sans: "var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif",

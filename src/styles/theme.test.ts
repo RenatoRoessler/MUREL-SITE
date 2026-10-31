@@ -25,6 +25,16 @@ describe("tema", () => {
     expect(contraste(theme.colors.asfalto, theme.colors.amarelo)).toBeGreaterThanOrEqual(4.5);
   });
 
+  it("expõe os tokens do WhatsApp", () => {
+    expect(theme.colors.whatsapp).toBe("#25D366");
+    expect(theme.colors.whatsappEscuro).toBe("#1EBE5B");
+  });
+
+  it("texto asfalto sobre o verde do WhatsApp atinge contraste AA, também no hover", () => {
+    expect(contraste(theme.colors.asfalto, theme.colors.whatsapp)).toBeGreaterThanOrEqual(4.5);
+    expect(contraste(theme.colors.asfalto, theme.colors.whatsappEscuro)).toBeGreaterThanOrEqual(4.5);
+  });
+
   it("texto névoa sobre asfalto atinge contraste AA", () => {
     expect(contraste(theme.colors.nevoa, theme.colors.asfalto)).toBeGreaterThanOrEqual(4.5);
   });

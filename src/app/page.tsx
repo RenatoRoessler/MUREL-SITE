@@ -3,6 +3,7 @@ import { Contato } from "@/components/home/Contato/Contato";
 import { Diferencial } from "@/components/home/Diferencial/Diferencial";
 import { Faq } from "@/components/home/Faq/Faq";
 import { Hero } from "@/components/home/Hero/Hero";
+import { BotaoWhatsapp } from "@/components/layout/BotaoWhatsapp/BotaoWhatsapp";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { emailContato, urlSite } from "@/lib/config";
@@ -35,6 +36,7 @@ export default function Home() {
         <Contato />
       </main>
       <Footer />
+      <BotaoWhatsapp />
     </>
   );
 }

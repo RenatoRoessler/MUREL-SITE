@@ -32,4 +32,19 @@ describe("config", () => {
     const { emailContato } = await carregar();
     expect(emailContato).toBe("contato@murel.com.br");
   });
+
+  it("monta o link do WhatsApp com número e mensagem codificada", async () => {
+    const { mensagemWhatsapp, numeroWhatsapp, urlWhatsapp } = await carregar();
+    expect(numeroWhatsapp).toBe("5519992215384");
+    expect(urlWhatsapp).toBe(
+      `https://wa.me/5519992215384?text=${encodeURIComponent(mensagemWhatsapp)}`,
+    );
+    expect(urlWhatsapp).not.toContain(" ");
+  });
+
+  it("expõe o número do WhatsApp formatado e o rótulo do botão", async () => {
+    const { numeroWhatsappExibicao, rotuloWhatsapp } = await carregar();
+    expect(numeroWhatsappExibicao).toBe("(19) 99221-5384");
+    expect(rotuloWhatsapp).toBe("Estamos online!");
+  });
 });

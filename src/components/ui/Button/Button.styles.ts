@@ -2,7 +2,7 @@
 
 import styled, { css } from "styled-components";
 
-export type VarianteBotao = "primary" | "ghost";
+export type VarianteBotao = "primary" | "ghost" | "whatsapp";
 export type TamanhoBotao = "md" | "sm";
 
 type EstiloBotao = { $variante: VarianteBotao; $tamanho: TamanhoBotao };
@@ -26,9 +26,10 @@ export const estiloBotao = css<EstiloBotao>`
     border-color 0.15s ease-out,
     color 0.15s ease-out;
 
-  ${({ $variante, theme }) =>
-    $variante === "primary"
-      ? css`
+  ${({ $variante, theme }) => {
+    switch ($variante) {
+      case "primary":
+        return css`
           background: ${theme.colors.amarelo};
           color: ${theme.colors.asfalto};
           border: 1.5px solid ${theme.colors.amarelo};
@@ -37,8 +38,21 @@ export const estiloBotao = css<EstiloBotao>`
             background: ${theme.colors.amareloEscuro};
             border-color: ${theme.colors.amareloEscuro};
           }
-        `
-      : css`
+        `;
+      case "whatsapp":
+        return css`
+          gap: ${theme.space[2]}px;
+          background: ${theme.colors.whatsapp};
+          color: ${theme.colors.asfalto};
+          border: 1.5px solid ${theme.colors.whatsapp};
+
+          &:hover {
+            background: ${theme.colors.whatsappEscuro};
+            border-color: ${theme.colors.whatsappEscuro};
+          }
+        `;
+      default:
+        return css`
           background: transparent;
           color: ${theme.colors.giz};
           border: 1.5px solid ${theme.colors.bordaControle};
@@ -47,7 +61,9 @@ export const estiloBotao = css<EstiloBotao>`
             border-color: ${theme.colors.amarelo};
             color: ${theme.colors.amarelo};
           }
-        `}
+        `;
+    }
+  }}
 
   &:disabled {
     opacity: 0.6;

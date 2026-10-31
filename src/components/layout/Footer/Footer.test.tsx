@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { urlAcesso } from "@/lib/config";
+import { urlAcesso, urlWhatsapp } from "@/lib/config";
 import { renderComTema } from "@/test/render";
 import { Footer } from "./Footer";
 
@@ -12,6 +12,13 @@ describe("Footer", () => {
       "mailto:contato@murel.com.br",
     );
     expect(screen.getByRole("link", { name: /formulário/i })).toHaveAttribute("href", "#contato");
+  });
+
+  it("mostra o WhatsApp como forma de contato", () => {
+    renderComTema(<Footer />);
+    const link = screen.getByRole("link", { name: "WhatsApp: (19) 99221-5384" });
+    expect(link).toHaveAttribute("href", urlWhatsapp);
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
   it("repete o botão de acesso ao sistema", () => {
