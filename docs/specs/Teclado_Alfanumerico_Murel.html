@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1729">
+<title>Murel · Teclado alfanumérico</title>
+<!--
+  Teclado alfanumérico do Murel: letras (QWERTY) com a tecla "123", que troca
+  para o teclado numérico (mesmo layout do teclado numérico); lá a tecla "ABC" volta às letras.
+  Arquivo único: HTML, CSS e JavaScript. Não usa a API.
+
+  Como usar num campo:  <input class="alfa" maxlength="20">
+  Aceita letras A–Z (sempre em maiúsculas, sem acento), números, espaço, ponto, hífen e vírgula.
+  "Próximo" vai para o próximo campo .alfa da tela; no último vira "OK" e fecha.
+  O teclado só aparece no celular/tablet (tela de toque, sem mouse);
+  no computador o campo usa o teclado físico, com o mesmo filtro.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+  :root{
+    --sans:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  /* ---------- Modo dia ---------- */
+  :root,[data-tema="dia"]{
+    --fundo:#F4F1E8; --texto:#0E1729; --campo:#FFFFFF; --line:#C9C2B1; --muted:#5A6478; --ph:#A39D8D; --foco:#0E1729;
+    --kb-fundo:#E2DCCD; --kb-borda:#D2CBBB; --kb-sombra:0 1px 0 rgba(14,23,41,.22);
+    --kb-n:#FFFFFF; --kb-n-ativo:#ECE7DA; --kb-n-texto:#0E1729;
+    --kb-f:#C9C1AF; --kb-f-ativo:#B8AF9B; --kb-f-texto:#0E1729; --kb-f-off:#9C9585;
+    --kb-prox:#FFC20E; --kb-prox-ativo:#E0A800; --kb-prox-texto:#0E1729;
+  }
+  /* ---------- Modo noite ---------- */
+  [data-tema="noite"]{
+    --fundo:#0E1729; --texto:#F4F1E8; --campo:#16223A; --line:#3A4C6B; --muted:#9AA3B5; --ph:#6B80A4; --foco:#F4F1E8;
+    --kb-fundo:#16223A; --kb-borda:#3A4C6B; --kb-sombra:none;
+    --kb-n:#2A3A59; --kb-n-ativo:#3A4C6B; --kb-n-texto:#F4F1E8;
+    --kb-f:#0E1729; --kb-f-ativo:#22304B; --kb-f-texto:#C9D0DD; --kb-f-off:#3A4C6B;
+    --kb-prox:#0E1729; --kb-prox-ativo:#22304B; --kb-prox-texto:#FFC20E;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--fundo);color:var(--texto);font-family:var(--sans);min-height:100vh}
+  button,input{font:inherit;color:inherit}
+
+  .topo{position:sticky;top:0;z-index:5;background:#0E1729;border-bottom:1px solid #22304B;color:#F4F1E8;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:10px}
+  .topo h1{margin:0;font-size:18px;font-weight:800;flex:1}
+  .tema{height:36px;padding:0 12px;border-radius:18px;border:1.5px solid #6B80A4;background:transparent;color:#F4F1E8;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+  main{max-width:560px;margin:0 auto;padding:16px 16px 340px;display:flex;flex-direction:column;gap:18px}
+
+  .sec{display:flex;flex-direction:column;gap:8px}
+  .lbl{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .txt{height:52px;border:1px solid var(--line);border-radius:12px;background:var(--campo);color:var(--texto);padding:0 14px;font-size:17px;font-weight:600;text-transform:uppercase;outline:none}
+  .txt:focus,.txt.foco{outline:2px solid var(--foco);outline-offset:1px}
+  .txt::placeholder{color:var(--ph);font-weight:500}
+
+  /* ================= Teclado alfanumérico ================= */
+  .ta{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--kb-fundo);border-top:1px solid var(--kb-borda);
+      padding:8px 4px calc(10px + env(safe-area-inset-bottom));user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+      transform:translateY(0);transition:transform .18s ease}
+  .ta[hidden]{display:block!important;transform:translateY(110%);pointer-events:none;visibility:hidden}
+  .ta-in{max-width:560px;margin:0 auto}
+  .ta button{border:0;padding:0;touch-action:manipulation;display:flex;align-items:center;justify-content:center}
+  /* teclas de caractere · teclas de função (cores vêm do tema) */
+  .ta .n{background:var(--kb-n);color:var(--kb-n-texto);font-family:var(--mono);font-weight:500;box-shadow:var(--kb-sombra)}
+  .ta .n:active{background:var(--kb-n-ativo)}
+  .ta .f{background:var(--kb-f);color:var(--kb-f-texto);font-family:var(--sans);font-weight:800;box-shadow:var(--kb-sombra)}
+  .ta .f:active{background:var(--kb-f-ativo)}
+  .ta .f:disabled{color:var(--kb-f-off)}
+  .ta .prox{background:var(--kb-prox);color:var(--kb-prox-texto)}
+  .ta .prox:active{background:var(--kb-prox-ativo)}
+  .ta .apagar svg{width:28px;height:20px}
+
+  /* modo letras */
+  .ta-linha{display:flex;justify-content:center;gap:5px;margin:0 0 7px}
+  .ta-linha:last-child{margin-bottom:0}
+  .ta-linha button{flex:1;max-width:44px;height:50px;border-radius:8px;font-size:20px}
+  .ta-linha .f{max-width:none;font-size:15px}
+  .ta-linha .apagar{flex:1.5}
+  .ta-linha .troca{flex:1.5}
+  .ta-linha .espaco{max-width:none;flex:4;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--kb-n-texto)}
+  .ta-linha .prox{flex:2}
+
+  /* modo números (mesmo layout do teclado numérico) */
+  .ta-grade{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 4px}
+  .ta-grade > *{height:52px;border-radius:10px}
+  .ta-grade .n{font-size:28px}
+  .ta-grade .f{font-size:17px}
+  .ta-grade .simb{font-family:var(--mono);font-size:24px;font-weight:700}
+  .ta-grade .espaco{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--kb-n-texto)}
+  @media (prefers-reduced-motion:reduce){.ta{transition:none}}
+</style>
+</head>
+<body>
+<header class="topo">
+  <svg viewBox="4 8 232 148" width="30" height="20" aria-hidden="true"><path d="M20 140V24H220V140M82 24V140M158 24V140" fill="none" stroke="#FFC20E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M114 62H126A12 12 0 0 1 138 74V116A12 12 0 0 1 126 128H114A12 12 0 0 1 102 116V74A12 12 0 0 1 114 62Z M106.3 88.5H133.7L130.8 75Q120 71 109.2 75Z M108.8 111H131.2L128.8 120Q120 122.2 111.2 120Z" fill="#FFC20E" fill-rule="evenodd"/></svg>
+  <h1>Teclado alfanumérico</h1>
+  <button type="button" class="tema" id="btnTema" aria-label="Trocar modo dia/noite"></button>
+</header>
+
+<main>
+  <section class="sec">
+    <label class="lbl" for="modelo">Modelo</label>
+    <input class="txt alfa" id="modelo" maxlength="20" placeholder="Ex.: HB20" autocomplete="off">
+  </section>
+  <section class="sec">
+    <label class="lbl" for="cor">Cor</label>
+    <input class="txt alfa" id="cor" maxlength="20" placeholder="Ex.: PRATA" autocomplete="off">
+  </section>
+  <section class="sec">
+    <label class="lbl" for="obs">Observação</label>
+    <input class="txt alfa" id="obs" maxlength="60" placeholder="Ex.: RISCO PORTA TRAS. ESQ." autocomplete="off">
+  </section>
+</main>
+
+<div class="ta" id="tecladoAlfa" role="group" aria-label="Teclado alfanumérico" hidden>
+  <div class="ta-in" id="taTeclas"></div>
+</div>
+
+<script>
+/* Modo dia / noite: segue o celular; o botão do topo troca (só para o teste). */
+(function () {
+  var html = document.documentElement, btn = document.getElementById('btnTema');
+  function aplicar(t) { html.setAttribute('data-tema', t); btn.textContent = t === 'dia' ? '☾ Noite' : '☀ Dia'; }
+  aplicar(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'noite' : 'dia');
+  btn.addEventListener('click', function () { aplicar(html.getAttribute('data-tema') === 'dia' ? 'noite' : 'dia'); });
+})();
+
+(function () {
+  var MOBILE = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  var kb = document.getElementById('tecladoAlfa');
+  var teclas = document.getElementById('taTeclas');
+  var LETRAS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  var APAGAR = '<button type="button" class="f apagar" data-act="apagar" aria-label="Apagar"><svg viewBox="0 0 30 22" aria-hidden="true"><path d="M9 2h17a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9L2 11z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 7l8 8m0-8l-8 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>';
+  var alvo = null, modo = 'abc', segurou = false, timer = null;
+
+  function campos() { return Array.prototype.slice.call(document.querySelectorAll('input.alfa')); }
+  function ultimo() { var l = campos(); return l.indexOf(alvo) === l.length - 1; }
+
+  // O que pode entrar no fim do texto atual
+  function aceita(el, v, ch) {
+    var max = el.maxLength > 0 ? el.maxLength : 40;
+    if (v.length >= max) return false;
+    if (ch === ' ') return v.length > 0 && !/ $/.test(v);
+    return /^[A-Z0-9.,-]$/.test(ch);
+  }
+  function limpar(el, txt) {
+    txt = txt.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    var v = '';
+    for (var i = 0; i < txt.length; i++) if (aceita(el, v, txt[i])) v += txt[i];
+    return v;
+  }
+
+  function k(c, cls) { return '<button type="button" class="n' + (cls ? ' ' + cls : '') + '" data-k="' + c + '">' + c + '</button>'; }
+
+  function desenhar() {
+    if (!alvo) return;
+    var v = alvo.value, cheio = v.length >= (alvo.maxLength > 0 ? alvo.maxLength : 40);
+    var prox = '<button type="button" class="f prox" data-act="proximo">' + (ultimo() ? 'OK' : 'Próximo') + '</button>';
+    var html;
+    if (modo === 'abc') {
+      html = '<div class="ta-linha">' + LETRAS[0].split('').map(function (c) { return k(c); }).join('') + '</div>' +
+             '<div class="ta-linha">' + LETRAS[1].split('').map(function (c) { return k(c); }).join('') + '</div>' +
+             '<div class="ta-linha">' + LETRAS[2].split('').map(function (c) { return k(c); }).join('') + APAGAR + '</div>' +
+             '<div class="ta-linha">' +
+               '<button type="button" class="f troca" data-act="modo" aria-label="Mostrar números">123</button>' +
+               '<button type="button" class="f espaco" data-k=" ">ESPAÇO</button>' + prox +
+             '</div>';
+    } else {
+      html = '<div class="ta-grade">' +
+        k('1') + k('2') + k('3') + APAGAR +
+        k('4') + k('5') + k('6') + prox +
+        k('7') + k('8') + k('9') +
+        '<button type="button" class="f simb" data-k="." id="taPonto" aria-label="Ponto (segure para hífen)">.-</button>' +
+        '<button type="button" class="f" data-act="modo" aria-label="Mostrar letras">ABC</button>' +
+        k('0') +
+        '<button type="button" class="f espaco" data-k=" " aria-label="Espaço">ESPAÇO</button>' +
+        '<button type="button" class="f simb" data-k="," aria-label="Vírgula">,</button>' +
+      '</div>';
+    }
+    teclas.innerHTML = html;
+    if (cheio) teclas.querySelectorAll('[data-k]').forEach(function (b) { b.disabled = true; });
+  }
+
+  function gravar(v) { alvo.value = v; alvo.dispatchEvent(new Event('input', { bubbles: true })); }
+
+  function abrir(el) {
+    if (!MOBILE) return;
+    if (alvo !== el) { if (alvo) alvo.classList.remove('foco'); modo = 'abc'; }
+    alvo = el; alvo.classList.add('foco');
+    kb.hidden = false; desenhar();
+    setTimeout(function () { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 50);
+  }
+  function fechar() {
+    if (kb.hidden) return;
+    kb.hidden = true;
+    if (alvo) {
+      if (alvo.value !== alvo.value.trim()) gravar(alvo.value.trim());
+      alvo.classList.remove('foco'); alvo.blur();
+    }
+    alvo = null;
+  }
+
+  function tecla(b) {
+    if (!b || b.disabled || !alvo) return;
+    var v = alvo.value;
+    if (b.dataset.act === 'modo') { modo = modo === 'abc' ? '123' : 'abc'; desenhar(); return; }
+    if (b.dataset.act === 'proximo') {
+      gravar(v.trim());
+      var lista = campos(), i = lista.indexOf(alvo);
+      if (i < lista.length - 1) { var el = lista[i + 1]; el.focus(); abrir(el); } else fechar();
+      return;
+    }
+    if (b.dataset.act === 'apagar') v = v.slice(0, -1);
+    else if (b.dataset.k && aceita(alvo, v, b.dataset.k)) v += b.dataset.k;
+    try { navigator.vibrate && navigator.vibrate(10); } catch (err) {}
+    gravar(v);
+    desenhar();
+  }
+
+  kb.addEventListener('pointerdown', function (e) {
+    e.preventDefault();   // mantém o foco no campo
+    var b = e.target.closest('button');
+    segurou = false; clearTimeout(timer);
+    if (b && b.id === 'taPonto') {   // segurar ".-" = hífen
+      timer = setTimeout(function () {
+        segurou = true;
+        if (alvo && aceita(alvo, alvo.value, '-')) { gravar(alvo.value + '-'); desenhar(); }
+      }, 450);
+    }
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) {
+    kb.addEventListener(ev, function () { clearTimeout(timer); });
+  });
+  kb.addEventListener('click', function (e) {
+    if (segurou) { segurou = false; return; }
+    tecla(e.target.closest('button'));
+  });
+
+  campos().forEach(function (el) {
+    if (MOBILE) el.setAttribute('inputmode', 'none');
+    el.setAttribute('autocorrect', 'off'); el.setAttribute('autocapitalize', 'characters'); el.setAttribute('spellcheck', 'false');
+    el.addEventListener('focus', function () { abrir(el); });
+    el.addEventListener('click', function () { abrir(el); });
+    el.addEventListener('beforeinput', function (e) {   // teclado físico: só o que é aceito
+      if (e.inputType !== 'insertText' || !e.data || e.data.length !== 1) return;
+      var v = el.value.slice(0, el.selectionStart) + el.value.slice(el.selectionEnd);
+      var ch = e.data.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (!aceita(el, v, ch)) e.preventDefault();
+    });
+    el.addEventListener('input', function () {           // maiúsculas, sem acento; colar: limpa
+      var v = limpar(el, el.value);
+      if (v !== el.value) el.value = v;
+      if (alvo === el) desenhar();
+    });
+  });
+
+  document.addEventListener('pointerdown', function (e) {
+    if (kb.hidden || kb.contains(e.target) || (e.target.classList && e.target.classList.contains('alfa'))) return;
+    fechar();
+  });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) fechar(); });
+})();
+</script>
+</body>
+</html>

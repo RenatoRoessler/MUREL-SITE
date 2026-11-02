@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1729">
+<title>Murel · Entrada com teclado de placa</title>
+<!--
+  Teste da tela de Entrada com o teclado de placa (Murel).
+  Arquivo único: HTML, CSS e JavaScript. Não usa a API: modelo, cor e categoria
+  são preenchidos à mão para o teste. Abra no celular para testar o toque.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+  :root{
+    --ink:#0E1729; --soft:#F4F1E8; --line:#C9C2B1; --muted:#5A6478; --yellow:#FFC20E;
+    --blue:#1F4DB3; --ok:#177548; --err:#C4302B;
+    --sans:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--soft);color:var(--ink);font-family:var(--sans);min-height:100vh}
+  button,input{font:inherit;color:inherit}
+
+  .topo{position:sticky;top:0;z-index:5;background:var(--ink);color:#F4F1E8;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:10px}
+  .topo h1{margin:0;font-size:18px;font-weight:800}
+  main{max-width:560px;margin:0 auto;padding:16px 16px 340px;display:flex;flex-direction:column;gap:18px}
+
+  /* Placa desenhada */
+  .plate{border:3px solid var(--ink);border-radius:10px;overflow:hidden;background:#fff;transition:background .2s}
+  .plate .band{font-size:11px;font-weight:700;letter-spacing:.2em;text-align:center;padding:4px 0;background:var(--blue);color:#fff;transition:background .2s,color .2s}
+  .plate input{width:100%;border:0;background:transparent;text-align:center;font-family:var(--mono);font-weight:700;font-size:34px;letter-spacing:.02em;color:var(--ink);padding:2px 0 6px;text-transform:uppercase;outline:none;caret-color:transparent}
+  .plate input::placeholder{color:#A39D8D}
+  .plate.foco,.plate:focus-within{box-shadow:0 0 0 3px var(--soft),0 0 0 5px var(--ink)}
+  .plate.antiga{background:linear-gradient(180deg,#D3D6D9,#B9BDC2)}
+  .plate.antiga .band{background:transparent;color:var(--ink);border-bottom:2px solid var(--ink)}
+  .hint{min-height:18px;font-size:13px;font-weight:600}
+  .hint.err{color:var(--err)} .hint.ok{color:var(--ok)}
+
+  .lbl{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .sec{display:flex;flex-direction:column;gap:8px}
+  .txt{height:48px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 14px;font-size:16px;text-transform:uppercase}
+  .txt:focus{outline:2px solid var(--ink);outline-offset:1px}
+  .cta{height:56px;border:0;border-radius:14px;background:var(--yellow);color:var(--ink);font-size:18px;font-weight:800}
+  .cta:disabled{background:#E1DDD0;color:#6E7484}
+  .resultado{font-family:var(--mono);font-size:13px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
+
+  /* ================= Teclado de placa ================= */
+  .tp{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#16223A;border-top:1px solid #3A4C6B;
+      padding:6px 4px calc(8px + env(safe-area-inset-bottom));user-select:none;-webkit-user-select:none;
+      transform:translateY(0);transition:transform .18s ease}
+  .tp[hidden]{display:block!important;transform:translateY(110%);pointer-events:none;visibility:hidden}
+  .tp-in{max-width:560px;margin:0 auto}
+  .tp{padding-top:8px}
+  .tp-num{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:5px 4px}
+  .tp-num button{height:56px;border:0;border-radius:10px;background:#22304B;color:#F4F1E8;font-family:var(--mono);font-size:26px;font-weight:700;padding:0;touch-action:manipulation}
+  .tp-num button:active{background:#3A4C6B}
+  .tp-num button:disabled{opacity:.28}
+  .tp-num button.tp-apagar{background:#16223A;border:1.5px solid #6B80A4;font-size:30px;font-family:var(--sans)}
+  .tp-linha{display:flex;justify-content:center;gap:5px;margin:5px 0}
+  .tp-linha button{flex:1;max-width:44px;height:48px;border:0;border-radius:8px;background:#22304B;color:#F4F1E8;font-family:var(--mono);font-size:20px;font-weight:700;padding:0;touch-action:manipulation}
+  .tp-linha button:active{background:#3A4C6B}
+  .tp-linha button:disabled{opacity:.28}
+  .tp-linha button.tp-larga{max-width:none;flex:1.6;font-family:var(--sans);font-size:16px;font-weight:800}
+  .tp-linha button.tp-apagar{background:#16223A;border:1.5px solid #6B80A4}
+  .tp-linha button.tp-ok{background:#FFC20E;color:#0E1729}
+  .tp-linha button.tp-ok:active{background:#E0A800}
+  .tp-linha button.tp-espaco{max-width:none;flex:3.4;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.12em;color:#9AA3B5}
+  .txt.foco{outline:2px solid var(--ink);outline-offset:1px}
+  @media (prefers-reduced-motion:reduce){.tp,.plate{transition:none}}
+</style>
+</head>
+<body>
+<header class="topo">
+  <svg viewBox="4 8 232 148" width="30" height="20" aria-hidden="true"><path d="M20 140V24H220V140M82 24V140M158 24V140" fill="none" stroke="#FFC20E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M114 62H126A12 12 0 0 1 138 74V116A12 12 0 0 1 126 128H114A12 12 0 0 1 102 116V74A12 12 0 0 1 114 62Z M106.3 88.5H133.7L130.8 75Q120 71 109.2 75Z M108.8 111H131.2L128.8 120Q120 122.2 111.2 120Z" fill="#FFC20E" fill-rule="evenodd"/></svg>
+  <h1>Entrada de Veículos</h1>
+</header>
+
+<main>
+  <section class="sec">
+    <div class="plate" id="plateBox">
+      <div class="band" id="plateBand">BRASIL</div>
+      <input id="placa" aria-label="Placa" maxlength="8" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="ABC1D23" inputmode="none" aria-controls="tecladoPlaca">
+    </div>
+    <div class="hint" id="plateHint"></div>
+  </section>
+
+  <section class="sec">
+    <label class="lbl" for="modelo">Modelo</label>
+    <input class="txt" id="modelo" placeholder="Ex.: ONIX" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="none" aria-controls="tecladoTexto">
+  </section>
+
+  <section class="sec">
+    <label class="lbl" for="cor">Cor</label>
+    <input class="txt" id="cor" placeholder="Ex.: PRATA" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="none" aria-controls="tecladoTexto">
+  </section>
+
+  <button type="button" class="cta" id="btnConfirmar" disabled>Confirmar Entrada</button>
+  <div class="resultado" id="resultado">Digite a placa para testar.</div>
+</main>
+
+<div class="tp" id="tecladoPlaca" role="group" aria-label="Teclado da placa" hidden>
+  <div class="tp-in">
+    <div id="tpTeclas"></div>
+  </div>
+</div>
+
+<div class="tp" id="tecladoTexto" role="group" aria-label="Teclado de letras" hidden>
+  <div class="tp-in">
+    <div id="ttTeclas"></div>
+  </div>
+</div>
+
+<script>
+/* Teclados próprios (placa e letras) só no celular/tablet: tela de toque, sem mouse.
+   No computador os campos usam o teclado normal, com os mesmos filtros. */
+var TECLADO_MUREL = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+if (!TECLADO_MUREL) {
+  ['placa', 'modelo', 'cor'].forEach(function (id) { document.getElementById(id).removeAttribute('inputmode'); });
+}
+
+/* ---------------- Campo da placa (como no app) ----------------
+   Detecta Mercosul x antiga, formata (ABC-1234 / ABC1D23) e valida. */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var RE_MERCO = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/;
+  var RE_ANTIGA = /^[A-Z]{3}[0-9]{4}$/;
+  var placaValida = false;
+
+  function detectar(s) { return s.length >= 5 ? (/[0-9]/.test(s[4]) ? 'antiga' : 'merco') : 'merco'; }
+  function formatar(s, tipo) { return (tipo === 'antiga' && s.length > 3) ? s.slice(0, 3) + '-' + s.slice(3) : s; }
+
+  function atualizarBotao() {
+    $('btnConfirmar').disabled = !(placaValida && $('modelo').value.trim() && $('cor').value.trim());
+  }
+
+  var inp = $('placa');
+  inp.addEventListener('input', function () {
+    var s = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7);
+    var tipo = detectar(s);
+    inp.value = formatar(s, tipo);
+    $('plateBox').classList.toggle('antiga', tipo === 'antiga');
+    $('plateBand').textContent = tipo === 'antiga' ? 'SP · SÃO PAULO' : 'BRASIL';
+    inp.placeholder = tipo === 'antiga' ? 'ABC-1234' : 'ABC1D23';
+
+    placaValida = RE_MERCO.test(s) || RE_ANTIGA.test(s);
+    var h = $('plateHint');
+    if (s.length === 7 && !placaValida) { h.className = 'hint err'; h.textContent = 'Placa inválida — confira letras e números'; }
+    else if (placaValida) { h.className = 'hint ok'; h.textContent = tipo === 'antiga' ? 'Placa modelo antigo' : 'Placa Mercosul'; }
+    else { h.className = 'hint'; h.textContent = ''; }
+    $('resultado').textContent = 'Placa: ' + (inp.value || '—') + ' · sem formatação: ' + (s || '—') + ' · válida: ' + (placaValida ? 'sim' : 'não');
+    atualizarBotao();
+  });
+
+  ['modelo', 'cor'].forEach(function (id) {
+    $(id).addEventListener('input', function (e) {
+      var v = e.target.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Z ]/g, '').replace(/^ +/, '').replace(/ {2,}/g, ' ').slice(0, 20);
+      if (v !== e.target.value) e.target.value = v;
+      atualizarBotao();
+    });
+  });
+
+  $('btnConfirmar').addEventListener('click', function () {
+    $('resultado').textContent = 'Entrada de teste: ' + inp.value + ' · ' + $('modelo').value + ' · ' + $('cor').value;
+  });
+})();
+
+/* ---------------- Teclado de placa ----------------
+   Mostra só o que cabe em cada posição:
+   1–3 letras · 4 número · 5 letra (Mercosul) ou número (antiga) · 6–7 números.
+   Cada toque grava a placa sem formatação e dispara "input"; o campo formata. */
+(function () {
+  var inp = document.getElementById('placa');
+  var kb = document.getElementById('tecladoPlaca');
+  var teclas = document.getElementById('tpTeclas');
+  var caixa = document.getElementById('plateBox');
+
+  var LETRAS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  var NUMEROS = '1234567890';
+  var VALIDA = /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/;
+
+  function bruta() { return inp.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7); }
+  function tipo(pos) { return pos < 3 ? 'L' : pos === 3 ? 'N' : pos === 4 ? 'LN' : pos < 7 ? 'N' : ''; }
+  function aceita(ch, pos) {
+    var t = tipo(pos);
+    return (t.indexOf('L') >= 0 && /[A-Z]/.test(ch)) || (t.indexOf('N') >= 0 && /[0-9]/.test(ch));
+  }
+  function linha(chars, desligado) {
+    return '<div class="tp-linha">' + chars.split('').map(function (c) {
+      return '<button type="button" data-k="' + c + '"' + (desligado ? ' disabled' : '') + '>' + c + '</button>';
+    }).join('') + '</div>';
+  }
+
+  // Só números (posições 4, 6 e 7): teclado numérico 1-2-3 / 4-5-6 / 7-8-9 / 0, com ⌫ à direita
+  function numerico(desligado) {
+    var ordem = ['1', '2', '3', 'apagar', '4', '5', '6', '', '7', '8', '9', '', '', '0', '', ''];
+    return '<div class="tp-num">' + ordem.map(function (c) {
+      if (c === 'apagar') return '<button type="button" class="tp-apagar" data-act="apagar" aria-label="Apagar">⌫</button>';
+      if (!c) return '<span aria-hidden="true"></span>';
+      return '<button type="button" data-k="' + c + '"' + (desligado ? ' disabled' : '') + '>' + c + '</button>';
+    }).join('') + '</div>';
+  }
+
+  function desenhar() {
+    var s = bruta(), t = tipo(s.length), html = '';
+    if (t === 'N' || !t) { teclas.innerHTML = numerico(!t); return; }
+    if (t.indexOf('N') >= 0) html += linha(NUMEROS);
+    if (t.indexOf('L') >= 0) html += LETRAS.map(function (l) { return linha(l); }).join('');
+    html += '<div class="tp-linha">' +
+      '<button type="button" class="tp-larga tp-apagar" data-act="apagar" aria-label="Apagar">⌫</button></div>';
+    teclas.innerHTML = html;
+  }
+
+  function gravar(s) { inp.value = s; inp.dispatchEvent(new Event('input', { bubbles: true })); }
+  function abrir() { if (!TECLADO_MUREL) return; kb.hidden = false; caixa.classList.add('foco'); desenhar(); }
+  function fechar() { if (kb.hidden) return; kb.hidden = true; caixa.classList.remove('foco'); inp.blur(); }
+
+  kb.addEventListener('pointerdown', function (e) { e.preventDefault(); });
+  kb.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b || b.disabled) return;
+    var s = bruta();
+    if (b.dataset.k && s.length < 7 && aceita(b.dataset.k, s.length)) s += b.dataset.k;
+    if (b.dataset.act === 'apagar') s = s.slice(0, -1);
+    if (b.dataset.act === 'ok') { fechar(); return; }
+    try { navigator.vibrate && navigator.vibrate(10); } catch (err) {}
+    gravar(s);
+    desenhar();
+    if (VALIDA.test(s)) setTimeout(fechar, 150);   // placa completa: fecha sozinho
+  });
+
+  inp.addEventListener('focus', abrir);
+  inp.addEventListener('click', abrir);
+  inp.addEventListener('beforeinput', function (e) {   // teclado físico: só o que cabe na posição
+    if (e.inputType !== 'insertText' || !e.data) return;
+    var s = bruta(), ch = e.data.toUpperCase();
+    if (ch.length === 1 && /[A-Z0-9]/.test(ch) && !(s.length < 7 && aceita(ch, s.length))) e.preventDefault();
+  });
+  inp.addEventListener('input', function () { if (!kb.hidden) desenhar(); });
+  document.addEventListener('pointerdown', function (e) {
+    if (!kb.hidden && e.target !== inp && !kb.contains(e.target)) fechar();
+  });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) fechar(); });
+})();
+
+/* ---------------- Teclado de letras (Modelo e Cor) ----------------
+   Só letras A–Z e espaço. No Modelo, a tecla amarela é "Próximo" e
+   leva para a Cor; na Cor, "OK" fecha o teclado. */
+(function () {
+  var kb = document.getElementById('tecladoTexto');
+  var teclas = document.getElementById('ttTeclas');
+  var CAMPOS = { modelo: { nome: 'MODELO DO VEÍCULO', prox: 'cor' }, cor: { nome: 'COR DO VEÍCULO', prox: null } };
+  var LETRAS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  var MAX = 20;
+  var alvo = null;
+
+  function linha(chars) {
+    return '<div class="tp-linha">' + chars.split('').map(function (c) {
+      return '<button type="button" data-k="' + c + '">' + c + '</button>';
+    }).join('') + '</div>';
+  }
+
+  function desenhar() {
+    if (!alvo) return;
+    var v = alvo.value, cfg = CAMPOS[alvo.id], cheio = v.length >= MAX;
+    var html = LETRAS.map(linha).join('');
+    html += '<div class="tp-linha">' +
+      '<button type="button" class="tp-larga tp-apagar" data-act="apagar" aria-label="Apagar">⌫</button>' +
+      '<button type="button" class="tp-espaco" data-act="espaco"' + (!v || / $/.test(v) || cheio ? ' disabled' : '') + '>ESPAÇO</button>' +
+      '<button type="button" class="tp-larga tp-ok" data-act="ok">' + (cfg.prox ? 'Próximo' : 'OK') + '</button></div>';
+    teclas.innerHTML = html;
+    if (cheio) teclas.querySelectorAll('[data-k]').forEach(function (b) { b.disabled = true; });
+  }
+
+  function gravar(v) { alvo.value = v; alvo.dispatchEvent(new Event('input', { bubbles: true })); }
+
+  function abrir(el) {
+    if (!TECLADO_MUREL) return;
+    if (alvo && alvo !== el) alvo.classList.remove('foco');
+    alvo = el; alvo.classList.add('foco');
+    kb.hidden = false; desenhar();
+    setTimeout(function () { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 50);
+  }
+
+  function fechar() {
+    if (kb.hidden) return;
+    kb.hidden = true;
+    if (alvo) {
+      if (alvo.value !== alvo.value.trim()) gravar(alvo.value.trim());
+      alvo.classList.remove('foco'); alvo.blur();
+    }
+    alvo = null;
+  }
+
+  kb.addEventListener('pointerdown', function (e) { e.preventDefault(); });
+  kb.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b || b.disabled || !alvo) return;
+    var v = alvo.value;
+    if (b.dataset.k && v.length < MAX) v += b.dataset.k;
+    if (b.dataset.act === 'espaco' && v && !/ $/.test(v) && v.length < MAX) v += ' ';
+    if (b.dataset.act === 'apagar') v = v.slice(0, -1);
+    if (b.dataset.act === 'ok') {
+      var prox = CAMPOS[alvo.id].prox;
+      gravar(v.trim());
+      if (prox) { var el = document.getElementById(prox); el.focus(); abrir(el); } else fechar();
+      return;
+    }
+    try { navigator.vibrate && navigator.vibrate(10); } catch (err) {}
+    gravar(v);
+    desenhar();
+  });
+
+  Object.keys(CAMPOS).forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('focus', function () { abrir(el); });
+    el.addEventListener('click', function () { abrir(el); });
+    el.addEventListener('beforeinput', function (e) {   // teclado físico: só letras e espaço
+      if (e.inputType === 'insertText' && e.data && !/^[A-Za-z ]+$/.test(e.data)) e.preventDefault();
+    });
+    el.addEventListener('input', function () { if (alvo === el) desenhar(); });
+  });
+
+  document.addEventListener('pointerdown', function (e) {
+    if (kb.hidden || kb.contains(e.target) || CAMPOS[e.target.id]) return;
+    fechar();
+  });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) fechar(); });
+})();
+</script>
+</body>
+</html>
