@@ -11,7 +11,7 @@ export function Contato() {
     <Section
       id="contato"
       titulo="Fale com a equipe da Murel"
-      lede="Conte sobre o seu pátio e tire dúvidas, inclusive sobre preço. A gente responde por e-mail ou telefone."
+      lede="Conte sobre o seu pátio e tire dúvidas. A gente responde por e-mail ou telefone."
     >
       <Whatsapp>
         <h3>Prefere falar agora?</h3>

@@ -27,7 +27,7 @@ export const perguntas: Pergunta[] = [
   {
     pergunta: "Quanto custa?",
     resposta:
-      "Fale com a equipe pelo formulário de contato. A gente responde com a proposta para o seu pátio.",
+      "Os valores estão na seção Planos: mensal, trimestral, semestral e anual, todos com as mesmas funcionalidades. Em dúvida sobre qual escolher, fale com a equipe pelo formulário de contato.",
   },
   {
     pergunta: "Como eu começo?",

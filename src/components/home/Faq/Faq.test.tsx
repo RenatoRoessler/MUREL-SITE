@@ -28,9 +28,9 @@ describe("Faq", () => {
     expect(detalhes).not.toHaveAttribute("open");
   });
 
-  it("a resposta sobre preço orienta a falar com a equipe, sem valores", () => {
+  it("a resposta sobre preço aponta para a seção Planos e mantém o contato para dúvidas", () => {
     const preco = perguntas.find((item) => item.pergunta === "Quanto custa?");
+    expect(preco?.resposta).toMatch(/seção Planos/i);
     expect(preco?.resposta).toMatch(/formulário de contato/i);
-    expect(preco?.resposta).not.toMatch(/R\$|\d/);
   });
 });
