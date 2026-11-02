@@ -18,6 +18,7 @@ import {
 const secoes = [
   { href: "#sistema", rotulo: "Sistema" },
   { href: "#como-funciona", rotulo: "Como funciona" },
+  { href: "#planos", rotulo: "Planos" },
   { href: "#perguntas", rotulo: "Perguntas" },
   { href: "#contato", rotulo: "Contato" },
 ];

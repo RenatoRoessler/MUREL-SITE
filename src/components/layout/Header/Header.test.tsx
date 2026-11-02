@@ -20,6 +20,7 @@ describe("Header", () => {
     renderComTema(<Header />);
     expect(screen.getByRole("link", { name: "Sistema", hidden: true })).toHaveAttribute("href", "#sistema");
     expect(screen.getByRole("link", { name: "Como funciona", hidden: true })).toHaveAttribute("href", "#como-funciona");
+    expect(screen.getByRole("link", { name: "Planos", hidden: true })).toHaveAttribute("href", "#planos");
     expect(screen.getByRole("link", { name: "Perguntas", hidden: true })).toHaveAttribute("href", "#perguntas");
     expect(screen.getByRole("link", { name: "Contato", hidden: true })).toHaveAttribute("href", "#contato");
     expect(screen.getByRole("link", { name: "Ir para o conteúdo" })).toHaveAttribute("href", "#conteudo");

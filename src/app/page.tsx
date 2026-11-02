@@ -5,6 +5,7 @@ import { Faq } from "@/components/home/Faq/Faq";
 import { Funcionalidades } from "@/components/home/Funcionalidades/Funcionalidades";
 import { funcionalidades } from "@/components/home/Funcionalidades/Funcionalidades.data";
 import { Hero } from "@/components/home/Hero/Hero";
+import { Planos } from "@/components/home/Planos/Planos";
 import { VisaoGeral } from "@/components/home/VisaoGeral/VisaoGeral";
 import { BotaoWhatsapp } from "@/components/layout/BotaoWhatsapp/BotaoWhatsapp";
 import { Footer } from "@/components/layout/Footer/Footer";
@@ -37,6 +38,7 @@ export default function Home() {
         <VisaoGeral areas={funcionalidades} />
         <Funcionalidades />
         <ComoFunciona />
+        <Planos />
         <Faq />
         <Contato />
       </main>
