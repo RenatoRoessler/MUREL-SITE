@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murel – Planos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@400;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0e1729}
+a{color:#f4f1e8}a:hover{color:#ffc20e}
+a:focus-visible,button:focus-visible{outline:2px solid #ffc20e;outline-offset:3px}
+</style>
+</head>
+<body>
+<main style="background: #0e1729; color: #f4f1e8; font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; padding: 96px 24px; box-sizing: border-box">
+<div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+
+<header style="display: flex; flex-direction: column; gap: 16px; max-width: 760px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PLANOS</span>
+<h2 style="margin: 0; font-size: 40px; line-height: 44px; font-weight: 800; letter-spacing: -0.02em">Um plano para cada <span style="color: #ffc20e">tipo de operação.</span></h2>
+<p style="margin: 0; font-size: 18px; line-height: 28px; color: #9aa3b5">Todos com ticket 100% digital, sem impressora e sem pedir dados do cliente. Escolha como você trabalha e veja o plano certo para o seu negócio.</p>
+</header>
+
+<div role="group" aria-label="Tipo de operação" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: #16223a; border: 1.5px solid #3a4c6b; border-radius: 14px; align-self: flex-start">
+<button type="button" data-tab="est" aria-pressed="true" style="min-height: 44px; padding: 0 18px; border: none; border-radius: 10px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; background: #ffc20e; color: #0e1729">Estacionamento</button>
+<button type="button" data-tab="valet" aria-pressed="false" style="min-height: 44px; padding: 0 18px; border: none; border-radius: 10px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; background: transparent; color: #f4f1e8">Valet</button>
+</div>
+
+<div data-panel="est">
+<section aria-label="Planos Estacionamento" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch; max-width: 1180px; width: 100%">
+<article style="background: #16223a; border: 1.5px solid #3a4c6b; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PARA COMEÇAR</span>
+
+</div>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.02em">Essencial</h3>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #9aa3b5">Para o estacionamento que quer largar o papel e o caderno e ter entrada, saída e caixa no celular.</p>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 36px; line-height: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">R$ 79,00</span><span style="font-size: 15px; color: #9aa3b5">/mês</span></div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; border: 1.5px solid #6b80a4; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #f4f1e8">Ir para adesão</a>
+<div style="border-top: 1.5px dashed #3a4c6b"></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 22px">
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Entrada com placa, modelo e cor, com leitura da placa pela câmera do celular</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Ticket digital com QR Code e página pública do ticket, sem login</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Lista do pátio com busca e filtro por tipo de veículo</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Tabelas de preço por categoria e horário</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Caixa com abertura, sangria, passagem de turno e fechamento</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Recebimento em dinheiro, Pix e cartão</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>1 pátio e até 3 operadores</span></li>
+</ul>
+</article>
+<article style="background: #16223a; border: 2px solid #ffc20e; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PARA CRESCER</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.1em; color: #0e1729; background: #ffc20e; border-radius: 999px; padding: 4px 10px">MAIS ESCOLHIDO</span>
+</div>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.02em">Profissional</h3>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #9aa3b5">Para quem tem mensalistas e convênios e quer saber quanto o pátio rende de verdade.</p>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 36px; line-height: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">R$ 129,00</span><span style="font-size: 15px; color: #9aa3b5">/mês</span></div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; background: #ffc20e; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #0e1729">Ir para adesão</a>
+<div style="border-top: 1.5px dashed #3a4c6b"></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 22px">
+<li style="font-weight: 700">Tudo do Essencial, mais:</li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Mensalistas com contrato por e-mail e controle de vencimento</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Empresas conveniadas com tabela de preço própria</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Relatórios de faturamento, permanência média e horário de pico</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Histórico de caixas com exportação em CSV e PDF</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Operadores ilimitados, com permissões de dono, gerente e operador</span></li>
+</ul>
+</article>
+<article style="background: #16223a; border: 1.5px solid #3a4c6b; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PARA OPERAÇÕES MAIORES</span>
+
+</div>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.02em">Premium</h3>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #9aa3b5">Para quem emite nota e precisa de controle total sobre cada ticket.</p>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 36px; line-height: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">R$ 189,00</span><span style="font-size: 15px; color: #9aa3b5">/mês</span></div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; border: 1.5px solid #6b80a4; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #f4f1e8">Ir para adesão</a>
+<div style="border-top: 1.5px dashed #3a4c6b"></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 22px">
+<li style="font-weight: 700">Tudo do Profissional, mais:</li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Emissão de NFS-e na saída</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Fotos de avarias na entrada</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Pagamento por tag</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Auditoria de cancelamentos, descontos e tickets alterados</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Atendimento prioritário</span></li>
+</ul>
+</article>
+</section>
+</div>
+<div data-panel="valet" hidden>
+<section aria-label="Planos Valet" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch; max-width: 1180px; width: 100%">
+<article style="background: #16223a; border: 1.5px solid #3a4c6b; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PARA COMEÇAR</span>
+
+</div>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.02em">Essencial</h3>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #9aa3b5">Para o valet que quer largar o papel e saber de quem é cada chave.</p>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 36px; line-height: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">R$ 89,00</span><span style="font-size: 15px; color: #9aa3b5">/mês</span></div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; border: 1.5px solid #6b80a4; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #f4f1e8">Ir para adesão</a>
+<div style="border-top: 1.5px dashed #3a4c6b"></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 22px">
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Recebimento do carro com placa, modelo e cor</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Controle de chaves com o número do gancho ligado ao ticket</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Ticket digital com QR Code, sem impressora</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Caixa por turno com dinheiro, Pix e cartão</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>1 ponto de operação</span></li>
+</ul>
+</article>
+<article style="background: #16223a; border: 2px solid #ffc20e; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PARA CRESCER</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.1em; color: #0e1729; background: #ffc20e; border-radius: 999px; padding: 4px 10px">MAIS ESCOLHIDO</span>
+</div>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.02em">Profissional</h3>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #9aa3b5">Para quem quer o carro na porta antes do cliente chegar e cada manobrista com o seu caixa.</p>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 36px; line-height: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">R$ 149,00</span><span style="font-size: 15px; color: #9aa3b5">/mês</span></div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; background: #ffc20e; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #0e1729">Ir para adesão</a>
+<div style="border-top: 1.5px dashed #3a4c6b"></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 22px">
+<li style="font-weight: 700">Tudo do Essencial, mais:</li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Pedido de retirada pelo QR Code: o cliente pede o carro da mesa</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Fila de retirada para os manobristas</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Fotos de avarias no recebimento</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Cobrança por carro, cortesia ou convênio com o estabelecimento</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Caixa por manobrista</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Até 3 pontos de operação</span></li>
+</ul>
+</article>
+<article style="background: #16223a; border: 1.5px solid #3a4c6b; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; color: #9aa3b5">PARA OPERAÇÕES MAIORES</span>
+
+</div>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.02em">Premium</h3>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #9aa3b5">Para quem atende vários restaurantes, hotéis e eventos e presta contas para cada um.</p>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 36px; line-height: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">R$ 239,00</span><span style="font-size: 15px; color: #9aa3b5">/mês</span></div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; border: 1.5px solid #6b80a4; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #f4f1e8">Ir para adesão</a>
+<div style="border-top: 1.5px dashed #3a4c6b"></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 22px">
+<li style="font-weight: 700">Tudo do Profissional, mais:</li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Pontos de operação ilimitados</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Relatório por ponto e por evento, para prestar contas ao estabelecimento</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Operação de eventos com cadastro rápido da equipe</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Emissão de NFS-e</span></li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M4 10.5l4 4 8-9" stroke="#ffc20e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Atendimento prioritário</span></li>
+</ul>
+</article>
+</section>
+</div>
+
+<section style="background: #16223a; border-radius: 18px; padding: 28px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 6px; flex: 1 1 420px">
+<strong style="font-size: 22px; line-height: 28px; font-weight: 700">Não sabe qual plano escolher?</strong>
+<span style="font-size: 16px; line-height: 26px; color: #9aa3b5">Conta como é o seu negócio e a gente indica o plano certo, sem letra miúda.</span>
+</div>
+<a href="https://murel.com.br" style="display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border: 1.5px solid #6b80a4; border-radius: 14px; font-size: 15px; font-weight: 800; text-decoration: none; color: #f4f1e8">Falar com a equipe</a>
+</section>
+
+</div>
+</main>
+<script>
+(function(){
+var on='min-height: 44px; padding: 0 18px; border: none; border-radius: 10px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; background: #ffc20e; color: #0e1729', off='min-height: 44px; padding: 0 18px; border: none; border-radius: 10px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; background: transparent; color: #f4f1e8';
+var tabs=document.querySelectorAll('[data-tab]'), panels=document.querySelectorAll('[data-panel]');
+tabs.forEach(function(b){
+b.addEventListener('click',function(){
+var k=b.getAttribute('data-tab');
+tabs.forEach(function(x){var a=x===b;x.setAttribute('aria-pressed',a);x.setAttribute('style',a?on:off);});
+panels.forEach(function(p){p.hidden=p.getAttribute('data-panel')!==k;});
+});
+});
+})();
+</script>
+</body>
+</html>
