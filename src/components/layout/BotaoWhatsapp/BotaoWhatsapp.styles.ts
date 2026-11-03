@@ -2,7 +2,10 @@
 
 import styled from "styled-components";
 
-export const Flutuante = styled.a`
+const duracaoAparicao = "0.3s";
+
+// Oculto com `visibility: hidden`: sai da ordem de tab e da árvore de acessibilidade sozinho.
+export const Flutuante = styled.a<{ $visivel: boolean }>`
   position: fixed;
   right: max(${({ theme }) => theme.space[3]}px, env(safe-area-inset-right, 0px));
   bottom: max(${({ theme }) => theme.space[3]}px, env(safe-area-inset-bottom, 0px));
@@ -11,6 +14,19 @@ export const Flutuante = styled.a`
   align-items: center;
   gap: ${({ theme }) => theme.space[2]}px;
   color: ${({ theme }) => theme.colors.asfalto};
+  opacity: ${({ $visivel }) => ($visivel ? 1 : 0)};
+  transform: translateY(${({ $visivel }) => ($visivel ? 0 : 24)}px);
+  visibility: ${({ $visivel }) => ($visivel ? "visible" : "hidden")};
+  pointer-events: ${({ $visivel }) => ($visivel ? "auto" : "none")};
+  /* Ao sumir, o visibility espera a transição terminar. */
+  transition:
+    opacity ${duracaoAparicao} ease-out,
+    transform ${duracaoAparicao} ease-out,
+    visibility 0s linear ${({ $visivel }) => ($visivel ? "0s" : duracaoAparicao)};
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     right: ${({ theme }) => theme.space[4]}px;
