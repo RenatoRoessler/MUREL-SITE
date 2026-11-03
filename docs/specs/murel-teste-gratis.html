@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murel: teste grátis por 30 dias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #0E1729;
+    --fundo-2: #16223A;
+    --fundo-3: #1C2B48;
+    --texto: #F4F1E8;
+    --texto-2: #9AA3B5;
+    --borda: #2A3A5C;
+    --borda-forte: #6B80A4;
+    --amarelo: #FFC20E;
+    --verde: #25D366;
+    --raio: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .container { width: min(1120px, 100% - 40px); margin: 0 auto; }
+  section { padding: 88px 0; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.6rem, 3.2vw, 2.25rem); font-weight: 800; line-height: 1.2; letter-spacing: -0.01em; }
+  h3 { font-size: 1.15rem; font-weight: 800; }
+  .destaque { color: var(--amarelo); }
+  .sub { color: var(--texto-2); font-size: 1.05rem; max-width: 640px; }
+  .rotulo {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--amarelo);
+  }
+
+  /* Botões */
+  .botao {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 26px; border-radius: var(--raio);
+    font: inherit; font-weight: 800; text-decoration: none; cursor: pointer;
+    border: 1px solid transparent; transition: transform .15s ease, filter .15s ease;
+  }
+  .botao:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .botao:focus-visible { outline: 3px solid var(--amarelo); outline-offset: 3px; }
+  .botao-primario { background: var(--amarelo); color: var(--fundo); border-color: var(--amarelo); }
+  .botao-secundario { background: transparent; color: var(--texto); border-color: var(--borda-forte); }
+  .botao-bloco { width: 100%; }
+
+  /* Topo */
+  header.barra { padding: 20px 0; border-bottom: 1px solid var(--borda); }
+  header.barra .container { display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.35rem; text-decoration: none; }
+  .logo svg { width: 36px; height: 24px; }
+  #topo { padding-top: 72px; }
+  #topo .sub { margin-top: 20px; }
+  .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .garantias {
+    display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px;
+    list-style: none; color: var(--texto-2); font-size: .92rem;
+  }
+  .garantias li { display: inline-flex; align-items: center; gap: 6px; }
+  .garantias svg { width: 16px; height: 16px; color: var(--amarelo); flex: none; }
+
+  /* Funcionalidades (resumo) */
+  .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 40px; }
+  .card { background: var(--fundo-2); border: 1px solid var(--borda); border-radius: 18px; padding: 24px; }
+  .card p { color: var(--texto-2); margin-top: 8px; font-size: .95rem; }
+
+  /* Faixa do teste grátis */
+  .teste {
+    margin-top: 40px;
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px;
+    background: var(--fundo-3); border: 2px solid var(--amarelo); border-radius: 20px;
+    padding: 32px;
+  }
+  .teste h3 { font-size: 1.5rem; }
+  .teste p { color: var(--texto-2); margin-top: 8px; max-width: 560px; }
+  .teste .garantias { margin-top: 14px; }
+  @media (max-width: 760px) { .teste { grid-template-columns: 1fr; padding: 24px; } }
+
+  /* Planos */
+  .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 32px; }
+  .plano {
+    position: relative; display: flex; flex-direction: column;
+    background: var(--fundo-2); border: 1px solid var(--borda); border-radius: 18px; padding: 26px 22px;
+  }
+  .plano.melhor { border: 2px solid var(--amarelo); }
+  .selo {
+    position: absolute; top: -12px; left: 22px;
+    background: var(--amarelo); color: var(--fundo);
+    font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .plano .nome { font-weight: 800; font-size: 1.05rem; }
+  .preco { margin-top: 14px; font-size: 2rem; font-weight: 800; line-height: 1; }
+  .preco small { font-size: .9rem; font-weight: 600; color: var(--texto-2); }
+  .condicoes { color: var(--texto-2); font-size: .9rem; margin-top: 8px; }
+  .economia { color: var(--amarelo); font-size: .9rem; font-weight: 600; margin-top: 4px; min-height: 1.4em; }
+  .plano .botao { margin-top: auto; }
+  .plano .espaco { flex: 1; min-height: 20px; }
+  .nota-planos { color: var(--texto-2); font-size: .9rem; margin-top: 20px; text-align: center; }
+
+  /* Perguntas */
+  .perguntas { margin-top: 32px; display: grid; gap: 12px; max-width: 820px; }
+  details { background: var(--fundo-2); border: 1px solid var(--borda); border-radius: 16px; }
+  summary {
+    list-style: none; cursor: pointer; padding: 20px 22px; font-weight: 800;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--amarelo); font-size: 1.4rem; line-height: 1; transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  summary:focus-visible { outline: 3px solid var(--amarelo); outline-offset: 2px; border-radius: 16px; }
+  details p { padding: 0 22px 20px; color: var(--texto-2); }
+
+  /* Contato */
+  #contato .caixa {
+    background: var(--fundo-2); border: 1px solid var(--borda); border-radius: 20px;
+    padding: 40px; display: grid; gap: 16px; justify-items: start;
+  }
+  footer { border-top: 1px solid var(--borda); padding: 32px 0; color: var(--texto-2); font-size: .9rem; }
+  footer .container { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+
+  /* Balão do WhatsApp: escondido até a penúltima seção (#perguntas) */
+  .whats {
+    position: fixed; right: 20px; bottom: 20px; z-index: 50;
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+    opacity: 0; transform: translateY(24px); pointer-events: none; visibility: hidden;
+    transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+  }
+  .whats.visivel {
+    opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+    transition: opacity .3s ease, transform .3s ease, visibility 0s;
+  }
+  .whats .balao {
+    background: var(--verde); color: #08331A; font-weight: 800; font-size: .95rem;
+    padding: 10px 16px; border-radius: 999px; white-space: nowrap;
+  }
+  .whats .icone {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--verde); color: #fff;
+    display: grid; place-items: center; font-size: 30px;
+  }
+  .whats:focus-visible { outline: 3px solid var(--amarelo); outline-offset: 4px; border-radius: 999px; }
+  @media (prefers-reduced-motion: reduce) {
+    .whats, .whats.visivel { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="container">
+    <a class="logo" href="#topo" aria-label="Murel">
+      <svg viewBox="0 0 240 160" aria-hidden="true">
+        <path d="M20 140V24H220V140M82 24V140M158 24V140" fill="none" stroke="#FFC20E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="102" y="62" width="36" height="66" rx="12" fill="#FFC20E"/>
+      </svg>
+      murel
+    </a>
+    <a class="botao botao-secundario" href="#teste">Testar grátis</a>
+  </div>
+</header>
+
+<main>
+  <!-- 1. Topo -->
+  <section id="topo">
+    <div class="container">
+      <h1>Seu pátio <span class="destaque">sob controle.</span></h1>
+      <p class="sub">O sistema de quem cuida de carro: estacionamentos, valets e lava-rápidos. Avulso, mensalista e conveniado no mesmo pátio, sem impressora e sem pedir e-mail ou telefone do cliente.</p>
+      <div class="acoes">
+        <a class="botao botao-primario" href="#teste">Testar grátis por 30 dias</a>
+        <a class="botao botao-secundario" href="#contato">Falar com a equipe</a>
+      </div>
+      <ul class="garantias" aria-label="Condições do teste">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Todas as funcionalidades</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Sem cartão de crédito</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Sem compromisso</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2. Funcionalidades (resumo, só para dar volume à página) -->
+  <section id="sistema">
+    <div class="container">
+      <span class="rotulo">O sistema</span>
+      <h2>Tudo o que o pátio precisa, numa tela só.</h2>
+      <div class="grade">
+        <div class="card"><h3>Entrada e saída</h3><p>Placa lida pela câmera, ticket digital com QR Code e recibo público.</p></div>
+        <div class="card"><h3>Caixa</h3><p>Abertura, sangria, passagem de turno e fechamento com a diferença apurada.</p></div>
+        <div class="card"><h3>Mensalistas</h3><p>Cadastro, contrato com aceite por link e agenda de vencimentos.</p></div>
+        <div class="card"><h3>Convênios</h3><p>Ticket carimbado com a tabela de preço do convênio aplicada.</p></div>
+      </div>
+      <div class="acoes"><a class="botao botao-primario" href="#teste">Testar grátis</a></div>
+    </div>
+  </section>
+
+  <!-- 3. Planos + teste grátis -->
+  <section id="planos" aria-labelledby="planos-titulo">
+    <div class="container">
+      <span class="rotulo">Planos</span>
+      <h2 id="planos-titulo">Escolha como quer pagar. O sistema é o mesmo.</h2>
+      <p class="sub" style="margin-top:12px">Todas as funcionalidades estão em todos os planos. O que muda é o tempo de compromisso e o valor por mês.</p>
+
+      <div class="teste" id="teste">
+        <div>
+          <span class="rotulo">Comece sem pagar nada</span>
+          <h3 style="margin-top:6px">Teste grátis por 30 dias</h3>
+          <p>Use o sistema completo no seu pátio, sem cadastrar cartão. Nada é cobrado automaticamente: no fim do teste, você escolhe o plano que fizer mais sentido.</p>
+          <ul class="garantias">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Todas as funcionalidades</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Sem cartão de crédito</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Sem compromisso</li>
+          </ul>
+        </div>
+        <a class="botao botao-primario" href="#cadastro">Começar meu teste grátis</a>
+      </div>
+
+      <div class="planos">
+        <article class="plano">
+          <span class="nome">Mensal</span>
+          <div class="preco">R$ 149,90 <small>/mês</small></div>
+          <p class="condicoes">Cobrado todo mês</p>
+          <p class="economia"></p>
+          <div class="espaco"></div>
+          <a class="botao botao-secundario botao-bloco" href="#cadastro">Escolher</a>
+        </article>
+        <article class="plano">
+          <span class="nome">Trimestral</span>
+          <div class="preco">R$ 134,90 <small>/mês</small></div>
+          <p class="condicoes">R$ 404,70 a cada 3 meses</p>
+          <p class="economia">Economia de R$ 45,00 (10%)</p>
+          <div class="espaco"></div>
+          <a class="botao botao-secundario botao-bloco" href="#cadastro">Escolher</a>
+        </article>
+        <article class="plano">
+          <span class="nome">Semestral</span>
+          <div class="preco">R$ 119,90 <small>/mês</small></div>
+          <p class="condicoes">R$ 719,40 a cada 6 meses</p>
+          <p class="economia">Economia de R$ 180,00 (20%)</p>
+          <div class="espaco"></div>
+          <a class="botao botao-secundario botao-bloco" href="#cadastro">Escolher</a>
+        </article>
+        <article class="plano melhor">
+          <span class="selo">Mais econômico</span>
+          <span class="nome">Anual</span>
+          <div class="preco">R$ 79,90 <small>/mês</small></div>
+          <p class="condicoes">R$ 958,80 a cada 12 meses</p>
+          <p class="economia">Economia de R$ 840,00 (47%)</p>
+          <div class="espaco"></div>
+          <a class="botao botao-primario botao-bloco" href="#cadastro">Escolher</a>
+        </article>
+      </div>
+      <p class="nota-planos">Todos os planos começam com 30 dias grátis. Você só paga depois do teste.</p>
+    </div>
+  </section>
+
+  <!-- 4. Perguntas (penúltima seção: a partir daqui o balão do WhatsApp aparece) -->
+  <section id="perguntas" aria-labelledby="perguntas-titulo">
+    <div class="container">
+      <span class="rotulo">Perguntas frequentes</span>
+      <h2 id="perguntas-titulo">Dúvidas sobre o teste grátis</h2>
+      <div class="perguntas">
+        <details open>
+          <summary>Preciso cadastrar cartão de crédito para testar?</summary>
+          <p>Não. O teste grátis não pede cartão nem nenhum dado de pagamento. Você só informa os dados da empresa para criar o acesso.</p>
+        </details>
+        <details>
+          <summary>O teste tem todas as funcionalidades?</summary>
+          <p>Sim. Durante os 30 dias você usa o sistema completo: entrada e saída, pátio, quadro de chaves, caixa, mensalistas, convênios e tudo o mais.</p>
+        </details>
+        <details>
+          <summary>O que acontece depois dos 30 dias?</summary>
+          <p>Nada é cobrado automaticamente. No fim do teste, você escolhe um plano para continuar usando. Se não escolher, o acesso é pausado e os seus dados ficam guardados por 30 dias, caso queira voltar.</p>
+        </details>
+        <details>
+          <summary>O que eu cadastrar no teste continua valendo se eu assinar?</summary>
+          <p>Sim. Tabelas de preço, mensalistas, convênios e histórico continuam lá. Você não precisa cadastrar nada de novo.</p>
+        </details>
+        <details>
+          <summary>Posso cancelar quando quiser?</summary>
+          <p>Pode. Durante o teste não existe compromisso, e depois dele você pode cancelar a qualquer momento.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Contato (última seção) -->
+  <section id="contato" aria-labelledby="contato-titulo">
+    <div class="container">
+      <div class="caixa">
+        <span class="rotulo">Contato</span>
+        <h2 id="contato-titulo">Fale com a equipe da Murel</h2>
+        <p class="sub">Conte sobre o seu pátio e tire dúvidas. A gente responde por e-mail, telefone ou WhatsApp.</p>
+        <div class="acoes" style="margin-top:8px">
+          <a class="botao botao-primario" href="#cadastro">Testar grátis por 30 dias</a>
+          <a class="botao botao-secundario" href="mailto:contato@murel.com.br">contato@murel.com.br</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© Murel. Seu pátio sob controle.</span>
+    <a href="mailto:contato@murel.com.br">contato@murel.com.br</a>
+  </div>
+</footer>
+
+<!-- Balão flutuante do WhatsApp -->
+<a class="whats" id="botao-whats"
+   href="https://wa.me/5519992215384?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Murel%20e%20quero%20conhecer%20o%20sistema."
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Estamos online! Falar com a Murel pelo WhatsApp (abre em nova aba)"
+   tabindex="-1" aria-hidden="true">
+  <span class="balao" aria-hidden="true">Estamos online!</span>
+  <span class="icone" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.78h-.01a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88zM20.52 3.45A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.16-3.48-8.41z"/></svg>
+  </span>
+</a>
+
+<script>
+  // Mostra o balão do WhatsApp quando a penúltima seção (#perguntas) entra na tela
+  // e mantém visível dali para baixo. Se a pessoa voltar para cima, ele some.
+  (function () {
+    var botao = document.getElementById('botao-whats');
+    var gatilho = document.getElementById('perguntas');
+    if (!botao || !gatilho) return;
+
+    var agendado = false;
+    function atualizar() {
+      agendado = false;
+      // aparece quando o topo da seção passa de 85% da altura da tela
+      var mostrar = gatilho.getBoundingClientRect().top < window.innerHeight * 0.85;
+      botao.classList.toggle('visivel', mostrar);
+      botao.setAttribute('aria-hidden', mostrar ? 'false' : 'true');
+      botao.tabIndex = mostrar ? 0 : -1;
+    }
+    function aoRolar() {
+      if (!agendado) { agendado = true; requestAnimationFrame(atualizar); }
+    }
+
+    window.addEventListener('scroll', aoRolar, { passive: true });
+    window.addEventListener('resize', aoRolar);
+    atualizar();
+  })();
+</script>
+</body>
+</html>
