@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/Button/Button";
 import { Section } from "@/components/ui/Section/Section";
+import { urlAdesaoTeste } from "@/lib/config";
 import type { Funcionalidade } from "@/types/funcionalidade";
-import { Cartao, Lista, Resumo, Rotulo } from "./VisaoGeral.styles";
+import { Cartao, Chamada, Lista, Resumo, Rotulo } from "./VisaoGeral.styles";
 
 type VisaoGeralProps = {
   areas: Pick<Funcionalidade, "id" | "rotulo" | "resumo">[];
@@ -23,6 +25,9 @@ export function VisaoGeral({ areas }: VisaoGeralProps) {
           </li>
         ))}
       </Lista>
+      <Chamada>
+        <Button href={urlAdesaoTeste}>Testar grátis</Button>
+      </Chamada>
     </Section>
   );
 }

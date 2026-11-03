@@ -1,4 +1,4 @@
-import type { TipoPlanoAdesao } from "@/types/plano";
+import { TipoPlanoAdesao } from "@/types/plano";
 
 const urlBase = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/+$/, "");
 
@@ -7,6 +7,8 @@ export const urlAcesso = urlBase;
 export const urlAdesao = `${urlBase}/adesao`;
 
 export const urlAdesaoComPlano = (tipo: TipoPlanoAdesao) => `${urlAdesao}?tipoPlanoAdesao=${tipo}`;
+
+export const urlAdesaoTeste = urlAdesaoComPlano(TipoPlanoAdesao.Trial);
 
 export const emailContato = "contato@murel.com.br";
 

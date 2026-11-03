@@ -2,8 +2,8 @@ import { enviarContato } from "@/app/contato/actions";
 import { Button } from "@/components/ui/Button/Button";
 import { IconeWhatsapp } from "@/components/ui/IconeWhatsapp/IconeWhatsapp";
 import { Section } from "@/components/ui/Section/Section";
-import { urlWhatsapp } from "@/lib/config";
-import { Divisor, Whatsapp } from "./Contato.styles";
+import { urlAdesaoTeste, urlWhatsapp } from "@/lib/config";
+import { Divisor, Teste, Whatsapp } from "./Contato.styles";
 import { ContatoForm } from "./ContatoForm";
 
 export function Contato() {
@@ -13,6 +13,11 @@ export function Contato() {
       titulo="Fale com a equipe da Murel"
       lede="Conte sobre o seu pátio e tire dúvidas. A gente responde por e-mail ou telefone."
     >
+      <Teste>
+        <h3>Prefere testar antes?</h3>
+        <p>Use o sistema completo por 30 dias, sem cartão e sem compromisso.</p>
+        <Button href={urlAdesaoTeste}>Testar grátis por 30 dias</Button>
+      </Teste>
       <Whatsapp>
         <h3>Prefere falar agora?</h3>
         <p>Abra uma conversa com a equipe no WhatsApp.</p>

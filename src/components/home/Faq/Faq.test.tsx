@@ -15,6 +15,32 @@ describe("Faq", () => {
     expect(screen.getByText(/como eu começo/i)).toBeInTheDocument();
   });
 
+  it("responde as dúvidas sobre o teste grátis", () => {
+    renderComTema(<Faq />);
+    for (const pergunta of [
+      "Preciso cadastrar cartão de crédito para testar?",
+      "O teste tem todas as funcionalidades?",
+      "O que acontece depois dos 30 dias?",
+      "O que eu cadastrar no teste continua valendo se eu assinar?",
+      "Posso cancelar quando quiser?",
+    ]) {
+      expect(screen.getByText(pergunta, { selector: "summary" })).toBeInTheDocument();
+    }
+  });
+
+  it("mostra as perguntas do teste depois de “Quanto custa?”", () => {
+    const titulos = perguntas.map((item) => item.pergunta);
+    expect(titulos.indexOf("Preciso cadastrar cartão de crédito para testar?")).toBe(
+      titulos.indexOf("Quanto custa?") + 1,
+    );
+  });
+
+  it("“Como eu começo?” cita o teste e mantém o formulário de contato", () => {
+    const comeco = perguntas.find((item) => item.pergunta === "Como eu começo?");
+    expect(comeco?.resposta).toMatch(/teste grátis/i);
+    expect(comeco?.resposta).toMatch(/formulário de contato/i);
+  });
+
   it("abre e fecha a resposta por teclado", async () => {
     const usuario = userEvent.setup();
     renderComTema(<Faq />);

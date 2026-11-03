@@ -1,7 +1,9 @@
 import { Simbolo } from "@/components/brand/Simbolo";
 import { Button } from "@/components/ui/Button/Button";
+import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { Container } from "@/components/ui/Section/Section.styles";
-import { urlAdesao } from "@/lib/config";
+import { urlAdesaoTeste } from "@/lib/config";
+import { garantiasTeste, rotuloGarantiasTeste } from "../TesteGratis/TesteGratis.data";
 import { Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
 
 export function Hero() {
@@ -18,11 +20,12 @@ export function Hero() {
             telefone do cliente. O ticket é 100% digital.
           </Subtitulo>
           <Chamadas>
-            <Button href={urlAdesao}>Ir para adesão</Button>
+            <Button href={urlAdesaoTeste}>Testar grátis por 30 dias</Button>
             <Button href="#contato" variante="ghost">
               Falar com a equipe
             </Button>
           </Chamadas>
+          <Garantias itens={garantiasTeste} rotulo={rotuloGarantiasTeste} />
         </Texto>
         <Marca>
           <Simbolo animado />

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button/Button";
 import { Section } from "@/components/ui/Section/Section";
+import { TesteGratis } from "../TesteGratis/TesteGratis";
 import { CartaoPlano } from "./CartaoPlano";
 import { areasDoSistema, calcularCondicoes, planos } from "./Planos.data";
 import {
@@ -11,6 +12,7 @@ import {
   ItemPlano,
   ListaPlanos,
   NomeArea,
+  NotaTeste,
   TextoDuvida,
   TextoIncluso,
   TituloIncluso,
@@ -39,6 +41,8 @@ export function Planos() {
       titulo="Escolha como quer pagar. O sistema é o mesmo."
       lede="Todas as funcionalidades estão em todos os planos. O que muda é o tempo de compromisso e o valor por mês."
     >
+      <TesteGratis />
+
       <ListaPlanos>
         {planos.map((plano) => (
           <ItemPlano key={plano.tipo}>
@@ -46,6 +50,7 @@ export function Planos() {
           </ItemPlano>
         ))}
       </ListaPlanos>
+      <NotaTeste>Todos os planos começam com 30 dias grátis. Você só paga depois do teste.</NotaTeste>
 
       <Incluso>
         <div>

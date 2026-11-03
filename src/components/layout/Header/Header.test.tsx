@@ -1,19 +1,36 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { urlAcesso } from "@/lib/config";
+import { urlAcesso, urlAdesaoTeste } from "@/lib/config";
 import { renderComTema } from "@/test/render";
 import { Header } from "./Header";
 
 describe("Header", () => {
   it("leva ao sistema pelo botão 'Acessar o sistema'", () => {
     renderComTema(<Header />);
-    expect(screen.getByRole("link", { name: "Acessar o sistema" })).toHaveAttribute("href", urlAcesso);
+    // O botão do header só aparece de md para cima (o jsdom não avalia media queries).
+    const acessos = screen.getAllByRole("link", { name: "Acessar o sistema", hidden: true });
+    expect(acessos).toHaveLength(2);
+    for (const acesso of acessos) {
+      expect(acesso).toHaveAttribute("href", urlAcesso);
+    }
   });
 
-  it("não tem botão de adesão", () => {
+  it("leva ao teste grátis pelo botão 'Testar grátis'", () => {
     renderComTema(<Header />);
-    expect(screen.queryByRole("link", { name: /adesão/i, hidden: true })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Testar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
+  });
+
+  it("mostra o acesso ao sistema também no menu aberto", async () => {
+    const usuario = userEvent.setup();
+    renderComTema(<Header />);
+    const menu = document.getElementById("menu-principal")!;
+    expect(within(menu).queryByRole("link", { name: "Acessar o sistema" })).not.toBeInTheDocument();
+
+    await usuario.click(screen.getByRole("button", { name: "Abrir menu" }));
+    const acesso = within(menu).getByRole("link", { name: "Acessar o sistema" });
+    expect(acesso).toHaveAttribute("href", urlAcesso);
+    expect(within(menu).getAllByRole("link").at(-1)).toBe(acesso);
   });
 
   it("tem os links de seção e o atalho para o conteúdo", () => {

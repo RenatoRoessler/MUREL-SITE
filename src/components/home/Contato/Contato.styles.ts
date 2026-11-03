@@ -18,7 +18,12 @@ export const Whatsapp = styled.div`
   }
 `;
 
-export const Divisor = styled.p`
+export const Teste = styled(Whatsapp)`
+  padding-bottom: ${({ theme }) => theme.space[4]}px;
+  border-bottom: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
+`;
+
+export const Divisor =styled.p`
   max-width: 720px;
   margin-bottom: ${({ theme }) => theme.space[4]}px;
   padding-top: ${({ theme }) => theme.space[4]}px;

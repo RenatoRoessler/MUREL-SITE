@@ -43,6 +43,17 @@ describe("config", () => {
     expect(outra.urlAdesao).not.toContain("tipoPlanoAdesao");
   });
 
+  it("monta a URL de adesão do teste grátis, com ou sem barra final", async () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://app.murel.com.br/");
+    const { urlAdesaoTeste } = await carregar();
+    expect(urlAdesaoTeste).toBe("https://app.murel.com.br/adesao?tipoPlanoAdesao=0");
+
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://app.murel.com.br");
+    const outra = await carregar();
+    expect(outra.urlAdesaoTeste).toBe("https://app.murel.com.br/adesao?tipoPlanoAdesao=0");
+    expect(outra.urlAdesao).not.toContain("tipoPlanoAdesao");
+  });
+
   it("cai para localhost quando a variável não existe", async () => {
     vi.stubEnv("NEXT_PUBLIC_APP_URL", undefined);
     const { urlAcesso } = await carregar();

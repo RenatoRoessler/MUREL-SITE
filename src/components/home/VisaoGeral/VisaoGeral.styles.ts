@@ -16,7 +16,11 @@ export const Lista = styled.ul`
   }
 `;
 
-export const Cartao = styled.a`
+export const Chamada = styled.div`
+  margin-top: ${({ theme }) => theme.space[5]}px;
+`;
+
+export const Cartao =styled.a`
   display: grid;
   gap: ${({ theme }) => theme.space[1]}px;
   align-content: start;

@@ -8,7 +8,7 @@ export const TipoPlanoAdesao = {
 
 export type TipoPlanoAdesao = (typeof TipoPlanoAdesao)[keyof typeof TipoPlanoAdesao];
 
-// Planos vendidos na seção: o Trial (0) existe no sistema, mas não é oferecido no site.
+// Planos vendidos na seção: o Trial (0) não é um cartão de plano, é a chamada do teste grátis.
 export type TipoPlanoVendido = Exclude<TipoPlanoAdesao, typeof TipoPlanoAdesao.Trial>;
 
 export type Plano = {

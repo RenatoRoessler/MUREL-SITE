@@ -21,7 +21,14 @@ export const ItemPlano = styled.li`
   display: grid;
 `;
 
-export const Incluso = styled.div`
+export const NotaTeste = styled.p`
+  margin-top: ${({ theme }) => theme.space[4]}px;
+  color: ${({ theme }) => theme.colors.nevoa};
+  font-size: 15px;
+  text-align: center;
+`;
+
+export const Incluso =styled.div`
   display: grid;
   gap: ${({ theme }) => theme.space[4]}px;
   margin-top: ${({ theme }) => theme.space[6]}px;

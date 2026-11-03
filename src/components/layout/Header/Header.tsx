@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { LogoMurel } from "@/components/brand/LogoMurel";
 import { Button } from "@/components/ui/Button/Button";
-import { urlAcesso } from "@/lib/config";
+import { urlAcesso, urlAdesaoTeste } from "@/lib/config";
 import {
+  AcessoDesktop,
   Acoes,
   Barra,
   BotaoMenu,
   Linha,
+  LinkAcessoMenu,
   LinkSecao,
   Marca,
   Navegacao,
@@ -42,11 +44,19 @@ export function Header() {
                 {secao.rotulo}
               </LinkSecao>
             ))}
+            <LinkAcessoMenu href={urlAcesso} onClick={fechar}>
+              Acessar o sistema
+            </LinkAcessoMenu>
           </Navegacao>
 
           <Acoes>
-            <Button href={urlAcesso} variante="ghost" tamanho="sm">
-              Acessar o sistema
+            <AcessoDesktop>
+              <Button href={urlAcesso} variante="ghost" tamanho="sm">
+                Acessar o sistema
+              </Button>
+            </AcessoDesktop>
+            <Button href={urlAdesaoTeste} tamanho="sm">
+              Testar grátis
             </Button>
             <BotaoMenu
               type="button"
