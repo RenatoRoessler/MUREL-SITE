@@ -55,7 +55,7 @@ export const Navegacao = styled.nav<{ $aberto: boolean }>`
   background: ${({ theme }) => theme.colors.asfalto2};
   border-bottom: 1px solid ${({ theme }) => theme.colors.asfalto3};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: flex;
     position: static;
     gap: ${({ theme }) => theme.space[4]}px;
@@ -78,9 +78,9 @@ export const LinkSecao = styled.a`
   }
 `;
 
-// Só no menu aberto (abaixo de md): de md para cima o acesso fica em `AcessoDesktop`.
+// Só no menu aberto (abaixo de lg): de lg para cima o acesso fica em `AcessoDesktop`.
 export const LinkAcessoMenu = styled(LinkSecao)`
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: none;
   }
 `;
@@ -91,11 +91,11 @@ export const Acoes = styled.div`
   gap: ${({ theme }) => theme.space[2]}px;
 `;
 
-// Abaixo de md o acesso vai para o menu, para o "Testar grátis" caber no header.
+// Abaixo de lg o acesso vai para o menu, para o "Testar grátis" caber no header.
 export const AcessoDesktop = styled.span`
   display: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: inline-flex;
   }
 `;
@@ -112,7 +112,7 @@ export const BotaoMenu = styled.button`
   color: ${({ theme }) => theme.colors.giz};
   cursor: pointer;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: none;
   }
 `;
