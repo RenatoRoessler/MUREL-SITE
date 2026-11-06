@@ -12,7 +12,7 @@ export function TesteGratis() {
         <Titulo id="teste-gratis-titulo">Teste grátis por 30 dias</Titulo>
         <Descricao>
           Use o sistema completo no seu pátio, sem cadastrar cartão. Nada é cobrado automaticamente: no
-          fim do teste, você escolhe o plano que fizer mais sentido.
+          fim do teste, você decide se quer assinar.
         </Descricao>
         <Garantias itens={garantiasTeste} rotulo={rotuloGarantiasTeste} />
       </Texto>

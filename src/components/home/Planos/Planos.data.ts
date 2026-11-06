@@ -1,30 +1,17 @@
 import { TipoPlanoAdesao, type AreaDoSistema, type Plano } from "@/types/plano";
 
-// Valores combinados com o negócio (docs/input.md), em centavos para o total e a economia saírem exatos.
-export const planos: Plano[] = [
-  { tipo: TipoPlanoAdesao.Mensal, nome: "Mensal", meses: 1, centavosPorMes: 14990 },
-  { tipo: TipoPlanoAdesao.Trimestral, nome: "Trimestral", meses: 3, centavosPorMes: 13490 },
-  { tipo: TipoPlanoAdesao.Semestral, nome: "Semestral", meses: 6, centavosPorMes: 11990 },
-  { tipo: TipoPlanoAdesao.Anual, nome: "Anual", meses: 12, centavosPorMes: 7990, recomendado: true },
-];
-
-export type CondicoesPlano = {
-  totalCentavos: number;
-  economiaCentavos: number;
-  economiaPercentual: number;
+// Valores combinados com o negócio (docs/specs/novo-preco-2026-11), em centavos.
+export const planoMensal: Plano = {
+  tipo: TipoPlanoAdesao.Mensal,
+  nome: "Mensal",
+  centavosPorMes: 9990,
+  centavosLancamento: 6990,
+  mesesDeLancamento: 12,
 };
 
-export function calcularCondicoes(plano: Plano, planoMensal: Plano): CondicoesPlano {
-  const totalCentavos = plano.centavosPorMes * plano.meses;
-  const totalSemDesconto = planoMensal.centavosPorMes * plano.meses;
-  const economiaCentavos = totalSemDesconto - totalCentavos;
+export const garantiasPlano = ["Todas as funcionalidades", "Sem fidelidade", "30 dias grátis para testar"] as const;
 
-  return {
-    totalCentavos,
-    economiaCentavos,
-    economiaPercentual: Math.round((economiaCentavos / totalSemDesconto) * 100),
-  };
-}
+export const rotuloGarantiasPlano = "O que o plano inclui";
 
 // Conteúdo conferido no código do GIPE (relatório de 23/10/2026 e histórico até a versão 1.0.333).
 // Fica de fora o que o sistema ainda não tem: relatórios, tela de permissões por módulo e emissão de NFS-e.

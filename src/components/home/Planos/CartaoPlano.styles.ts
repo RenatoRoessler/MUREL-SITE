@@ -2,25 +2,25 @@
 
 import styled from "styled-components";
 
-export const Cartao = styled.article<{ $destaque: boolean }>`
+export const Cartao = styled.article`
   position: relative;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space[4]}px;
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
   padding: ${({ theme }) => theme.space[4]}px;
   background: ${({ theme }) => theme.colors.asfalto2};
-  border: ${({ $destaque }) => ($destaque ? "2px" : "1.5px")} solid
-    ${({ $destaque, theme }) => ($destaque ? theme.colors.amarelo : theme.colors.faixaCinza)};
+  border: 2px solid ${({ theme }) => theme.colors.amarelo};
   border-radius: ${({ theme }) => theme.radii.xl};
 `;
 
 export const Topo = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: ${({ theme }) => theme.space[2]}px;
-  min-height: 28px;
 `;
 
 export const Nome = styled.h3`
@@ -32,7 +32,7 @@ export const Nome = styled.h3`
 
 export const Selo = styled.span`
   padding: 4px 10px;
-  border-radius: ${({ theme }) => theme.radii.full};
+  border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.amarelo};
   color: ${({ theme }) => theme.colors.asfalto};
   font-family: ${({ theme }) => theme.fontFamilies.mono};
@@ -41,17 +41,23 @@ export const Selo = styled.span`
   letter-spacing: 0.1em;
   line-height: 16px;
   text-transform: uppercase;
-  white-space: nowrap;
 `;
 
 export const Preco = styled.p`
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: ${({ theme }) => theme.space[1]}px;
+  gap: ${({ theme }) => theme.space[1]}px ${({ theme }) => theme.space[2]}px;
+`;
+
+export const Riscado = styled.span`
+  color: ${({ theme }) => theme.colors.nevoa};
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
 `;
 
 export const Valor = styled.span`
-  font-size: 36px;
+  font-size: 44px;
   font-weight: ${({ theme }) => theme.fontWeights.extrabold};
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -63,26 +69,24 @@ export const PorMes = styled.span`
   font-size: 15px;
 `;
 
-export const Condicoes = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.space[1]}px;
+export const Regra = styled.p`
+  color: ${({ theme }) => theme.colors.nevoa};
   font-size: 15px;
   line-height: 1.4;
-`;
-
-export const Total = styled.p`
-  color: ${({ theme }) => theme.colors.nevoa};
   font-variant-numeric: tabular-nums;
 `;
 
-export const Economia = styled.p`
-  color: ${({ theme }) => theme.colors.ok};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  font-variant-numeric: tabular-nums;
+// Lido por leitor de tela e escondido da vista: dá sentido ao preço riscado.
+export const SoLeitor = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 `;
 
 export const Chamada = styled.div`
-  margin-top: auto;
   padding-top: ${({ theme }) => theme.space[4]}px;
   border-top: 1.5px dashed ${({ theme }) => theme.colors.faixaCinza};
 

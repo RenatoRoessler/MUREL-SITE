@@ -1,44 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { areasDoSistema, calcularCondicoes, planos } from "./Planos.data";
+import { fimDoLancamento, rotuloFimDoLancamento } from "./Lancamento";
+import { areasDoSistema, planoMensal } from "./Planos.data";
 
-describe("planos", () => {
-  it("lista os quatro planos em ordem de prazo, com os valores por mês", () => {
-    expect(planos.map(({ nome, meses, centavosPorMes }) => [nome, meses, centavosPorMes])).toEqual([
-      ["Mensal", 1, 14990],
-      ["Trimestral", 3, 13490],
-      ["Semestral", 6, 11990],
-      ["Anual", 12, 7990],
-    ]);
+describe("planoMensal", () => {
+  it("tem o preço de tabela, o de lançamento e os meses de lançamento", () => {
+    expect(planoMensal.centavosPorMes).toBe(9990);
+    expect(planoMensal.centavosLancamento).toBe(6990);
+    expect(planoMensal.mesesDeLancamento).toBe(12);
   });
 
-  it("usa os tipos de adesão do sistema (1 a 4) e deixa o Trial de fora", () => {
-    expect(planos.map((plano) => plano.tipo)).toEqual([1, 2, 3, 4]);
-  });
-
-  it("recomenda só o plano Anual", () => {
-    expect(planos.filter((plano) => plano.recomendado).map((plano) => plano.nome)).toEqual(["Anual"]);
+  it("usa o tipo de adesão Mensal (1)", () => {
+    expect(planoMensal.tipo).toBe(1);
   });
 });
 
-describe("calcularCondicoes", () => {
-  const [mensal, ...demais] = planos;
-
-  it("calcula o total do período em centavos", () => {
-    expect([mensal, ...demais].map((plano) => calcularCondicoes(plano, mensal).totalCentavos)).toEqual([
-      14990, 40470, 71940, 95880,
-    ]);
-  });
-
-  it("calcula a economia sobre o plano mensal em centavos", () => {
-    expect([mensal, ...demais].map((plano) => calcularCondicoes(plano, mensal).economiaCentavos)).toEqual([
-      0, 4500, 18000, 84000,
-    ]);
-  });
-
-  it("arredonda o percentual de economia para inteiro", () => {
-    expect([mensal, ...demais].map((plano) => calcularCondicoes(plano, mensal).economiaPercentual)).toEqual([
-      0, 10, 20, 47,
-    ]);
+describe("fim do lançamento", () => {
+  it("é 01/07/2027 00:00 em Brasília e o rótulo mostra 30/06/2027", () => {
+    expect(fimDoLancamento.toISOString()).toBe("2027-07-01T03:00:00.000Z");
+    expect(rotuloFimDoLancamento).toBe("30/06/2027");
   });
 });
 

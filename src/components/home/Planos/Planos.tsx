@@ -2,23 +2,19 @@ import { Button } from "@/components/ui/Button/Button";
 import { Section } from "@/components/ui/Section/Section";
 import { TesteGratis } from "../TesteGratis/TesteGratis";
 import { CartaoPlano } from "./CartaoPlano";
-import { areasDoSistema, calcularCondicoes, planos } from "./Planos.data";
+import { areasDoSistema, planoMensal } from "./Planos.data";
 import {
   Area,
   Areas,
   DescricaoArea,
   Duvida,
   Incluso,
-  ItemPlano,
-  ListaPlanos,
   NomeArea,
   NotaTeste,
   TextoDuvida,
   TextoIncluso,
   TituloIncluso,
 } from "./Planos.styles";
-
-const [planoMensal] = planos;
 
 function Marca() {
   return (
@@ -38,27 +34,18 @@ export function Planos() {
   return (
     <Section
       id="planos"
-      titulo="Escolha como quer pagar. O sistema é o mesmo."
-      lede="Todas as funcionalidades estão em todos os planos. O que muda é o tempo de compromisso e o valor por mês."
+      titulo="Um plano, tudo incluso, sem fidelidade."
+      lede="Sem módulo extra, sem limite de vagas e sem multa para cancelar."
     >
       <TesteGratis />
 
-      <ListaPlanos>
-        {planos.map((plano) => (
-          <ItemPlano key={plano.tipo}>
-            <CartaoPlano plano={plano} condicoes={calcularCondicoes(plano, planoMensal)} />
-          </ItemPlano>
-        ))}
-      </ListaPlanos>
-      <NotaTeste>Todos os planos começam com 30 dias grátis. Você só paga depois do teste.</NotaTeste>
+      <CartaoPlano plano={planoMensal} />
+      <NotaTeste>O plano começa com 30 dias grátis. Você só paga depois do teste.</NotaTeste>
 
       <Incluso>
         <div>
-          <TituloIncluso>Tudo isso em todos os planos</TituloIncluso>
-          <TextoIncluso>
-            Sem módulo extra e sem limite de funcionalidade por plano: quem assina o mensal usa o mesmo
-            sistema de quem assina o anual.
-          </TextoIncluso>
+          <TituloIncluso>Tudo isso incluso no plano</TituloIncluso>
+          <TextoIncluso>Nenhuma destas áreas é cobrada à parte.</TextoIncluso>
         </div>
         <Areas>
           {areasDoSistema.map((area) => (
@@ -75,8 +62,8 @@ export function Planos() {
 
       <Duvida>
         <TextoDuvida>
-          <strong>Em dúvida sobre qual plano escolher?</strong>
-          <span>Conte como é o seu pátio e a gente ajuda a escolher.</span>
+          <strong>Ficou com dúvida?</strong>
+          <span>Conte como é o seu pátio e a gente responde.</span>
         </TextoDuvida>
         <Button href="#contato" variante="ghost">
           Falar com a equipe

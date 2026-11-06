@@ -8,15 +8,13 @@ export const TipoPlanoAdesao = {
 
 export type TipoPlanoAdesao = (typeof TipoPlanoAdesao)[keyof typeof TipoPlanoAdesao];
 
-// Planos vendidos na seção: o Trial (0) não é um cartão de plano, é a chamada do teste grátis.
-export type TipoPlanoVendido = Exclude<TipoPlanoAdesao, typeof TipoPlanoAdesao.Trial>;
-
+// O sistema (GIPE) ainda aceita os tipos 2 a 4, mas o site vende só o Mensal.
 export type Plano = {
-  tipo: TipoPlanoVendido;
+  tipo: typeof TipoPlanoAdesao.Mensal;
   nome: string;
-  meses: 1 | 3 | 6 | 12;
   centavosPorMes: number;
-  recomendado?: boolean;
+  centavosLancamento: number;
+  mesesDeLancamento: number;
 };
 
 export type AreaDoSistema = {

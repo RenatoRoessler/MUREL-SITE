@@ -31,7 +31,7 @@ describe("Faq", () => {
   it("mostra as perguntas do teste depois de “Quanto custa?”", () => {
     const titulos = perguntas.map((item) => item.pergunta);
     expect(titulos.indexOf("Preciso cadastrar cartão de crédito para testar?")).toBe(
-      titulos.indexOf("Quanto custa?") + 1,
+      titulos.indexOf("Quanto custa?") + 2,
     );
   });
 
@@ -54,9 +54,28 @@ describe("Faq", () => {
     expect(detalhes).not.toHaveAttribute("open");
   });
 
-  it("a resposta sobre preço aponta para a seção Planos e mantém o contato para dúvidas", () => {
+  it("a resposta sobre preço cita o lançamento, o prazo e o preço de tabela, sem os planos que saíram", () => {
     const preco = perguntas.find((item) => item.pergunta === "Quanto custa?");
+    expect(preco?.resposta).toMatch(/R\$ 69,90/);
+    expect(preco?.resposta).toMatch(/R\$ 99,90/);
+    expect(preco?.resposta).toMatch(/30\/06\/2027/);
     expect(preco?.resposta).toMatch(/seção Planos/i);
     expect(preco?.resposta).toMatch(/formulário de contato/i);
+    expect(preco?.resposta).not.toMatch(/trimestral|semestral|anual/i);
+  });
+
+  it("explica o que acontece depois dos 12 meses, logo após “Quanto custa?”, sem prometer aviso", () => {
+    const titulos = perguntas.map((item) => item.pergunta);
+    const pergunta = "O que acontece depois dos 12 meses do preço de lançamento?";
+    expect(titulos.indexOf(pergunta)).toBe(titulos.indexOf("Quanto custa?") + 1);
+    const resposta = perguntas.find((item) => item.pergunta === pergunta)?.resposta ?? "";
+    expect(resposta).toMatch(/R\$ 99,90/);
+    expect(resposta).not.toMatch(/\d+ dias/);
+  });
+
+  it("o fim do teste fala em assinar, não em escolher plano", () => {
+    const fim = perguntas.find((item) => item.pergunta === "O que acontece depois dos 30 dias?");
+    expect(fim?.resposta).toMatch(/você assina/);
+    expect(fim?.resposta).not.toMatch(/escolhe um plano/);
   });
 });

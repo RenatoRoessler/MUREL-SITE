@@ -1,20 +1,25 @@
+"use client";
+
 import { Button } from "@/components/ui/Button/Button";
+import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { urlAdesaoComPlano } from "@/lib/config";
 import type { Plano } from "@/types/plano";
-import type { CondicoesPlano } from "./Planos.data";
 import {
   Cartao,
   Chamada,
-  Condicoes,
-  Economia,
   Nome,
   PorMes,
   Preco,
+  Regra,
+  Riscado,
   Selo,
+  SoLeitor,
   Topo,
-  Total,
   Valor,
 } from "./CartaoPlano.styles";
+import { rotuloFimDoLancamento } from "./Lancamento";
+import { garantiasPlano, rotuloGarantiasPlano } from "./Planos.data";
+import { useLancamentoVigente } from "./useLancamentoVigente";
 
 const formatadorReais = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
@@ -22,42 +27,42 @@ const formatarReais = (centavos: number) => formatadorReais.format(centavos / 10
 
 type CartaoPlanoProps = {
   plano: Plano;
-  condicoes: CondicoesPlano;
 };
 
-export function CartaoPlano({ plano, condicoes }: CartaoPlanoProps) {
-  const destaque = plano.recomendado === true;
-  const textoTotal =
-    plano.meses === 1
-      ? "Cobrado todo mês"
-      : `${formatarReais(condicoes.totalCentavos)} a cada ${plano.meses} meses`;
+export function CartaoPlano({ plano }: CartaoPlanoProps) {
+  const lancamento = useLancamentoVigente();
+  const tabela = formatarReais(plano.centavosPorMes);
+  const promocional = formatarReais(plano.centavosLancamento);
 
   return (
-    <Cartao $destaque={destaque}>
+    <Cartao>
       <Topo>
         <Nome>{plano.nome}</Nome>
-        {destaque ? <Selo>Mais econômico</Selo> : null}
+        {lancamento ? <Selo>Preço de lançamento · assine até {rotuloFimDoLancamento}</Selo> : null}
       </Topo>
       <Preco>
-        <Valor>{formatarReais(plano.centavosPorMes)}</Valor>
+        {lancamento ? (
+          <>
+            <Riscado>
+              <SoLeitor>de </SoLeitor>
+              <s>{tabela}</s>
+              <SoLeitor> por </SoLeitor>
+            </Riscado>
+            <Valor>{promocional}</Valor>
+          </>
+        ) : (
+          <Valor>{tabela}</Valor>
+        )}
         <PorMes>/mês</PorMes>
       </Preco>
-      <Condicoes>
-        <Total>{textoTotal}</Total>
-        {condicoes.economiaCentavos > 0 ? (
-          <Economia>
-            Economia de {formatarReais(condicoes.economiaCentavos)} ({condicoes.economiaPercentual}%)
-          </Economia>
-        ) : null}
-      </Condicoes>
+      {lancamento ? (
+        <Regra>
+          {promocional}/mês nos primeiros {plano.mesesDeLancamento} meses; depois, {tabela}/mês.
+        </Regra>
+      ) : null}
+      <Garantias itens={garantiasPlano} rotulo={rotuloGarantiasPlano} />
       <Chamada>
-        <Button
-          href={urlAdesaoComPlano(plano.tipo)}
-          variante={destaque ? "primary" : "ghost"}
-          aria-label={`Aderir ao plano ${plano.nome.toLowerCase()}`}
-        >
-          Aderir ao plano
-        </Button>
+        <Button href={urlAdesaoComPlano(plano.tipo)}>Assinar o plano mensal</Button>
       </Chamada>
     </Cartao>
   );

@@ -27,7 +27,12 @@ export const perguntas: Pergunta[] = [
   {
     pergunta: "Quanto custa?",
     resposta:
-      "Os valores estão na seção Planos: mensal, trimestral, semestral e anual, todos com as mesmas funcionalidades. Em dúvida sobre qual escolher, fale com a equipe pelo formulário de contato.",
+      "Um plano único, com todas as funcionalidades e sem fidelidade: R$ 69,90 por mês no lançamento, para quem assinar até 30/06/2027. Depois de 12 meses, o valor passa a ser R$ 99,90 por mês. Os detalhes estão na seção Planos; em dúvida, fale com a equipe pelo formulário de contato.",
+  },
+  {
+    pergunta: "O que acontece depois dos 12 meses do preço de lançamento?",
+    resposta:
+      "O valor passa a ser o de tabela, R$ 99,90 por mês. Se quiser entender como isso funciona no seu caso, fale com a equipe pelo formulário de contato.",
   },
   // Regras do teste grátis ainda sem confirmação do negócio: ver "Riscos" em docs/specs/teste-gratis/prd.md.
   {
@@ -43,7 +48,7 @@ export const perguntas: Pergunta[] = [
   {
     pergunta: "O que acontece depois dos 30 dias?",
     resposta:
-      "Nada é cobrado automaticamente. No fim do teste, você escolhe um plano para continuar usando. Se não escolher, o acesso é pausado e os seus dados ficam guardados por 30 dias, caso queira voltar.",
+      "Nada é cobrado automaticamente. No fim do teste, você assina para continuar usando. Se não escolher, o acesso é pausado e os seus dados ficam guardados por 30 dias, caso queira voltar.",
   },
   {
     pergunta: "O que eu cadastrar no teste continua valendo se eu assinar?",

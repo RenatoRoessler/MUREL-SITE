@@ -2,25 +2,6 @@
 
 import styled from "styled-components";
 
-export const ListaPlanos = styled.ul`
-  display: grid;
-  gap: ${({ theme }) => theme.space[3]}px;
-  list-style: none;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: ${({ theme }) => theme.space[4]}px;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-`;
-
-export const ItemPlano = styled.li`
-  display: grid;
-`;
-
 export const NotaTeste = styled.p`
   margin-top: ${({ theme }) => theme.space[4]}px;
   color: ${({ theme }) => theme.colors.nevoa};
@@ -28,7 +9,7 @@ export const NotaTeste = styled.p`
   text-align: center;
 `;
 
-export const Incluso =styled.div`
+export const Incluso = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.space[4]}px;
   margin-top: ${({ theme }) => theme.space[6]}px;

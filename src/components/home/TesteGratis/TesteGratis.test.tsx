@@ -21,6 +21,12 @@ describe("TesteGratis", () => {
     ]);
   });
 
+  it("diz que no fim do teste a pessoa decide se quer assinar, sem falar em escolher plano", () => {
+    const { container } = renderComTema(<TesteGratis />);
+    expect(container.textContent).toContain("você decide se quer assinar");
+    expect(container.textContent).not.toMatch(/escolhe o plano/);
+  });
+
   it("leva o botão à adesão com o tipo do teste", () => {
     renderComTema(<TesteGratis />);
     const link = screen.getByRole("link", { name: "Começar meu teste grátis" });
