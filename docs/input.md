@@ -1,12 +1,41 @@
-melhoria na sessoa de sistema
-qquero que sepera em sistema para cada tipo de usuáro
-para o Cliente, pegue imagem da pasta [text](../../../Users/renat/OneDrive/Documentos/gipe/cliente)
-para o Operador pegue imagens da pasta [text](../../../Users/renat/OneDrive/Documentos/gipe/operador)
-para o gestor quero que entre na versão web e tire print de cada menu do sistema com dados preenchidos na versão web
-para cada imagem gere uma exlicação da tela
-https://app.murel.com.br/
-(login e senha removidos; ficam fora do repositório)
+integração com o endpoint de planos
+agora os planos vem do back
 
-antes de implementar gere 3 modelos de layout para eu escolher
+/api/v1/Plano
 
-para as telas mobile quere que apareça dentro de um celular e para as web dentro de uma tela de notebook
+curl -X 'GET' \
+ 'http://localhost:5000/api/v1/Plano' \
+ -H 'accept: _/_'
+
+[
+{
+"planoAdesaoId": 1,
+"plano": "TESTE GRATUITO",
+"tipoPeriodoPlano": 0,
+"tipoPeriodoPlanoDescricao": "Trial",
+"validadeDuracaoMeses": 1,
+"valor": 0,
+"valorPromocional": null,
+"diferencaPercentual": null,
+"promocaoInicio": null,
+"promocaoFim": null,
+"emPromocao": false,
+"valorAtual": 0,
+"ordemExibicao": 1
+},
+{
+"planoAdesaoId": 2,
+"plano": "MENSAL",
+"tipoPeriodoPlano": 1,
+"tipoPeriodoPlanoDescricao": "Mensal",
+"validadeDuracaoMeses": 1,
+"valor": 99.9,
+"valorPromocional": 69.9,
+"diferencaPercentual": null,
+"promocaoInicio": "2026-11-01T00:00:00",
+"promocaoFim": "2027-06-30T00:00:00",
+"emPromocao": true,
+"valorAtual": 69.9,
+"ordemExibicao": 2
+}
+]
