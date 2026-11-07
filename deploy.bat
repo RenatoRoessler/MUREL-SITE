@@ -23,8 +23,10 @@ if errorlevel 1 goto erro
 
 rem O .env.production so e criado na primeira vez: no servidor ele guarda tambem SMTP_USER e SMTP_PASSWORD
 rem (formulario de contato), que o deploy nao envia nem apaga.
+rem MUREL_API_URL (API dos planos e precos, a mesma do GIPE) e acrescentada quando falta, mesmo num .env.production antigo;
+rem sem ela o site mostra a contingencia, sem preco. O build le o arquivo, por isso ela entra antes do npm run build.
 echo [3/4] Instalando dependencias e gerando o build de producao (leva alguns minutos)...
-ssh %SSH_OPCOES% %SERVIDOR% "set -e; mkdir -p %DESTINO% && tar -xzf /tmp/murel-site-deploy.tgz -C %DESTINO% && rm /tmp/murel-site-deploy.tgz && cd %DESTINO% && ([ -f .env.production ] || printf 'NEXT_PUBLIC_APP_URL=https://app.murel.com.br\nNEXT_PUBLIC_SITE_URL=https://murel.com.br\nCONTATO_DESTINO=contato@murel.com.br\n' > .env.production) && npm ci && npm run build"
+ssh %SSH_OPCOES% %SERVIDOR% "set -e; mkdir -p %DESTINO% && tar -xzf /tmp/murel-site-deploy.tgz -C %DESTINO% && rm /tmp/murel-site-deploy.tgz && cd %DESTINO% && ([ -f .env.production ] || printf 'NEXT_PUBLIC_APP_URL=https://app.murel.com.br\nNEXT_PUBLIC_SITE_URL=https://murel.com.br\nCONTATO_DESTINO=contato@murel.com.br\n' > .env.production) && (grep -q '^MUREL_API_URL=' .env.production || printf '\nMUREL_API_URL=https://api.murel.com.br/api/v1\n' >> .env.production) && npm ci && npm run build"
 if errorlevel 1 goto erro
 
 echo [4/4] Reiniciando o app...
