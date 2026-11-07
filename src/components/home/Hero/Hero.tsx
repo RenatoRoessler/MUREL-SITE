@@ -3,10 +3,16 @@ import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { Container } from "@/components/ui/Section/Section.styles";
 import { urlAdesaoTeste } from "@/lib/config";
+import { botaoTeste } from "@/lib/planos/textos";
+import type { TesteGratis } from "@/types/plano";
 import { garantiasTeste, rotuloGarantiasTeste } from "../TesteGratis/TesteGratis.data";
 import { Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
 
-export function Hero() {
+type HeroProps = {
+  teste: TesteGratis | null;
+};
+
+export function Hero({ teste }: HeroProps) {
   return (
     <Container>
       <Topo id="topo" aria-labelledby="hero-titulo">
@@ -20,7 +26,7 @@ export function Hero() {
             telefone do cliente. O ticket é 100% digital.
           </Subtitulo>
           <Chamadas>
-            <Button href={urlAdesaoTeste}>Testar grátis por 30 dias</Button>
+            <Button href={urlAdesaoTeste}>{botaoTeste(teste)}</Button>
             <Button href="#contato" variante="ghost">
               Falar com a equipe
             </Button>

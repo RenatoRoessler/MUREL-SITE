@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/Button/Button";
 import { Section } from "@/components/ui/Section/Section";
+import { notaTestePlano } from "@/lib/planos/textos";
+import type { OfertaPlanos } from "@/types/plano";
 import { TesteGratis } from "../TesteGratis/TesteGratis";
 import { CartaoPlano } from "./CartaoPlano";
-import { areasDoSistema, planoMensal } from "./Planos.data";
+import { areasDoSistema } from "./Planos.data";
+import { PlanoIndisponivel } from "./PlanoIndisponivel";
 import {
   Area,
   Areas,
@@ -30,17 +33,31 @@ function Marca() {
   );
 }
 
-export function Planos() {
+type PlanosProps = {
+  oferta: OfertaPlanos | null;
+};
+
+export function Planos({ oferta }: PlanosProps) {
+  const teste = oferta?.teste ?? null;
+
   return (
     <Section
       id="planos"
       titulo="Um plano, tudo incluso, sem fidelidade."
       lede="Sem módulo extra, sem limite de vagas e sem multa para cancelar."
     >
-      <TesteGratis />
+      <TesteGratis teste={teste} />
 
-      <CartaoPlano plano={planoMensal} />
-      <NotaTeste>O plano começa com 30 dias grátis. Você só paga depois do teste.</NotaTeste>
+      {oferta ? (
+        <>
+          {oferta.planos.map((plano) => (
+            <CartaoPlano key={plano.tipo} plano={plano} teste={teste} />
+          ))}
+          <NotaTeste>{notaTestePlano(teste)}</NotaTeste>
+        </>
+      ) : (
+        <PlanoIndisponivel />
+      )}
 
       <Incluso>
         <div>

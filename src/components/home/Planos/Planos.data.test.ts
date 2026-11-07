@@ -1,23 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { fimDoLancamento, rotuloFimDoLancamento } from "./Lancamento";
-import { areasDoSistema, planoMensal } from "./Planos.data";
+import { areasDoSistema, montarGarantiasPlano } from "./Planos.data";
 
-describe("planoMensal", () => {
-  it("tem o preço de tabela, o de lançamento e os meses de lançamento", () => {
-    expect(planoMensal.centavosPorMes).toBe(9990);
-    expect(planoMensal.centavosLancamento).toBe(6990);
-    expect(planoMensal.mesesDeLancamento).toBe(12);
+describe("montarGarantiasPlano", () => {
+  it("lista as três garantias, com a duração do teste do back-end", () => {
+    expect(montarGarantiasPlano({ duracaoMeses: 1 })).toEqual([
+      "Todas as funcionalidades",
+      "Sem fidelidade",
+      "1 mês grátis para testar",
+    ]);
   });
 
-  it("usa o tipo de adesão Mensal (1)", () => {
-    expect(planoMensal.tipo).toBe(1);
-  });
-});
-
-describe("fim do lançamento", () => {
-  it("é 01/07/2027 00:00 em Brasília e o rótulo mostra 30/06/2027", () => {
-    expect(fimDoLancamento.toISOString()).toBe("2027-07-01T03:00:00.000Z");
-    expect(rotuloFimDoLancamento).toBe("30/06/2027");
+  it("não cita número quando a duração é desconhecida", () => {
+    expect(montarGarantiasPlano(null).join(" ")).not.toMatch(/\d/);
   });
 });
 

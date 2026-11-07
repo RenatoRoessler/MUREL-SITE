@@ -3,10 +3,16 @@ import { Button } from "@/components/ui/Button/Button";
 import { IconeWhatsapp } from "@/components/ui/IconeWhatsapp/IconeWhatsapp";
 import { Section } from "@/components/ui/Section/Section";
 import { urlAdesaoTeste, urlWhatsapp } from "@/lib/config";
+import { botaoTeste, fraseTesteContato } from "@/lib/planos/textos";
+import type { TesteGratis } from "@/types/plano";
 import { Divisor, Teste, Whatsapp } from "./Contato.styles";
 import { ContatoForm } from "./ContatoForm";
 
-export function Contato() {
+type ContatoProps = {
+  teste: TesteGratis | null;
+};
+
+export function Contato({ teste }: ContatoProps) {
   return (
     <Section
       id="contato"
@@ -15,8 +21,8 @@ export function Contato() {
     >
       <Teste>
         <h3>Prefere testar antes?</h3>
-        <p>Use o sistema completo por 30 dias, sem cartão e sem compromisso.</p>
-        <Button href={urlAdesaoTeste}>Testar grátis por 30 dias</Button>
+        <p>{fraseTesteContato(teste)}</p>
+        <Button href={urlAdesaoTeste}>{botaoTeste(teste)}</Button>
       </Teste>
       <Whatsapp>
         <h3>Prefere falar agora?</h3>

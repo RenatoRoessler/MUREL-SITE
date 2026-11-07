@@ -1,15 +1,21 @@
 import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { urlAdesaoTeste } from "@/lib/config";
+import { tituloTeste } from "@/lib/planos/textos";
+import type { TesteGratis as TesteGratisDoPlano } from "@/types/plano";
 import { garantiasTeste, rotuloGarantiasTeste } from "./TesteGratis.data";
 import { Descricao, Faixa, Rotulo, Texto, Titulo } from "./TesteGratis.styles";
 
-export function TesteGratis() {
+type TesteGratisProps = {
+  teste: TesteGratisDoPlano | null;
+};
+
+export function TesteGratis({ teste }: TesteGratisProps) {
   return (
     <Faixa aria-labelledby="teste-gratis-titulo">
       <Texto>
         <Rotulo>Comece sem pagar nada</Rotulo>
-        <Titulo id="teste-gratis-titulo">Teste grátis por 30 dias</Titulo>
+        <Titulo id="teste-gratis-titulo">{tituloTeste(teste)}</Titulo>
         <Descricao>
           Use o sistema completo no seu pátio, sem cadastrar cartão. Nada é cobrado automaticamente: no
           fim do teste, você decide se quer assinar.

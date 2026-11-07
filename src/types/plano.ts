@@ -8,13 +8,23 @@ export const TipoPlanoAdesao = {
 
 export type TipoPlanoAdesao = (typeof TipoPlanoAdesao)[keyof typeof TipoPlanoAdesao];
 
-// O sistema (GIPE) ainda aceita os tipos 2 a 4, mas o site vende só o Mensal.
-export type Plano = {
-  tipo: typeof TipoPlanoAdesao.Mensal;
+export type TipoPlanoPago = Exclude<TipoPlanoAdesao, typeof TipoPlanoAdesao.Trial>;
+
+// Espelha o que o site usa de GET /api/v1/Plano. Valores em reais, como o back-end envia.
+export type PlanoPago = {
+  tipo: TipoPlanoPago;
   nome: string;
-  centavosPorMes: number;
-  centavosLancamento: number;
-  mesesDeLancamento: number;
+  valorTabela: number;
+  valorAtual: number;
+  // "fim" é a data "AAAA-MM-DD" de promocaoFim, ou null quando o back-end não informa.
+  promocao: { fim: string | null } | null;
+};
+
+export type TesteGratis = { duracaoMeses: number };
+
+export type OfertaPlanos = {
+  planos: PlanoPago[];
+  teste: TesteGratis | null;
 };
 
 export type AreaDoSistema = {

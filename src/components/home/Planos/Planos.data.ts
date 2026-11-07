@@ -1,15 +1,8 @@
-import { TipoPlanoAdesao, type AreaDoSistema, type Plano } from "@/types/plano";
+import { garantiaTestePlano } from "@/lib/planos/textos";
+import type { AreaDoSistema, TesteGratis } from "@/types/plano";
 
-// Valores combinados com o negócio (docs/specs/novo-preco-2026-11), em centavos.
-export const planoMensal: Plano = {
-  tipo: TipoPlanoAdesao.Mensal,
-  nome: "Mensal",
-  centavosPorMes: 9990,
-  centavosLancamento: 6990,
-  mesesDeLancamento: 12,
-};
-
-export const garantiasPlano = ["Todas as funcionalidades", "Sem fidelidade", "30 dias grátis para testar"] as const;
+export const montarGarantiasPlano = (teste: TesteGratis | null) =>
+  ["Todas as funcionalidades", "Sem fidelidade", garantiaTestePlano(teste)] as const;
 
 export const rotuloGarantiasPlano = "O que o plano inclui";
 

@@ -1,78 +1,82 @@
 import { screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { urlAdesaoComPlano } from "@/lib/config";
+import { planoMensalEmPromocao } from "@/test/oferta";
 import { renderComTema } from "@/test/render";
+import type { PlanoPago } from "@/types/plano";
 import { CartaoPlano } from "./CartaoPlano";
-import { fimDoLancamento } from "./Lancamento";
-import { planoMensal } from "./Planos.data";
 
-const antesDoPrazo = new Date(fimDoLancamento.getTime() - 24 * 60 * 60 * 1000);
-const depoisDoPrazo = new Date(fimDoLancamento.getTime() + 1);
+const teste = { duracaoMeses: 1 };
 
-function renderizarEm(data: Date) {
-  vi.useFakeTimers({ toFake: ["Date"] });
-  vi.setSystemTime(data);
-  return renderComTema(<CartaoPlano plano={planoMensal} />);
-}
+const semPromocao: PlanoPago = { ...planoMensalEmPromocao, valorAtual: 99.9, promocao: null };
+const promocaoSemData: PlanoPago = { ...planoMensalEmPromocao, promocao: { fim: null } };
 
 describe("CartaoPlano", () => {
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  describe("com o lançamento vigente", () => {
-    it("mostra o preço de tabela riscado e o de lançamento em destaque", () => {
-      renderizarEm(antesDoPrazo);
+  describe("em promoção, com data de fim", () => {
+    it("mostra o preço de tabela riscado e o atual em destaque", () => {
+      renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={teste} />);
       expect(screen.getByRole("heading", { level: 3, name: "Mensal" })).toBeInTheDocument();
       expect(screen.getByText("R$ 99,90").tagName).toBe("S");
       expect(screen.getByText("R$ 69,90")).toBeInTheDocument();
     });
 
     it("dá contexto ao preço riscado para leitor de tela", () => {
-      const { container } = renderizarEm(antesDoPrazo);
+      const { container } = renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={teste} />);
       const texto = (container.querySelector("p")?.textContent ?? "").replace(/\s/g, " ");
       expect(texto).toBe("de R$ 99,90 por R$ 69,90/mês");
     });
 
-    it("mostra o selo com o prazo e a regra dos 12 meses", () => {
-      renderizarEm(antesDoPrazo);
+    it("mostra o selo com a data e a regra até o fim da promoção", () => {
+      renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={teste} />);
       expect(screen.getByText("Preço de lançamento · assine até 30/06/2027")).toBeInTheDocument();
       expect(
-        screen.getByText(/R\$\s69,90\/mês nos primeiros 12 meses; depois, R\$\s99,90\/mês\./),
+        screen.getByText(/R\$\s69,90\/mês até 30\/06\/2027; depois, R\$\s99,90\/mês\./),
       ).toBeInTheDocument();
+      expect(screen.queryByText(/12 meses/)).not.toBeInTheDocument();
     });
   });
 
-  describe("com o lançamento encerrado", () => {
-    it("mostra só o preço de tabela, sem riscado, selo nem regra dos 12 meses", () => {
-      const { container } = renderizarEm(depoisDoPrazo);
+  describe("em promoção, sem data de fim", () => {
+    it("mantém o riscado e o preço atual, sem nenhuma data", () => {
+      const { container } = renderComTema(<CartaoPlano plano={promocaoSemData} teste={teste} />);
+      expect(screen.getByText("R$ 99,90").tagName).toBe("S");
+      expect(screen.getByText("R$ 69,90")).toBeInTheDocument();
+      expect(screen.getByText("Preço de lançamento")).toBeInTheDocument();
+      expect(container.textContent).not.toMatch(/\d{2}\/\d{2}\/\d{4}|assine até|; depois/);
+    });
+  });
+
+  describe("sem promoção", () => {
+    it("mostra só o preço atual, sem riscado, selo nem regra", () => {
+      const { container } = renderComTema(<CartaoPlano plano={semPromocao} teste={teste} />);
       expect(screen.getByText("R$ 99,90")).toBeInTheDocument();
       expect(container.querySelector("s")).toBeNull();
       expect(screen.queryByText(/Preço de lançamento/)).not.toBeInTheDocument();
-      expect(screen.queryByText(/primeiros 12 meses/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/; depois/)).not.toBeInTheDocument();
       expect(screen.queryByText("R$ 69,90")).not.toBeInTheDocument();
     });
   });
 
-  it("lista as garantias do plano", () => {
-    renderizarEm(antesDoPrazo);
+  it("lista as garantias do plano, com a duração do teste do back-end", () => {
+    renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={teste} />);
     expect(screen.getByText("Todas as funcionalidades")).toBeInTheDocument();
     expect(screen.getByText("Sem fidelidade")).toBeInTheDocument();
-    expect(screen.getByText("30 dias grátis para testar")).toBeInTheDocument();
+    expect(screen.getByText("1 mês grátis para testar")).toBeInTheDocument();
   });
 
-  it("leva à adesão com o tipo Mensal nos dois estados", () => {
-    const { unmount } = renderizarEm(antesDoPrazo);
-    expect(screen.getByRole("link", { name: "Assinar o plano mensal" })).toHaveAttribute(
-      "href",
-      urlAdesaoComPlano(1),
-    );
-    unmount();
+  it("não cita duração do teste quando o back-end não informa", () => {
+    const { container } = renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={null} />);
+    expect(container.textContent).not.toMatch(/mês grátis|30 dias/);
+  });
 
-    renderizarEm(depoisDoPrazo);
-    expect(screen.getByRole("link", { name: "Assinar o plano mensal" })).toHaveAttribute(
-      "href",
-      urlAdesaoComPlano(1),
-    );
+  it("leva à adesão com o tipo do plano, em qualquer estado", () => {
+    for (const plano of [planoMensalEmPromocao, promocaoSemData, semPromocao]) {
+      const { unmount } = renderComTema(<CartaoPlano plano={plano} teste={teste} />);
+      expect(screen.getByRole("link", { name: "Assinar o plano mensal" })).toHaveAttribute(
+        "href",
+        urlAdesaoComPlano(1),
+      );
+      unmount();
+    }
   });
 });

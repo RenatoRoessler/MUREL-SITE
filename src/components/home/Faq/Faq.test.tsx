@@ -1,13 +1,22 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { ofertaEmPromocao, ofertaPromocaoSemData, ofertaSemPromocao } from "@/test/oferta";
 import { renderComTema } from "@/test/render";
-import { perguntas } from "./Faq.data";
+import type { OfertaPlanos } from "@/types/plano";
 import { Faq } from "./Faq";
+import { montarPerguntas } from "./Faq.data";
+
+const texto = (valor: string) => valor.replace(/\s/g, " ");
+
+const resposta = (oferta: OfertaPlanos | null, pergunta: string) =>
+  texto(montarPerguntas(oferta).find((item) => item.pergunta === pergunta)?.resposta ?? "");
+
+const titulos = (oferta: OfertaPlanos | null) => montarPerguntas(oferta).map((item) => item.pergunta);
 
 describe("Faq", () => {
   it("mostra as perguntas combinadas no PRD", () => {
-    renderComTema(<Faq />);
+    renderComTema(<Faq oferta={ofertaEmPromocao} />);
     expect(screen.getByText(/tipo de negócio/i)).toBeInTheDocument();
     expect(screen.getByText(/comprar impressora/i)).toBeInTheDocument();
     expect(screen.getByText(/dados do cliente/i)).toBeInTheDocument();
@@ -16,11 +25,11 @@ describe("Faq", () => {
   });
 
   it("responde as dúvidas sobre o teste grátis", () => {
-    renderComTema(<Faq />);
+    renderComTema(<Faq oferta={ofertaEmPromocao} />);
     for (const pergunta of [
       "Preciso cadastrar cartão de crédito para testar?",
       "O teste tem todas as funcionalidades?",
-      "O que acontece depois dos 30 dias?",
+      "O que acontece quando o teste termina?",
       "O que eu cadastrar no teste continua valendo se eu assinar?",
       "Posso cancelar quando quiser?",
     ]) {
@@ -28,22 +37,9 @@ describe("Faq", () => {
     }
   });
 
-  it("mostra as perguntas do teste depois de “Quanto custa?”", () => {
-    const titulos = perguntas.map((item) => item.pergunta);
-    expect(titulos.indexOf("Preciso cadastrar cartão de crédito para testar?")).toBe(
-      titulos.indexOf("Quanto custa?") + 2,
-    );
-  });
-
-  it("“Como eu começo?” cita o teste e mantém o formulário de contato", () => {
-    const comeco = perguntas.find((item) => item.pergunta === "Como eu começo?");
-    expect(comeco?.resposta).toMatch(/teste grátis/i);
-    expect(comeco?.resposta).toMatch(/formulário de contato/i);
-  });
-
   it("abre e fecha a resposta por teclado", async () => {
     const usuario = userEvent.setup();
-    renderComTema(<Faq />);
+    renderComTema(<Faq oferta={ofertaEmPromocao} />);
     const resumo = screen.getByText("Preciso comprar impressora?");
     const detalhes = resumo.closest("details");
     expect(detalhes).not.toHaveAttribute("open");
@@ -54,28 +50,64 @@ describe("Faq", () => {
     expect(detalhes).not.toHaveAttribute("open");
   });
 
-  it("a resposta sobre preço cita o lançamento, o prazo e o preço de tabela, sem os planos que saíram", () => {
-    const preco = perguntas.find((item) => item.pergunta === "Quanto custa?");
-    expect(preco?.resposta).toMatch(/R\$ 69,90/);
-    expect(preco?.resposta).toMatch(/R\$ 99,90/);
-    expect(preco?.resposta).toMatch(/30\/06\/2027/);
-    expect(preco?.resposta).toMatch(/seção Planos/i);
-    expect(preco?.resposta).toMatch(/formulário de contato/i);
-    expect(preco?.resposta).not.toMatch(/trimestral|semestral|anual/i);
+  it("“Como eu começo?” cita o teste e mantém o formulário de contato", () => {
+    const comeco = resposta(ofertaEmPromocao, "Como eu começo?");
+    expect(comeco).toMatch(/teste grátis/i);
+    expect(comeco).toMatch(/formulário de contato/i);
   });
 
-  it("explica o que acontece depois dos 12 meses, logo após “Quanto custa?”, sem prometer aviso", () => {
-    const titulos = perguntas.map((item) => item.pergunta);
-    const pergunta = "O que acontece depois dos 12 meses do preço de lançamento?";
-    expect(titulos.indexOf(pergunta)).toBe(titulos.indexOf("Quanto custa?") + 1);
-    const resposta = perguntas.find((item) => item.pergunta === pergunta)?.resposta ?? "";
-    expect(resposta).toMatch(/R\$ 99,90/);
-    expect(resposta).not.toMatch(/\d+ dias/);
+  it("o fim do teste fala em assinar, não em escolher plano, e não depende da duração", () => {
+    const fim = resposta(ofertaEmPromocao, "O que acontece quando o teste termina?");
+    expect(fim).toMatch(/você assina/);
+    expect(fim).not.toMatch(/escolhe um plano/);
   });
 
-  it("o fim do teste fala em assinar, não em escolher plano", () => {
-    const fim = perguntas.find((item) => item.pergunta === "O que acontece depois dos 30 dias?");
-    expect(fim?.resposta).toMatch(/você assina/);
-    expect(fim?.resposta).not.toMatch(/escolhe um plano/);
+  describe("“Quanto custa?”", () => {
+    it("com promoção e data, cita o preço atual, a data de promocaoFim e o preço de tabela", () => {
+      const preco = resposta(ofertaEmPromocao, "Quanto custa?");
+      expect(preco).toMatch(/R\$ 69,90 por mês no lançamento, até 30\/06\/2027/);
+      expect(preco).toMatch(/R\$ 99,90 por mês/);
+      expect(preco).toMatch(/seção Planos/i);
+      expect(preco).toMatch(/formulário de contato/i);
+      expect(preco).not.toMatch(/trimestral|semestral|anual|12 meses/i);
+    });
+
+    it("com promoção sem data, não cita data nenhuma", () => {
+      const preco = resposta(ofertaPromocaoSemData, "Quanto custa?");
+      expect(preco).toMatch(/R\$ 69,90 por mês no lançamento/);
+      expect(preco).toMatch(/R\$ 99,90/);
+      expect(preco).not.toMatch(/\d{2}\/\d{2}\/\d{4}/);
+    });
+
+    it("sem promoção, cita só o preço atual", () => {
+      const preco = resposta(ofertaSemPromocao, "Quanto custa?");
+      expect(preco).toMatch(/R\$ 99,90 por mês\./);
+      expect(preco).not.toMatch(/lançamento/);
+    });
+
+    it("na contingência, não cita valor e manda falar com a equipe", () => {
+      const preco = resposta(null, "Quanto custa?");
+      expect(preco).not.toMatch(/R\$|\d/);
+      expect(preco).toMatch(/formulário de contato/i);
+    });
+  });
+
+  describe("fim do preço de lançamento", () => {
+    const pergunta = "O que acontece quando o preço de lançamento acaba?";
+
+    it("aparece logo após “Quanto custa?”, com a data e o preço de tabela", () => {
+      const lista = titulos(ofertaEmPromocao);
+      expect(lista.indexOf(pergunta)).toBe(lista.indexOf("Quanto custa?") + 1);
+      const texto = resposta(ofertaEmPromocao, pergunta);
+      expect(texto).toMatch(/30\/06\/2027/);
+      expect(texto).toMatch(/R\$ 99,90/);
+      expect(texto).not.toMatch(/\d+ dias|12 meses/);
+    });
+
+    it("fica de fora sem data de fim, sem promoção ou na contingência", () => {
+      expect(titulos(ofertaPromocaoSemData)).not.toContain(pergunta);
+      expect(titulos(ofertaSemPromocao)).not.toContain(pergunta);
+      expect(titulos(null)).not.toContain(pergunta);
+    });
   });
 });

@@ -1,9 +1,8 @@
-"use client";
-
 import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { urlAdesaoComPlano } from "@/lib/config";
-import type { Plano } from "@/types/plano";
+import { formatarDataIso, formatarReais } from "@/lib/planos/formatar";
+import type { PlanoPago, TesteGratis } from "@/types/plano";
 import {
   Cartao,
   Chamada,
@@ -17,52 +16,49 @@ import {
   Topo,
   Valor,
 } from "./CartaoPlano.styles";
-import { rotuloFimDoLancamento } from "./Lancamento";
-import { garantiasPlano, rotuloGarantiasPlano } from "./Planos.data";
-import { useLancamentoVigente } from "./useLancamentoVigente";
-
-const formatadorReais = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-
-const formatarReais = (centavos: number) => formatadorReais.format(centavos / 100);
+import { montarGarantiasPlano, rotuloGarantiasPlano } from "./Planos.data";
 
 type CartaoPlanoProps = {
-  plano: Plano;
+  plano: PlanoPago;
+  teste: TesteGratis | null;
 };
 
-export function CartaoPlano({ plano }: CartaoPlanoProps) {
-  const lancamento = useLancamentoVigente();
-  const tabela = formatarReais(plano.centavosPorMes);
-  const promocional = formatarReais(plano.centavosLancamento);
+export function CartaoPlano({ plano, teste }: CartaoPlanoProps) {
+  const tabela = formatarReais(plano.valorTabela);
+  const atual = formatarReais(plano.valorAtual);
+  const fim = plano.promocao?.fim ? formatarDataIso(plano.promocao.fim) : null;
 
   return (
     <Cartao>
       <Topo>
         <Nome>{plano.nome}</Nome>
-        {lancamento ? <Selo>Preço de lançamento · assine até {rotuloFimDoLancamento}</Selo> : null}
+        {plano.promocao ? (
+          <Selo>{fim ? `Preço de lançamento · assine até ${fim}` : "Preço de lançamento"}</Selo>
+        ) : null}
       </Topo>
       <Preco>
-        {lancamento ? (
+        {plano.promocao ? (
           <>
             <Riscado>
               <SoLeitor>de </SoLeitor>
               <s>{tabela}</s>
               <SoLeitor> por </SoLeitor>
             </Riscado>
-            <Valor>{promocional}</Valor>
+            <Valor>{atual}</Valor>
           </>
         ) : (
-          <Valor>{tabela}</Valor>
+          <Valor>{atual}</Valor>
         )}
         <PorMes>/mês</PorMes>
       </Preco>
-      {lancamento ? (
+      {plano.promocao && fim ? (
         <Regra>
-          {promocional}/mês nos primeiros {plano.mesesDeLancamento} meses; depois, {tabela}/mês.
+          {atual}/mês até {fim}; depois, {tabela}/mês.
         </Regra>
       ) : null}
-      <Garantias itens={garantiasPlano} rotulo={rotuloGarantiasPlano} />
+      <Garantias itens={montarGarantiasPlano(teste)} rotulo={rotuloGarantiasPlano} />
       <Chamada>
-        <Button href={urlAdesaoComPlano(plano.tipo)}>Assinar o plano mensal</Button>
+        <Button href={urlAdesaoComPlano(plano.tipo)}>Assinar o plano {plano.nome.toLowerCase()}</Button>
       </Chamada>
     </Cartao>
   );

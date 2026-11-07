@@ -9,6 +9,7 @@ import { BotaoWhatsapp } from "@/components/layout/BotaoWhatsapp/BotaoWhatsapp";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { emailContato, urlSite } from "@/lib/config";
+import { obterOferta } from "@/lib/planos/obterOferta";
 
 const dadosEstruturados = {
   "@context": "https://schema.org",
@@ -20,7 +21,9 @@ const dadosEstruturados = {
     "Sistema para estacionamentos, valets e lava-rápidos, com pátio, caixa, tabela de preços, mensalistas e empresas conveniadas. Ticket 100% digital, sem impressora e sem cadastro do cliente.",
 };
 
-export default function Home() {
+export default async function Home() {
+  const oferta = await obterOferta();
+
   return (
     <>
       <script
@@ -31,13 +34,13 @@ export default function Home() {
       />
       <Header />
       <main id="conteudo">
-        <Hero />
+        <Hero teste={oferta?.teste ?? null} />
         <Diferencial />
         <Sistema />
         <ComoFunciona />
-        <Planos />
-        <Faq />
-        <Contato />
+        <Planos oferta={oferta} />
+        <Faq oferta={oferta} />
+        <Contato teste={oferta?.teste ?? null} />
       </main>
       <Footer />
       <BotaoWhatsapp />
