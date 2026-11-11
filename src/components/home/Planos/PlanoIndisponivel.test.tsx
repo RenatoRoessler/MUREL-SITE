@@ -8,7 +8,7 @@ describe("PlanoIndisponivel", () => {
   it("avisa que os valores não carregaram e aponta o teste grátis e a equipe", () => {
     renderComTema(<PlanoIndisponivel />);
     expect(screen.getByText("Os valores não carregaram agora")).toBeInTheDocument();
-    expect(screen.getByText("Comece pelo teste grátis ou fale com a equipe.")).toBeInTheDocument();
+    expect(screen.getByText("Comece pelo mês grátis ou fale com a equipe.")).toBeInTheDocument();
   });
 
   it("não mostra preço nem duração do teste", () => {
@@ -18,7 +18,7 @@ describe("PlanoIndisponivel", () => {
 
   it("leva o teste à adesão Trial e o WhatsApp à conversa com a equipe", () => {
     renderComTema(<PlanoIndisponivel />);
-    expect(screen.getByRole("link", { name: "Começar meu teste grátis" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Começar meu mês grátis" })).toHaveAttribute(
       "href",
       urlAdesaoTeste,
     );

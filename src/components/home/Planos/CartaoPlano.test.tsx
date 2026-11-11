@@ -61,7 +61,7 @@ describe("CartaoPlano", () => {
     renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={teste} />);
     expect(screen.getByText("Todas as funcionalidades")).toBeInTheDocument();
     expect(screen.getByText("Sem fidelidade")).toBeInTheDocument();
-    expect(screen.getByText("1 mês grátis para testar")).toBeInTheDocument();
+    expect(screen.getByText("1º mês grátis")).toBeInTheDocument();
   });
 
   it("não cita duração do teste quando o back-end não informa", () => {

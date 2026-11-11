@@ -8,7 +8,7 @@ import { Contato } from "./Contato";
 describe("Contato", () => {
   it("oferece o teste grátis antes do WhatsApp", () => {
     renderComTema(<Contato teste={ofertaEmPromocao.teste} />);
-    const link = screen.getByRole("link", { name: "Testar grátis por 1 mês" });
+    const link = screen.getByRole("link", { name: "Começar grátis" });
     expect(link).toHaveAttribute("href", urlAdesaoTeste);
 
     const whatsapp = screen.getByRole("link", { name: "Chamar no WhatsApp" });
@@ -21,7 +21,7 @@ describe("Contato", () => {
     unmount();
 
     renderComTema(<Contato teste={null} />);
-    expect(screen.getByRole("link", { name: "Testar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
+    expect(screen.getByRole("link", { name: "Começar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
     expect(screen.queryByText(/\d+ m[êe]s/)).not.toBeInTheDocument();
   });
 });

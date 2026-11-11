@@ -21,7 +21,7 @@ describe("Hero", () => {
 
   it("destaca o teste grátis e mantém o contato com a equipe", () => {
     renderComTema(<Hero teste={ofertaEmPromocao.teste} />);
-    expect(screen.getByRole("link", { name: "Testar grátis por 1 mês" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Comece com 1 mês grátis" })).toHaveAttribute(
       "href",
       urlAdesaoTeste,
     );
@@ -30,13 +30,13 @@ describe("Hero", () => {
 
   it("não cita duração do teste quando o back-end não informa", () => {
     renderComTema(<Hero teste={null} />);
-    expect(screen.getByRole("link", { name: "Testar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
+    expect(screen.getByRole("link", { name: "Comece grátis" })).toHaveAttribute("href", urlAdesaoTeste);
     expect(screen.queryByText(/por \d+ m/)).not.toBeInTheDocument();
   });
 
   it("mostra as garantias do teste abaixo das chamadas", () => {
     renderComTema(<Hero teste={ofertaEmPromocao.teste} />);
-    const lista = screen.getByRole("list", { name: "Condições do teste grátis" });
+    const lista = screen.getByRole("list", { name: "Condições do mês grátis" });
     expect(within(lista).getAllByRole("listitem")).toHaveLength(3);
   });
 });

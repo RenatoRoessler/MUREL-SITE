@@ -34,7 +34,7 @@ export function Sistema({ dados = perfis }: SistemaProps) {
     >
       <SeletorPerfil perfis={paineis} inicial={perfilInicial} rotulo="Perfil de usuário" />
       <Chamada>
-        <Button href={urlAdesaoTeste}>Testar grátis</Button>
+        <Button href={urlAdesaoTeste}>Experimente no seu pátio</Button>
       </Chamada>
     </Section>
   );

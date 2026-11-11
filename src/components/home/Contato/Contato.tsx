@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { IconeWhatsapp } from "@/components/ui/IconeWhatsapp/IconeWhatsapp";
 import { Section } from "@/components/ui/Section/Section";
 import { urlAdesaoTeste, urlWhatsapp } from "@/lib/config";
-import { botaoTeste, fraseTesteContato } from "@/lib/planos/textos";
+import { fraseTesteContato } from "@/lib/planos/textos";
 import type { TesteGratis } from "@/types/plano";
 import { Divisor, Teste, Whatsapp } from "./Contato.styles";
 import { ContatoForm } from "./ContatoForm";
@@ -20,9 +20,9 @@ export function Contato({ teste }: ContatoProps) {
       lede="Conte sobre o seu pátio e tire dúvidas. A gente responde por e-mail ou telefone."
     >
       <Teste>
-        <h3>Prefere testar antes?</h3>
+        <h3>Prefere ver funcionando no seu pátio?</h3>
         <p>{fraseTesteContato(teste)}</p>
-        <Button href={urlAdesaoTeste}>{botaoTeste(teste)}</Button>
+        <Button href={urlAdesaoTeste}>Começar grátis</Button>
       </Teste>
       <Whatsapp>
         <h3>Prefere falar agora?</h3>

@@ -4,4 +4,4 @@ export const garantiasTeste = [
   "Sem compromisso",
 ] as const;
 
-export const rotuloGarantiasTeste = "Condições do teste grátis";
+export const rotuloGarantiasTeste = "Condições do mês grátis";

@@ -33,6 +33,6 @@ describe("Sistema", () => {
 
   it("chama para o teste grátis ao fim da seção", () => {
     renderComTema(<Sistema />);
-    expect(screen.getByRole("link", { name: "Testar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
+    expect(screen.getByRole("link", { name: "Experimente no seu pátio" })).toHaveAttribute("href", urlAdesaoTeste);
   });
 });

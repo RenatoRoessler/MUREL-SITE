@@ -10,9 +10,9 @@ export function PlanoIndisponivel() {
   return (
     <Cartao>
       <Nome>Os valores não carregaram agora</Nome>
-      <Regra>Comece pelo teste grátis ou fale com a equipe.</Regra>
+      <Regra>Comece pelo mês grátis ou fale com a equipe.</Regra>
       <Botoes>
-        <Button href={urlAdesaoTeste}>Começar meu teste grátis</Button>
+        <Button href={urlAdesaoTeste}>Começar meu mês grátis</Button>
         <Button href={urlWhatsapp} variante="whatsapp" target="_blank" rel="noopener noreferrer">
           <IconeWhatsapp />
           Chamar no WhatsApp

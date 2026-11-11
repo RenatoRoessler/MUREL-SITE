@@ -27,10 +27,10 @@ describe("Faq", () => {
   it("responde as dúvidas sobre o teste grátis", () => {
     renderComTema(<Faq oferta={ofertaEmPromocao} />);
     for (const pergunta of [
-      "Preciso cadastrar cartão de crédito para testar?",
-      "O teste tem todas as funcionalidades?",
-      "O que acontece quando o teste termina?",
-      "O que eu cadastrar no teste continua valendo se eu assinar?",
+      "Preciso de cartão de crédito para começar?",
+      "O mês grátis inclui todas as funcionalidades?",
+      "O que acontece depois do mês grátis?",
+      "Meus cadastros continuam quando eu assinar?",
       "Posso cancelar quando quiser?",
     ]) {
       expect(screen.getByText(pergunta, { selector: "summary" })).toBeInTheDocument();
@@ -52,12 +52,12 @@ describe("Faq", () => {
 
   it("“Como eu começo?” cita o teste e mantém o formulário de contato", () => {
     const comeco = resposta(ofertaEmPromocao, "Como eu começo?");
-    expect(comeco).toMatch(/teste grátis/i);
+    expect(comeco).toMatch(/mês grátis/i);
     expect(comeco).toMatch(/formulário de contato/i);
   });
 
   it("o fim do teste fala em assinar, não em escolher plano, e não depende da duração", () => {
-    const fim = resposta(ofertaEmPromocao, "O que acontece quando o teste termina?");
+    const fim = resposta(ofertaEmPromocao, "O que acontece depois do mês grátis?");
     expect(fim).toMatch(/você assina/);
     expect(fim).not.toMatch(/escolhe um plano/);
   });

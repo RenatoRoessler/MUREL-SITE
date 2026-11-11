@@ -56,7 +56,7 @@ export function Header() {
               </Button>
             </AcessoDesktop>
             <Button href={urlAdesaoTeste} tamanho="sm">
-              Testar grátis
+              Começar grátis
             </Button>
             <BotaoMenu
               type="button"

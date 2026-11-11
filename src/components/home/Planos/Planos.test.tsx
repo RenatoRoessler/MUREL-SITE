@@ -29,7 +29,7 @@ describe("Planos", () => {
 
   it("apresenta o teste grátis antes do plano, com o tipo Trial (0)", () => {
     renderComTema(<Planos oferta={ofertaEmPromocao} />);
-    const faixa = screen.getByRole("heading", { level: 3, name: "Teste grátis por 1 mês" });
+    const faixa = screen.getByRole("heading", { level: 3, name: "1 mês grátis, com o sistema completo" });
     const plano = screen.getByRole("link", { name: "Assinar o plano mensal" });
     expect(faixa.compareDocumentPosition(plano) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 
@@ -65,7 +65,7 @@ describe("Planos", () => {
 
     it("mantém a faixa do teste, sem duração, e o WhatsApp", () => {
       renderComTema(<Planos oferta={null} />);
-      expect(screen.getByRole("heading", { level: 3, name: "Teste grátis" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { level: 3, name: "Mês grátis, com o sistema completo" })).toBeInTheDocument();
       expect(screen.getByRole("link", { name: "Chamar no WhatsApp" })).toBeInTheDocument();
     });
   });

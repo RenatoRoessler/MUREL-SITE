@@ -16,9 +16,9 @@ describe("Header", () => {
     }
   });
 
-  it("leva ao teste grátis pelo botão 'Testar grátis'", () => {
+  it("leva ao teste grátis pelo botão 'Começar grátis'", () => {
     renderComTema(<Header />);
-    expect(screen.getByRole("link", { name: "Testar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
+    expect(screen.getByRole("link", { name: "Começar grátis" })).toHaveAttribute("href", urlAdesaoTeste);
   });
 
   it("mostra o acesso ao sistema também no menu aberto", async () => {

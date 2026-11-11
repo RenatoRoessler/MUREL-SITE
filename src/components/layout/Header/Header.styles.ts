@@ -91,7 +91,7 @@ export const Acoes = styled.div`
   gap: ${({ theme }) => theme.space[2]}px;
 `;
 
-// Abaixo de lg o acesso vai para o menu, para o "Testar grátis" caber no header.
+// Abaixo de lg o acesso vai para o menu, para o "Começar grátis" caber no header.
 export const AcessoDesktop = styled.span`
   display: none;
 

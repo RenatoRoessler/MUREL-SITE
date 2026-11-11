@@ -17,12 +17,12 @@ export function TesteGratis({ teste }: TesteGratisProps) {
         <Rotulo>Comece sem pagar nada</Rotulo>
         <Titulo id="teste-gratis-titulo">{tituloTeste(teste)}</Titulo>
         <Descricao>
-          Use o sistema completo no seu pátio, sem cadastrar cartão. Nada é cobrado automaticamente: no
-          fim do teste, você decide se quer assinar.
+          Use o sistema completo no seu pátio, sem cadastrar cartão. Nada é cobrado automaticamente:
+          depois de 30 dias, você decide se quer continuar.
         </Descricao>
         <Garantias itens={garantiasTeste} rotulo={rotuloGarantiasTeste} />
       </Texto>
-      <Button href={urlAdesaoTeste}>Começar meu teste grátis</Button>
+      <Button href={urlAdesaoTeste}>Começar meu mês grátis</Button>
     </Faixa>
   );
 }

@@ -63,34 +63,34 @@ export function montarPerguntas(oferta: OfertaPlanos | null): Pergunta[] {
     ...perguntaFimDoLancamento(plano),
     // Regras do teste grátis ainda sem confirmação do negócio: ver "Riscos" em docs/specs/teste-gratis/prd.md.
     {
-      pergunta: "Preciso cadastrar cartão de crédito para testar?",
+      pergunta: "Preciso de cartão de crédito para começar?",
       resposta:
-        "Não. O teste grátis não pede cartão nem nenhum dado de pagamento. Você só informa os dados da empresa para criar o acesso.",
+        "Não. O mês grátis não pede cartão nem nenhum dado de pagamento. Você só informa os dados da empresa para criar o acesso.",
     },
     {
-      pergunta: "O teste tem todas as funcionalidades?",
+      pergunta: "O mês grátis inclui todas as funcionalidades?",
       resposta:
-        "Sim. Durante o teste você usa o sistema completo: entrada e saída, pátio, quadro de chaves, caixa, mensalistas, convênios e tudo o mais.",
+        "Sim. Desde o primeiro dia você usa o sistema completo: entrada e saída, pátio, quadro de chaves, caixa, mensalistas, convênios e tudo o mais.",
     },
     {
-      pergunta: "O que acontece quando o teste termina?",
+      pergunta: "O que acontece depois do mês grátis?",
       resposta:
-        "Nada é cobrado automaticamente. No fim do teste, você assina para continuar usando. Se não assinar, o acesso é pausado e os seus dados ficam guardados por 30 dias, caso queira voltar.",
+        "Nada é cobrado automaticamente. Ao fim dos 30 dias, você assina para continuar usando. Se não assinar, o acesso é pausado e os seus dados ficam guardados por 30 dias, caso queira voltar.",
     },
     {
-      pergunta: "O que eu cadastrar no teste continua valendo se eu assinar?",
+      pergunta: "Meus cadastros continuam quando eu assinar?",
       resposta:
         "Sim. Tabelas de preço, mensalistas, convênios e histórico continuam lá. Você não precisa cadastrar nada de novo.",
     },
     {
       pergunta: "Posso cancelar quando quiser?",
       resposta:
-        "Pode. Durante o teste não existe compromisso, e depois dele você pode cancelar a qualquer momento.",
+        "Pode. No mês grátis não existe compromisso e, depois dele, você pode cancelar a qualquer momento.",
     },
     {
       pergunta: "Como eu começo?",
       resposta:
-        "Comece pelo teste grátis, direto no botão “Testar grátis”. Se preferir conversar antes, mande uma mensagem pelo formulário de contato: a equipe da Murel responde e explica o passo a passo para o seu pátio.",
+        "Comece pelo mês grátis, direto no botão “Começar grátis”. Se preferir conversar antes, mande uma mensagem pelo formulário de contato: a equipe da Murel responde e explica o passo a passo para o seu pátio.",
     },
   ];
 }

@@ -1,22 +1,24 @@
 import type { TesteGratis } from "@/types/plano";
 import { rotuloDuracaoMeses } from "./formatar";
 
-// Textos que citam a duração do teste. Sem a duração (API indisponível), saem sem número.
+// Textos que citam a duração do mês grátis. Sem a duração (API indisponível), saem sem número.
 export const tituloTeste = (teste: TesteGratis | null) =>
-  teste ? `Teste grátis por ${rotuloDuracaoMeses(teste.duracaoMeses)}` : "Teste grátis";
+  teste ? `${rotuloDuracaoMeses(teste.duracaoMeses)} grátis, com o sistema completo` : "Mês grátis, com o sistema completo";
 
 export const botaoTeste = (teste: TesteGratis | null) =>
-  teste ? `Testar grátis por ${rotuloDuracaoMeses(teste.duracaoMeses)}` : "Testar grátis";
+  teste ? `Comece com ${rotuloDuracaoMeses(teste.duracaoMeses)} grátis` : "Comece grátis";
 
-export const garantiaTestePlano = (teste: TesteGratis | null) =>
-  teste ? `${rotuloDuracaoMeses(teste.duracaoMeses)} grátis para testar` : "Teste grátis antes de assinar";
+export const garantiaTestePlano = (teste: TesteGratis | null) => {
+  if (!teste) return "Mês grátis antes de assinar";
+  return teste.duracaoMeses === 1 ? "1º mês grátis" : `${rotuloDuracaoMeses(teste.duracaoMeses)} grátis`;
+};
 
 export const notaTestePlano = (teste: TesteGratis | null) =>
   teste
-    ? `O plano começa com ${rotuloDuracaoMeses(teste.duracaoMeses)} grátis. Você só paga depois do teste.`
-    : "O plano começa com um teste grátis. Você só paga depois do teste.";
+    ? `O plano começa com ${rotuloDuracaoMeses(teste.duracaoMeses)} grátis. Você só paga a partir do ${teste.duracaoMeses + 1}º mês.`
+    : "O plano começa com um mês grátis. Você só paga depois dele.";
 
 export const fraseTesteContato = (teste: TesteGratis | null) =>
   teste
     ? `Use o sistema completo por ${rotuloDuracaoMeses(teste.duracaoMeses)}, sem cartão e sem compromisso.`
-    : "Use o sistema completo no teste grátis, sem cartão e sem compromisso.";
+    : "Use o sistema completo no mês grátis, sem cartão e sem compromisso.";

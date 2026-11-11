@@ -6,7 +6,7 @@ describe("montarGarantiasPlano", () => {
     expect(montarGarantiasPlano({ duracaoMeses: 1 })).toEqual([
       "Todas as funcionalidades",
       "Sem fidelidade",
-      "1 mês grátis para testar",
+      "1º mês grátis",
     ]);
   });
 
