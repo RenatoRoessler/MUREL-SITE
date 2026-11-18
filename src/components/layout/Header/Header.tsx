@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { LogoMurel } from "@/components/brand/LogoMurel";
+import { useRef, useState } from "react";
+import { LogoMurel, type LogoHandle } from "@/components/brand/LogoMurel";
 import { Button } from "@/components/ui/Button/Button";
 import { urlAcesso, urlAdesaoTeste } from "@/lib/config";
 import {
@@ -28,14 +28,27 @@ const secoes = [
 export function Header() {
   const [aberto, setAberto] = useState(false);
   const fechar = () => setAberto(false);
+  const logoRef = useRef<LogoHandle>(null);
 
   return (
     <>
       <PularConteudo href="#conteudo">Ir para o conteúdo</PularConteudo>
       <Barra>
         <Linha>
-          <Marca href="#topo" aria-label="Murel, início da página">
-            <LogoMurel />
+          {/* O logo anima ao abrir a página. Hover e foco param a animação; durante ela, o clique (ou toque) só
+              para, sem seguir o link. Parado, o link leva ao topo como sempre. */}
+          <Marca
+            href="#topo"
+            aria-label="Murel, início da página"
+            onPointerEnter={(evento) => {
+              if (evento.pointerType === "mouse") logoRef.current?.parar();
+            }}
+            onFocus={() => logoRef.current?.parar()}
+            onClick={(evento) => {
+              if (logoRef.current?.parar()) evento.preventDefault();
+            }}
+          >
+            <LogoMurel ref={logoRef} animado pararAoInteragir={false} />
           </Marca>
 
           <Navegacao id="menu-principal" aria-label="Seções da página" $aberto={aberto}>

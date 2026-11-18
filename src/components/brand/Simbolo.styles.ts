@@ -1,14 +1,24 @@
 "use client";
 
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+import { FADE_PARADA_MS } from "./useAnimacaoDoCarro";
 
-const estaciona = keyframes`
-  from { transform: translateY(46px); }
-  to { transform: none; }
-`;
+// Grupo do carro. Animado, quem move é o useAnimacaoDoCarro (atributo transform); aqui ficam só o fade da parada
+// e a impressão, que sai sempre em repouso: a propriedade transform vence o atributo e põe o carro na vaga.
+export const Carro = styled.g`
+  &[data-carro] {
+    transition: opacity ${FADE_PARADA_MS}ms ease;
+  }
 
-export const Carro = styled.g<{ $animado: boolean }>`
-  @media (prefers-reduced-motion: no-preference) {
-    animation: ${({ $animado }) => ($animado ? estaciona : "none")} 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both 0.2s;
+  @media print {
+    &[data-carro] {
+      visibility: visible !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    [data-luz] {
+      display: none;
+    }
   }
 `;
