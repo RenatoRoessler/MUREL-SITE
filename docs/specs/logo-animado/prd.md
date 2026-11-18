@@ -13,11 +13,11 @@ Donos e gestores de estacionamentos, valets e lava-rápidos que visitam o site n
 
 ## Requisitos funcionais
 - RF1: O ciclo é o mesmo do sistema: o carro espera na vaga, sai de ré até a rua, segue para a esquerda e some, o logo fica vazio por um instante, o carro volta pela direita, faz a curva e estaciona. Faróis com facho, luz de freio e luz de ré.
-- RF2: São **2 ciclos** e a animação termina com o carro estacionado na vaga do meio (o logo de sempre).
+- RF2: São **2 ciclos** e a animação termina com o carro estacionado na vaga do meio (o logo de sempre). Depois de **2 minutos** parada, ela roda os 2 ciclos de novo, enquanto a página estiver aberta (revisão de 2026-11-18).
 - RF3: **Cabeçalho**: o logo (símbolo + "murel") anima ao abrir a página. O carro passa por baixo da palavra.
 - RF4: **Topo da página (Hero)**: o símbolo grande anima com o novo ciclo, no lugar da animação atual. Como ele aparece sem a palavra, o carro entra e sai pelas bordas do próprio símbolo.
 - RF5: **Rodapé**: o logo continua estático (fica no fim da página; a animação acabaria antes de ser vista).
-- RF6: Passar o mouse, focar ou tocar no logo para a animação e põe o carro na vaga; ela não recomeça enquanto a página estiver aberta (WCAG 2.2.2).
+- RF6: Passar o mouse, focar ou tocar no logo para a animação e põe o carro na vaga; ela não recomeça enquanto a página estiver aberta, nem pelo reinício de 2 minutos (WCAG 2.2.2).
 - RF7: No cabeçalho, onde o logo é o link para o topo da página: durante a animação o primeiro toque ou clique só para; com a animação parada, o link funciona como hoje. Pelo teclado, o foco já para e Enter segue o link.
 - RF8: Com a preferência do aparelho por **menos movimento**, não há animação. Na impressão, o carro aparece estacionado.
 - RF9: O carro nunca passa por cima de texto ou botões vizinhos: a faixa da rua, logo abaixo das vagas, é reservada no layout.

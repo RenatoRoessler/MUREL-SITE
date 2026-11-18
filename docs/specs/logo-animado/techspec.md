@@ -7,7 +7,7 @@
 ## Design
 (O site ainda não tem a skill `claude-design`; as decisões visuais ficam aqui.)
 - **Estados**: repouso (carro na vaga, sem luzes), animando, parada (some em 150 ms, volta na vaga em 150 ms).
-- **Linha do tempo** (≈ 24 s): espera 1,2 s → [ré 1,5 · troca 0,35 · saída 1,7 · vazio 1,2 · entrada 3,4 · estacionado 6] → [ré · troca · saída · vazio · entrada] → assentamento 0,6 s → repouso. Igual ao sistema.
+- **Linha do tempo** (≈ 24 s): espera 1,2 s → [ré 1,5 · troca 0,35 · saída 1,7 · vazio 1,2 · entrada 3,4 · estacionado 6] → [ré · troca · saída · vazio · entrada] → assentamento 0,6 s → repouso. Igual ao sistema. Do repouso, recomeça depois de 2 minutos (`INTERVALO_REINICIO_MS`); parada pelo usuário, não recomeça.
 - **Geometria** (unidades do `viewBox` 240×160): vaga (120, 95); rua y 168, logo abaixo da linha de baixo das vagas; curva de raio 60 com centro (180, 108). O carro deitado vai até y 186, então a faixa da rua tem 28 unidades (17,5% da altura do símbolo), reservada no layout.
 - **Luzes**: facho (gradiente creme), freio (vermelho com halo), ré (branco com halo), cores da marca fixas, como o amarelo do carro já é no `Simbolo`. Abaixo de 40 px de altura, só facho e halos.
 - **Recorte**: o carro só aparece dentro da área do logo (símbolo + palavra no cabeçalho; só o símbolo no Hero), estendida para baixo até a rua.
