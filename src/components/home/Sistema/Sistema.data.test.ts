@@ -65,3 +65,20 @@ describe("perfis do sistema", () => {
     }
   });
 });
+
+describe("eventos vivos das telas", () => {
+  it("ficam dentro da imagem (x e y entre 0 e 100) e têm texto quando são avisos", () => {
+    const comVida = perfis.flatMap((perfil) => perfil.telas).filter((tela) => tela.vida);
+    expect(comVida.length).toBeGreaterThan(0);
+
+    for (const tela of comVida) {
+      for (const evento of tela.vida ?? []) {
+        expect(evento.x).toBeGreaterThanOrEqual(0);
+        expect(evento.x).toBeLessThanOrEqual(100);
+        expect(evento.y).toBeGreaterThanOrEqual(0);
+        expect(evento.y).toBeLessThanOrEqual(100);
+        if (evento.tipo === "aviso") expect(evento.texto.trim()).not.toBe("");
+      }
+    }
+  });
+});

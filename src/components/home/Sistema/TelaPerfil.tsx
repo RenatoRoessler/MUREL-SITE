@@ -13,7 +13,7 @@ export function TelaPerfil({ tela }: TelaPerfilProps) {
   return (
     <Slide $retrato={retrato}>
       <Imagem $retrato={retrato}>
-        <TelaSistema imagem={tela.imagem} alt={tela.alt} sizes={sizes} />
+        <TelaSistema imagem={tela.imagem} alt={tela.alt} sizes={sizes} vida={tela.vida} />
       </Imagem>
       <Texto>
         <Titulo>{tela.titulo}</Titulo>

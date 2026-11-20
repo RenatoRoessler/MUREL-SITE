@@ -71,3 +71,41 @@ describe("SeletorPerfil", () => {
     expect(screen.getByRole("tab", { name: "Gestor" })).toHaveAttribute("aria-selected", "true");
   });
 });
+
+describe("SeletorPerfil: transições", () => {
+  it("o painel novo entra vindo do lado para onde a troca andou", () => {
+    montar();
+    expect(screen.getByRole("tabpanel", { name: "Gestor" })).not.toHaveAttribute("data-entrando");
+
+    fireEvent.click(screen.getByRole("tab", { name: "Cliente" }));
+    expect(screen.getByRole("tabpanel", { name: "Cliente" })).toHaveAttribute("data-entrando", "anterior");
+
+    fireEvent.click(screen.getByRole("tab", { name: "Operador" }));
+    expect(screen.getByRole("tabpanel", { name: "Operador" })).toHaveAttribute("data-entrando", "proximo");
+    expect(document.querySelectorAll("[data-entrando]")).toHaveLength(1);
+  });
+
+  it("clicar na aba já ativa não dispara entrada", () => {
+    montar();
+    fireEvent.click(screen.getByRole("tab", { name: "Gestor" }));
+    expect(screen.getByRole("tabpanel", { name: "Gestor" })).not.toHaveAttribute("data-entrando");
+  });
+
+  it("só liga a pílula depois de medir a aba ativa", () => {
+    const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "offsetWidth");
+    const semMedida = montar();
+    expect(semMedida.container.querySelector('[role="tablist"]')).not.toHaveAttribute("data-pilula");
+    semMedida.unmount();
+
+    Object.defineProperty(HTMLElement.prototype, "offsetWidth", { configurable: true, value: 90 });
+    try {
+      const medido = montar();
+      const lista = medido.container.querySelector('[role="tablist"]') as HTMLElement;
+      expect(lista).toHaveAttribute("data-pilula", "pronta");
+      expect(lista.style.getPropertyValue("--pilula-w")).toBe("90px");
+    } finally {
+      if (original) Object.defineProperty(HTMLElement.prototype, "offsetWidth", original);
+      else delete (HTMLElement.prototype as { offsetWidth?: number }).offsetWidth;
+    }
+  });
+});

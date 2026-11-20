@@ -23,6 +23,7 @@ import patioOperador from "@/assets/telas/operador/patio.webp";
 import saidaRegistrada from "@/assets/telas/operador/saida-registrada.webp";
 import ticket from "@/assets/telas/operador/ticket.webp";
 import type { IdPerfil, PerfilSistema } from "@/types/sistema";
+import { vidaDaFila, vidaDoPatio, vidaDoTicket } from "./Sistema.vida";
 
 // Telas capturadas em 06/11/2026 (sistema v1.0.356), com dados fictícios.
 // Cada explicação descreve só o que aparece na tela; revisar a cada versão relevante do sistema.
@@ -52,6 +53,7 @@ export const perfis: PerfilSistema[] = [
       {
         id: "patio",
         imagem: patioOperador,
+        vida: vidaDoPatio,
         alt: "Tela do pátio no celular, com as vagas ocupadas, a quantidade por tipo, o campo de busca e a lista de veículos com a placa e o tempo de permanência.",
         titulo: "Pátio",
         explicacao:
@@ -76,6 +78,7 @@ export const perfis: PerfilSistema[] = [
       {
         id: "ticket",
         imagem: ticket,
+        vida: vidaDoTicket,
         alt: "Ticket de entrada de um veículo, com a placa, a permanência, o valor até agora separado em estadia e serviços, a tabela de preço, a lista de serviços adicionais e os botões Comprovante cliente e Registrar saída.",
         titulo: "Ticket do veículo",
         explicacao:
@@ -115,6 +118,7 @@ export const perfis: PerfilSistema[] = [
       {
         id: "fila-na-fila",
         imagem: filaNaFila,
+        vida: vidaDaFila,
         alt: "Fila de serviços no celular, com os contadores no topo, a busca por placa ou prisma, as abas Na fila, Em andamento e Pronto e os cartões dos veículos com o serviço pedido e o botão Iniciar.",
         titulo: "Fila de serviços",
         explicacao:
