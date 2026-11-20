@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8">
+<title>Refinamentos da home: 9 modelos</title>
+<style>
+:root{--asfalto:#0E1729;--asfalto2:#16223A;--asfalto3:#22304B;--faixa:#3A4C6B;--borda:#6B80A4;--amarelo:#FFC20E;--giz:#F4F1E8;--nevoa:#9AA3B5}
+*{box-sizing:border-box;margin:0}
+body{background:#050a14;color:var(--giz);font:16px/1.5 system-ui,Segoe UI,sans-serif;padding:24px}
+h1{font-size:24px}.sub{color:var(--nevoa);margin:4px 0 26px}
+h2.bloco{font-size:20px;border-bottom:2px solid var(--amarelo);padding-bottom:6px;margin:34px 0 16px}
+.modelo{margin-bottom:30px}.modelo h3{color:var(--amarelo);font-size:17px}.nota{color:var(--nevoa);font-size:14px;margin:2px 0 12px;max-width:95ch}
+.par{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.f{background:var(--asfalto);border:1px solid var(--faixa);border-radius:12px;padding:16px;overflow:hidden}
+.f small{display:block;color:var(--nevoa);font-size:12px;margin-bottom:10px}
+.m{width:360px}.d{width:1000px}
+h4{font-size:26px;line-height:1.1;letter-spacing:-.02em;font-weight:800}
+p.l{color:var(--nevoa);font-size:14px;margin:6px 0}
+.btn{display:inline-block;padding:10px 18px;border-radius:14px;font-weight:800;font-size:14px;background:var(--amarelo);color:var(--asfalto);border:1.5px solid var(--amarelo)}
+.btn.g{background:transparent;color:var(--giz);border-color:var(--borda)}.btn.w{background:#25D366;border-color:#25D366}
+.campo{border:1px solid var(--borda);background:var(--asfalto2);border-radius:10px;height:38px;margin:4px 0 10px}.campo.t{height:80px}
+.rot{font-size:13px;font-weight:600}.rot i{font-weight:400;color:var(--nevoa)}
+.num{font-size:96px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--amarelo)}.m .num{font-size:64px}
+.tres{display:grid;grid-template-columns:repeat(3,1fr)}.m .tres{grid-template-columns:1fr}
+.tres>div{padding:18px 20px}.tres.v>div+div{border-left:2px dashed var(--faixa)}.m .tres.v>div+div{border-left:0;border-top:2px dashed var(--faixa)}
+.centro{text-align:center}
+.cartao{background:var(--asfalto2);border:1px solid var(--faixa);border-radius:16px;padding:18px}
+.faixaFull{background:var(--asfalto2);margin:-16px;padding:22px 16px}
+.duas{display:grid;grid-template-columns:1.3fr 1fr;gap:24px}.m .duas{grid-template-columns:1fr}
+.duasE{display:grid;grid-template-columns:1fr 1.6fr;gap:24px}.m .duasE{grid-template-columns:1fr}
+.perg{border-bottom:1px solid var(--faixa);padding:11px 0;display:flex;justify-content:space-between;font-weight:600;font-size:14px}.perg b{color:var(--amarelo)}
+.grp{font:600 11px ui-monospace,monospace;letter-spacing:.1em;color:var(--amarelo);text-transform:uppercase;margin:12px 0 2px}
+.busca{border:1px solid var(--borda);border-radius:10px;height:38px;padding:7px 12px;color:var(--nevoa);font-size:13px;margin-bottom:8px}
+.abas{display:flex;gap:8px;margin-bottom:12px}.aba{padding:8px 14px;border:1px solid var(--borda);border-radius:99px;font-weight:700;font-size:13px}.aba.on{background:var(--amarelo);color:var(--asfalto);border-color:var(--amarelo)}
+.rod{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:22px;font-size:13px}.m .rod{grid-template-columns:1fr 1fr}
+.rod h5{font:600 11px ui-monospace,monospace;letter-spacing:.1em;color:var(--amarelo);text-transform:uppercase;margin-bottom:6px}.rod p,.rod a{display:block;color:var(--nevoa);margin:3px 0;text-decoration:underline}
+.logo{font-weight:800;font-size:22px;color:var(--giz);margin-bottom:6px}
+.linha{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:13px}.linha a{color:var(--nevoa);margin-right:12px;text-decoration:underline}
+</style>
+<body>
+<h1>Refinamentos da home: 9 modelos</h1>
+<p class="sub">Três modelos para cada bloco: Diferencial, Contato + FAQ e Rodapé. Textos atuais do site. Celular 360 px e desktop.</p>
+
+<h2 class="bloco">1. Diferencial (números em destaque)</h2>
+<div class="modelo"><h3>Diferencial A: faixa de números enormes, centralizados (recomendado)</h3><p class="nota">Fundo asfalto2 de ponta a ponta, título curto no alto e os três números muito grandes e centralizados, com o texto abaixo de cada um.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><div class="faixaFull centro"><h4>Sem papel e sem cadastro do cliente.</h4><div class="tres" style="margin-top:14px"><div><div class="num">0</div><b>impressoras</b><p class="l">Sem bobina, sem manutenção.</p></div><div><div class="num">0</div><b>dados pessoais pedidos</b><p class="l">Nada de e-mail ou telefone.</p></div><div><div class="num">2</div><b>formas de levar o ticket</b><p class="l">Foto da tela ou QR Code.</p></div></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="faixaFull centro"><h4 style="font-size:34px">Sem papel e sem cadastro do cliente.</h4><p class="l" style="max-width:60ch;margin:6px auto 0">Na entrada, o operador registra só os dados do carro: placa, modelo e cor.</p><div class="tres" style="margin-top:16px"><div><div class="num">0</div><b>impressoras</b><p class="l">Sem bobina, sem manutenção, sem ticket molhado ou perdido.</p></div><div><div class="num">0</div><b>dados pessoais pedidos</b><p class="l">Nada de e-mail ou telefone.</p></div><div><div class="num">2</div><b>formas de levar o ticket</b><p class="l">Foto da tela ou leitura do QR Code.</p></div></div></div></div>
+</div></div>
+<div class="modelo"><h3>Diferencial B: números grandes à esquerda, pista vertical entre colunas</h3><p class="nota">Mantém o fundo da página; os números ficam alinhados à esquerda, grandes, separados por faixas tracejadas verticais (o motivo da pista).</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4>Sem papel e sem cadastro do cliente.</h4><div class="tres v" style="margin-top:10px"><div><div class="num">0</div><b>impressoras</b><p class="l">Sem bobina, sem manutenção.</p></div><div><div class="num">0</div><b>dados pessoais pedidos</b><p class="l">Nada de e-mail ou telefone.</p></div><div><div class="num">2</div><b>formas de levar o ticket</b></div></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:34px">Sem papel e sem cadastro do cliente.</h4><p class="l">Na entrada, o operador registra só os dados do carro: placa, modelo e cor.</p><div class="tres v" style="margin-top:10px"><div><div class="num">0</div><b>impressoras</b><p class="l">Sem bobina, sem manutenção, sem ticket molhado ou perdido.</p></div><div><div class="num">0</div><b>dados pessoais pedidos</b><p class="l">Nada de e-mail ou telefone.</p></div><div><div class="num">2</div><b>formas de levar o ticket</b><p class="l">Foto da tela ou leitura do QR Code.</p></div></div></div>
+</div></div>
+<div class="modelo"><h3>Diferencial C: três cartões</h3><p class="nota">Três cartões com borda, número no topo. Mais "caixinhas", menos impacto que o A.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4>Sem papel e sem cadastro do cliente.</h4><div style="display:grid;gap:10px;margin-top:12px"><div class="cartao"><div class="num" style="font-size:56px">0</div><b>impressoras</b></div><div class="cartao"><div class="num" style="font-size:56px">0</div><b>dados pessoais pedidos</b></div><div class="cartao"><div class="num" style="font-size:56px">2</div><b>formas de levar o ticket</b></div></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:34px">Sem papel e sem cadastro do cliente.</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px"><div class="cartao"><div class="num" style="font-size:72px">0</div><b>impressoras</b><p class="l">Sem bobina, sem manutenção.</p></div><div class="cartao"><div class="num" style="font-size:72px">0</div><b>dados pessoais pedidos</b><p class="l">Nada de e-mail ou telefone.</p></div><div class="cartao"><div class="num" style="font-size:72px">2</div><b>formas de levar o ticket</b><p class="l">Foto da tela ou QR Code.</p></div></div></div>
+</div></div>
+
+<h2 class="bloco">2. Contato + FAQ</h2>
+<div class="modelo"><h3>Contato A: formulário à esquerda, cartão lateral à direita (recomendado)</h3><p class="nota">Celular: atalhos lado a lado no começo (WhatsApp e Escrever mensagem), formulário abaixo e mês grátis depois. Desktop: formulário e cartão lateral com WhatsApp, e-mail, "A gente responde por e-mail ou telefone" e o mês grátis.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4 style="font-size:22px">Fale com a equipe da Murel</h4><div style="display:flex;gap:8px;margin:12px 0"><span class="btn w" style="flex:1;text-align:center">WhatsApp</span><span class="btn g" style="flex:1;text-align:center">Escrever mensagem</span></div><div class="rot">Nome <i>obrigatório</i></div><div class="campo"></div><div class="rot">E-mail <i>(ou telefone)</i></div><div class="campo"></div><div class="rot">Mensagem <i>obrigatório</i></div><div class="campo t"></div><span class="btn">Enviar mensagem</span><div class="cartao" style="margin-top:14px"><b>Prefere ver funcionando?</b><p class="l">Use o sistema por 1 mês, sem cartão.</p><span class="btn">Começar grátis</span></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:32px">Fale com a equipe da Murel</h4><p class="l">Conte sobre o seu pátio e tire dúvidas. A gente responde por e-mail ou telefone.</p><div class="duas" style="margin-top:12px"><div><div class="rot">Nome <i>obrigatório</i></div><div class="campo"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div class="rot">E-mail <i>(ou telefone)</i></div><div class="campo"></div></div><div><div class="rot">Telefone <i>(ou e-mail)</i></div><div class="campo"></div></div></div><div class="rot">Mensagem <i>obrigatório</i></div><div class="campo t"></div><span class="btn">Enviar mensagem</span></div><div style="display:grid;gap:12px;align-content:start"><div class="cartao"><b>Prefere falar agora?</b><p class="l">Abra uma conversa no WhatsApp.</p><span class="btn w">Chamar no WhatsApp</span><p class="l">contato@murel.com.br<br>A gente responde por e-mail ou telefone.</p></div><div class="cartao"><b>Prefere ver funcionando?</b><p class="l">Use o sistema por 1 mês, sem cartão e sem compromisso.</p><span class="btn">Começar grátis</span></div></div></div></div>
+</div></div>
+<div class="modelo"><h3>Contato B: atalhos em linha no topo e formulário em largura total</h3><p class="nota">Os três caminhos (WhatsApp, mensagem, mês grátis) em uma linha no topo; o formulário ocupa a largura toda embaixo.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4 style="font-size:22px">Fale com a equipe da Murel</h4><div style="display:grid;gap:8px;margin:12px 0"><span class="btn w" style="text-align:center">Chamar no WhatsApp</span><span class="btn g" style="text-align:center">Escrever mensagem</span><span class="btn g" style="text-align:center">Ver funcionando (mês grátis)</span></div><div class="rot">Nome <i>obrigatório</i></div><div class="campo"></div><div class="rot">Mensagem <i>obrigatório</i></div><div class="campo t"></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:32px">Fale com a equipe da Murel</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0"><div class="cartao"><b>Falar agora</b><p class="l">WhatsApp</p><span class="btn w">Chamar</span></div><div class="cartao"><b>Escrever</b><p class="l">Resposta por e-mail ou telefone</p><span class="btn g">Ir ao formulário</span></div><div class="cartao"><b>Ver funcionando</b><p class="l">1 mês grátis</p><span class="btn">Começar grátis</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div class="rot">Nome <i>obrigatório</i></div><div class="campo"></div></div><div><div class="rot">E-mail <i>(ou telefone)</i></div><div class="campo"></div></div></div><div class="rot">Mensagem <i>obrigatório</i></div><div class="campo t"></div></div>
+</div></div>
+<div class="modelo"><h3>Contato C: abas "Falar agora" e "Escrever mensagem"</h3><p class="nota">Uma aba por caminho; só um painel aparece. Economiza altura, mas esconde o formulário até o toque na aba.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4 style="font-size:22px">Fale com a equipe da Murel</h4><div class="abas" style="margin-top:12px"><span class="aba on">Escrever mensagem</span><span class="aba">Falar agora</span></div><div class="rot">Nome <i>obrigatório</i></div><div class="campo"></div><div class="rot">Mensagem <i>obrigatório</i></div><div class="campo t"></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:32px">Fale com a equipe da Murel</h4><div class="abas" style="margin-top:12px"><span class="aba on">Escrever mensagem</span><span class="aba">Falar agora</span><span class="aba">Ver funcionando</span></div><div style="max-width:620px"><div class="rot">Nome <i>obrigatório</i></div><div class="campo"></div><div class="rot">E-mail <i>(ou telefone)</i></div><div class="campo"></div><div class="rot">Mensagem <i>obrigatório</i></div><div class="campo t"></div></div></div>
+</div></div>
+
+<div class="modelo"><h3>FAQ A: título e chamada à esquerda, lista à direita, em dois grupos (recomendado)</h3><p class="nota">Busca e "Abrir todas" no topo da lista; as 12 perguntas em dois grupos ("Preço e teste" e "Como funciona"). Fundo asfalto2.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><div class="faixaFull"><h4 style="font-size:22px">Perguntas frequentes</h4><div class="busca" style="margin-top:10px">Buscar nas perguntas</div><p class="l">Abrir todas</p><div class="grp">Preço e teste</div><div class="perg">Quanto custa?<b>+</b></div><div class="perg">O mês grátis inclui tudo?<b>+</b></div><div class="grp">Como funciona</div><div class="perg">Preciso comprar impressora?<b>+</b></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="faixaFull"><div class="duasE"><div><h4 style="font-size:32px">Perguntas frequentes</h4><p class="l">Não achou a sua? Fale com a equipe.</p><span class="btn g">Falar com a equipe</span></div><div><div class="busca">Buscar nas perguntas</div><p class="l" style="text-align:right">Abrir todas</p><div class="grp">Preço e teste</div><div class="perg">Quanto custa?<b>+</b></div><div class="perg">O que acontece quando o preço de lançamento acaba?<b>+</b></div><div class="perg">Preciso de cartão de crédito para começar?<b>+</b></div><div class="grp">Como funciona</div><div class="perg">Preciso comprar impressora?<b>+</b></div><div class="perg">Funciona no celular?<b>+</b></div></div></div></div></div>
+</div></div>
+<div class="modelo"><h3>FAQ B: lista em duas colunas</h3><p class="nota">Perguntas em duas colunas lado a lado, com a busca no topo. Mostra mais perguntas por tela, mas as respostas abertas empurram uma coluna só.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4 style="font-size:22px">Perguntas frequentes</h4><div class="busca" style="margin-top:10px">Buscar nas perguntas</div><div class="perg">Quanto custa?<b>+</b></div><div class="perg">Preciso comprar impressora?<b>+</b></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:32px">Perguntas frequentes</h4><div class="busca" style="margin-top:10px;max-width:420px">Buscar nas perguntas</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px"><div><div class="grp">Preço e teste</div><div class="perg">Quanto custa?<b>+</b></div><div class="perg">O mês grátis inclui tudo?<b>+</b></div><div class="perg">Posso cancelar quando quiser?<b>+</b></div></div><div><div class="grp">Como funciona</div><div class="perg">Preciso comprar impressora?<b>+</b></div><div class="perg">Funciona no celular?<b>+</b></div><div class="perg">Como eu começo?<b>+</b></div></div></div></div>
+</div></div>
+<div class="modelo"><h3>FAQ C: lista única com cabeçalhos de grupo</h3><p class="nota">A lista atual, uma coluna, com os dois grupos como cabeçalhos e a busca no topo. A menor mudança.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><h4 style="font-size:22px">Perguntas frequentes</h4><div class="busca" style="margin-top:10px">Buscar nas perguntas</div><div class="grp">Preço e teste</div><div class="perg">Quanto custa?<b>+</b></div><div class="grp">Como funciona</div><div class="perg">Preciso comprar impressora?<b>+</b></div></div>
+ <div class="f d"><small>Desktop</small><h4 style="font-size:32px">Perguntas frequentes</h4><div style="max-width:700px"><div class="busca" style="margin-top:10px">Buscar nas perguntas</div><div class="grp">Preço e teste</div><div class="perg">Quanto custa?<b>+</b></div><div class="perg">Preciso de cartão de crédito para começar?<b>+</b></div><div class="grp">Como funciona</div><div class="perg">Preciso comprar impressora?<b>+</b></div><div class="perg">Funciona no celular?<b>+</b></div></div></div>
+</div></div>
+
+<h2 class="bloco">3. Rodapé</h2>
+<div class="modelo"><h3>Rodapé A: quatro colunas (recomendado)</h3><p class="nota">Marca e contato, seções, legal (termos e privacidade, só se as páginas existirem) e ações.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><div class="rod"><div><div class="logo">murel</div><p>contato@murel.com.br</p><p>WhatsApp (19) 99221-5384</p></div><div><h5>Seções</h5><a>Sistema</a><a>Como funciona</a><a>Planos</a><a>Perguntas</a></div><div><h5>Legal</h5><a>Termos de uso</a><a>Privacidade</a></div><div><h5>Ações</h5><span class="btn" style="margin:4px 0">Ir para adesão</span><span class="btn g">Acessar</span></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="rod"><div><div class="logo">murel</div><p>contato@murel.com.br</p><p>WhatsApp (19) 99221-5384</p></div><div><h5>Seções</h5><a>Sistema</a><a>Como funciona</a><a>Planos</a><a>Perguntas</a><a>Contato</a></div><div><h5>Legal</h5><a>Termos de uso</a><a>Política de privacidade</a></div><div><h5>Ações</h5><span class="btn" style="margin:4px 0">Ir para adesão</span> <span class="btn g">Acessar o sistema</span></div></div></div>
+</div></div>
+<div class="modelo"><h3>Rodapé B: duas linhas</h3><p class="nota">Uma linha de links (seções e legal) e outra com marca, contato e botões.</p>
+<div class="par">
+ <div class="f m"><small>Celular</small><div class="linha"><div><a>Sistema</a><a>Planos</a><a>Perguntas</a></div></div><hr style="border:0;border-top:1px dashed var(--faixa);margin:12px 0"><div class="logo">murel</div><p class="l">contato@murel.com.br</p><span class="btn">Ir para adesão</span></div>
+ <div class="f d"><small>Desktop</small><div class="linha"><div><a>Sistema</a><a>Como funciona</a><a>Planos</a><a>Perguntas</a><a>Contato</a></div><div><a>Termos de uso</a><a>Privacidade</a></div></div><hr style="border:0;border-top:1px dashed var(--faixa);margin:14px 0"><div class="linha"><div><span class="logo">murel</span> <span class="l">contato@murel.com.br · (19) 99221-5384</span></div><div><span class="btn">Ir para adesão</span> <span class="btn g">Acessar o sistema</span></div></div></div>
+</div></div>
+<div class="modelo"><h3>Rodapé C: coluna única centralizada</h3><p class="nota">Estilo cartão de visita: marca, contato, links e botões empilhados e centralizados.</p>
+<div class="par">
+ <div class="f m centro"><small>Celular</small><div class="logo">murel</div><p class="l">contato@murel.com.br</p><div class="linha" style="justify-content:center"><a>Sistema</a><a>Planos</a><a>Perguntas</a></div><div style="margin-top:12px"><span class="btn">Ir para adesão</span></div></div>
+ <div class="f d centro"><small>Desktop</small><div class="logo">murel</div><p class="l">contato@murel.com.br · WhatsApp (19) 99221-5384</p><div class="linha" style="justify-content:center"><a>Sistema</a><a>Como funciona</a><a>Planos</a><a>Perguntas</a><a>Contato</a><a>Termos</a><a>Privacidade</a></div><div style="margin-top:12px"><span class="btn">Ir para adesão</span> <span class="btn g">Acessar o sistema</span></div></div>
+</div></div>
+</html>
