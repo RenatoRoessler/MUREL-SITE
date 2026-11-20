@@ -26,7 +26,7 @@ export function Hero({ teste }: HeroProps) {
             telefone do cliente. O ticket é 100% digital.
           </Subtitulo>
           <Chamadas>
-            <Button href={urlAdesaoTeste}>{botaoTeste(teste)}</Button>
+            <Button href={urlAdesaoTeste} brilho>{botaoTeste(teste)}</Button>
             <Button href="#contato" variante="ghost">
               Falar com a equipe
             </Button>

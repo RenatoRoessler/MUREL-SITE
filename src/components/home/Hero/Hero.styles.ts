@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { comMovimento, revelar } from "@/styles/movimento";
 
 export const Topo = styled.section`
   display: grid;
@@ -15,10 +16,39 @@ export const Topo = styled.section`
   }
 `;
 
+const desenhar = keyframes`
+  from {
+    background-size: 0% 0.09em;
+  }
+
+  to {
+    background-size: 100% 0.09em;
+  }
+`;
+
+// Entrada em sequência ao carregar, só com CSS: o conteúdo já é clicável desde o início. Título, subtítulo,
+// chamadas e garantias entram um depois do outro.
+const ATRASOS_DE_ENTRADA = [0, 120, 240, 360];
+
 export const Texto = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.space[3]}px;
   justify-items: start;
+
+  ${({ theme }) =>
+    comMovimento(css`
+      > * {
+        animation: ${revelar} ${theme.motion.duracao.lenta}ms ${theme.motion.curva.saida} backwards;
+      }
+
+      ${ATRASOS_DE_ENTRADA.map(
+        (atraso, indice) => css`
+          > *:nth-child(${indice + 1}) {
+            animation-delay: ${atraso}ms;
+          }
+        `,
+      )}
+    `)}
 `;
 
 export const Titulo = styled.h1`
@@ -31,6 +61,16 @@ export const Titulo = styled.h1`
     font-style: normal;
     color: ${({ theme }) => theme.colors.amarelo};
   }
+
+  /* Sublinhado que se desenha da esquerda para a direita (fundo, para acompanhar a quebra de linha). */
+  ${({ theme }) =>
+    comMovimento(css`
+      em {
+        background: linear-gradient(${theme.colors.amarelo}, ${theme.colors.amarelo}) no-repeat 0 100% / 100% 0.09em;
+        box-decoration-break: clone;
+        animation: ${desenhar} 600ms ${theme.motion.curva.saida} 500ms backwards;
+      }
+    `)}
 `;
 
 export const Subtitulo = styled.p`

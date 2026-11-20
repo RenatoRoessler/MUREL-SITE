@@ -60,4 +60,20 @@ describe("Button", () => {
     link.focus();
     expect(link).toHaveFocus();
   });
+
+  it("aceita brilho sem repassar a prop ao DOM e mantém link ou botão", () => {
+    renderComTema(
+      <>
+        <Button href="#a" brilho>
+          Com brilho
+        </Button>
+        <Button brilho>Botão com brilho</Button>
+      </>,
+    );
+
+    const link = screen.getByRole("link", { name: "Com brilho" });
+    expect(link).not.toHaveAttribute("brilho");
+    expect(link).not.toHaveAttribute("$brilho");
+    expect(screen.getByRole("button", { name: "Botão com brilho" })).not.toHaveAttribute("brilho");
+  });
 });

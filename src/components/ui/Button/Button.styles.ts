@@ -1,11 +1,12 @@
 "use client";
 
 import styled, { css } from "styled-components";
+import { brilho, comMovimento } from "@/styles/movimento";
 
 export type VarianteBotao = "primary" | "ghost" | "whatsapp";
 export type TamanhoBotao = "md" | "sm";
 
-type EstiloBotao = { $variante: VarianteBotao; $tamanho: TamanhoBotao };
+type EstiloBotao = { $variante: VarianteBotao; $tamanho: TamanhoBotao; $brilho?: boolean };
 
 export const estiloBotao = css<EstiloBotao>`
   display: inline-flex;
@@ -24,7 +25,38 @@ export const estiloBotao = css<EstiloBotao>`
   transition:
     background-color 0.15s ease-out,
     border-color 0.15s ease-out,
-    color 0.15s ease-out;
+    color 0.15s ease-out,
+    transform 0.15s ease-out;
+
+  ${comMovimento(css`
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+  `)}
+
+  /* Faixa de luz que cruza o botão 3 vezes (a cada 6s) e para: chama atenção sem ficar piscando. */
+  ${({ $brilho, theme }) =>
+    $brilho &&
+    comMovimento(css`
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        z-index: -1;
+        width: 40%;
+        background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+        animation: ${brilho} 6s ${theme.motion.curva.padrao} 1s 3 backwards;
+        pointer-events: none;
+      }
+    `)}
 
   ${({ $variante, theme }) => {
     switch ($variante) {
