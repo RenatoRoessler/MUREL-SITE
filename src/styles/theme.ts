@@ -15,6 +15,9 @@ export const theme = {
     // Cor de terceiro: mantém o reconhecimento do WhatsApp, fora da paleta Murel.
     whatsapp: "#25D366",
     whatsappEscuro: "#1EBE5B",
+    // Luz de farol: o amarelo da marca, translúcido, para os efeitos que seguem o cursor.
+    farol: "rgba(255, 194, 14, 0.18)",
+    farolBorda: "rgba(255, 194, 14, 0.55)",
   },
   fontFamilies: {
     sans: "var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif",
@@ -47,6 +50,16 @@ export const theme = {
     curva: {
       saida: "cubic-bezier(0.16, 1, 0.3, 1)",
       padrao: "ease-out",
+      // Passa um pouco do ponto e volta: retorno do botão magnético e check do envio.
+      elastica: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    },
+    // Ciclos longos, em ms: telas "vivas" e deslocamento do fundo.
+    ciclo: { lento: 6000, fundo: 40000 },
+    // Efeitos que seguem o cursor (só com mouse): raio da luz (px), botão magnético e tilt (graus).
+    cursor: {
+      raio: 240,
+      magnetismo: { alcance: 80, forca: 0.25, maximo: 6 },
+      inclinacao: 6,
     },
     intervalo: 70,
     distancia: 16,

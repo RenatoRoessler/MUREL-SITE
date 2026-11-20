@@ -51,6 +51,16 @@ describe("tema", () => {
     expect(theme.motion.distancia).toBe(16);
   });
 
+  it("expõe os tokens dos efeitos avançados", () => {
+    expect(theme.motion.curva.elastica).toBe("cubic-bezier(0.34, 1.56, 0.64, 1)");
+    expect(theme.motion.ciclo).toEqual({ lento: 6000, fundo: 40000 });
+    expect(theme.motion.cursor.raio).toBe(240);
+    expect(theme.motion.cursor.magnetismo).toEqual({ alcance: 80, forca: 0.25, maximo: 6 });
+    expect(theme.motion.cursor.inclinacao).toBe(6);
+    expect(theme.colors.farol).toBe("rgba(255, 194, 14, 0.18)");
+    expect(theme.colors.farolBorda).toBe("rgba(255, 194, 14, 0.55)");
+  });
+
   it("expõe a altura da barra fixa", () => {
     expect(theme.layout.barraFixa).toBe("72px");
   });
