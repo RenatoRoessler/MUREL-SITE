@@ -2,6 +2,7 @@ import { act, createEvent, fireEvent, screen, within } from "@testing-library/re
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { urlAcesso, urlAdesaoTeste } from "@/lib/config";
+import { simularIntersectionObserver } from "@/test/intersectionObserver";
 import { renderComTema } from "@/test/render";
 import { Header } from "./Header";
 
@@ -101,6 +102,94 @@ describe("Header: fundo ao rolar", () => {
 
     await usuario.click(screen.getByRole("button", { name: "Abrir menu" }));
     expect(getComputedStyle(menu).visibility).toBe("visible");
+  });
+});
+
+describe("Header: menu do celular", () => {
+  it("fecha com Esc e devolve o foco ao botão do menu", async () => {
+    const usuario = userEvent.setup();
+    renderComTema(<Header />);
+    await usuario.click(screen.getByRole("button", { name: "Abrir menu" }));
+    expect(screen.getByRole("button", { name: "Fechar menu" })).toHaveAttribute("aria-expanded", "true");
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    const botao = screen.getByRole("button", { name: "Abrir menu" });
+    expect(botao).toHaveAttribute("aria-expanded", "false");
+    expect(botao).toHaveFocus();
+  });
+
+  it("fecha com um toque fora do header, mas não com um toque dentro do menu", async () => {
+    const usuario = userEvent.setup();
+    renderComTema(<Header />);
+    await usuario.click(screen.getByRole("button", { name: "Abrir menu" }));
+
+    fireEvent.pointerDown(document.getElementById("menu-principal")!);
+    expect(screen.getByRole("button", { name: "Fechar menu" })).toBeInTheDocument();
+
+    fireEvent.pointerDown(document.body);
+    expect(screen.getByRole("button", { name: "Abrir menu" })).toBeInTheDocument();
+  });
+
+  it("esmaece a página com um fundo enquanto o menu está aberto", async () => {
+    const usuario = userEvent.setup();
+    const { container } = renderComTema(<Header />);
+    const fundo = container.querySelector("a + div[aria-hidden='true']")!;
+    expect(getComputedStyle(fundo).visibility).toBe("hidden");
+
+    await usuario.click(screen.getByRole("button", { name: "Abrir menu" }));
+    expect(getComputedStyle(fundo).visibility).toBe("visible");
+  });
+
+  it("Esc e toque fora não fazem nada com o menu fechado", () => {
+    renderComTema(<Header />);
+    fireEvent.keyDown(document, { key: "Escape" });
+    fireEvent.pointerDown(document.body);
+    expect(screen.getByRole("button", { name: "Abrir menu" })).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
+describe("Header: seção ativa", () => {
+  afterEach(() => {
+    document.body.innerHTML = "";
+    vi.unstubAllGlobals();
+  });
+
+  const link = (secao: string) => document.querySelector(`a[href="#${secao}"]`)!;
+
+  it("destaca o link da seção em que a pessoa está, com aria-current", () => {
+    const observadores = simularIntersectionObserver();
+    const planos = document.createElement("section");
+    planos.id = "planos";
+    const perguntas = document.createElement("section");
+    perguntas.id = "perguntas";
+    document.body.append(planos, perguntas);
+    renderComTema(<Header />);
+    expect(link("planos")).not.toHaveAttribute("aria-current");
+
+    act(() => observadores[0].emitir(planos, true));
+    expect(link("planos")).toHaveAttribute("aria-current", "location");
+    expect(link("perguntas")).not.toHaveAttribute("aria-current");
+
+    act(() => observadores[0].emitir(planos, false));
+    act(() => observadores[0].emitir(perguntas, true));
+    expect(link("planos")).not.toHaveAttribute("aria-current");
+    expect(link("perguntas")).toHaveAttribute("aria-current", "location");
+  });
+
+  it("move o traço do desktop para o link ativo, por variáveis CSS", () => {
+    const observadores = simularIntersectionObserver();
+    const planos = document.createElement("section");
+    planos.id = "planos";
+    document.body.append(planos);
+    renderComTema(<Header />);
+    const menu = document.getElementById("menu-principal")!;
+    expect(menu.style.getPropertyValue("--traco-l")).toBe("0px");
+
+    Object.defineProperty(link("planos"), "offsetLeft", { value: 120, configurable: true });
+    Object.defineProperty(link("planos"), "offsetWidth", { value: 64, configurable: true });
+    act(() => observadores[0].emitir(planos, true));
+    expect(menu.style.getPropertyValue("--traco-x")).toBe("120px");
+    expect(menu.style.getPropertyValue("--traco-l")).toBe("64px");
   });
 });
 

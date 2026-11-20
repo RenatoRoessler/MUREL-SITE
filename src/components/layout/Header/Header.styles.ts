@@ -41,6 +41,28 @@ export const Barra = styled.header<{ $rolado: boolean }>`
     `)}
 `;
 
+// Esmaece a página enquanto o menu do celular está aberto (a página já não é o foco). Só abaixo de `lg`.
+export const Fundo = styled.div<{ $visivel: boolean }>`
+  position: fixed;
+  inset: ${({ theme }) => theme.layout.headerHeight} 0 0 0;
+  z-index: 9;
+  background: color-mix(in srgb, ${({ theme }) => theme.colors.asfalto} 70%, transparent);
+  opacity: ${({ $visivel }) => ($visivel ? 1 : 0)};
+  visibility: ${({ $visivel }) => ($visivel ? "visible" : "hidden")};
+  pointer-events: ${({ $visivel }) => ($visivel ? "auto" : "none")};
+
+  ${({ theme, $visivel }) =>
+    comMovimento(css`
+      transition:
+        opacity ${theme.motion.duracao.media}ms ${theme.motion.curva.padrao},
+        visibility 0s linear ${$visivel ? 0 : theme.motion.duracao.media}ms;
+    `)}
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: none;
+  }
+`;
+
 export const Linha = styled.div`
   display: flex;
   align-items: center;
@@ -102,7 +124,7 @@ export const Navegacao = styled.nav<{ $aberto: boolean }>`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: flex;
-    position: static;
+    position: relative;
     gap: ${({ theme }) => theme.space[4]}px;
     padding: 0;
     background: none;
@@ -129,6 +151,36 @@ export const LinkSecao = styled.a`
 
   &:hover {
     color: ${({ theme }) => theme.colors.giz};
+  }
+
+  /* Seção em que a pessoa está. */
+  &[aria-current="location"] {
+    color: ${({ theme }) => theme.colors.amarelo};
+  }
+`;
+
+// Traço sob o link da seção ativa, só no desktop. A posição e a largura vêm das variáveis --traco-x e --traco-l,
+// que o Header atualiza; deslizar entre os links só acontece quando o movimento é permitido.
+export const Traco = styled.span`
+  display: none;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: block;
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    width: var(--traco-l, 0px);
+    height: 2px;
+    border-radius: ${({ theme }) => theme.radii.full};
+    background: ${({ theme }) => theme.colors.amarelo};
+    transform: translateX(var(--traco-x, 0px));
+
+    ${({ theme }) =>
+      comMovimento(css`
+        transition:
+          transform ${theme.motion.duracao.rapida + 50}ms ${theme.motion.curva.saida},
+          width ${theme.motion.duracao.rapida + 50}ms ${theme.motion.curva.saida};
+      `)}
   }
 `;
 
