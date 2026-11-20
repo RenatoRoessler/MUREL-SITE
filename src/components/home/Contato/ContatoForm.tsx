@@ -8,6 +8,7 @@ import {
   Armadilha,
   AreaTexto,
   Aviso,
+  AvisoDoPar,
   Campo,
   Confirmacao,
   Entrada,
@@ -74,12 +75,13 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
     );
   }
 
-  const propsCampo = (campo: keyof CamposContato) => ({
+  // `ligadoAoAviso`: e-mail e telefone são "um dos dois"; o aviso fica ligado aos dois campos.
+  const propsCampo = (campo: keyof CamposContato, ligadoAoAviso = false) => ({
     id: `contato-${campo}`,
     name: campo,
     defaultValue: valores[campo],
     "aria-invalid": erros[campo] ? true : undefined,
-    "aria-describedby": erros[campo] ? `contato-${campo}-erro` : undefined,
+    "aria-describedby": [erros[campo] ? `contato-${campo}-erro` : null, ligadoAoAviso ? "contato-aviso" : null].filter(Boolean).join(" ") || undefined,
     $invalido: Boolean(erros[campo]),
   });
 
@@ -117,7 +119,9 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
 
       <Grade>
         <Campo>
-          <Rotulo htmlFor="contato-nome">Nome</Rotulo>
+          <Rotulo htmlFor="contato-nome">
+            Nome <Opcional>(obrigatório)</Opcional>
+          </Rotulo>
           <Entrada {...propsCampo("nome")} type="text" autoComplete="name" required />
           {erroDe("nome")}
         </Campo>
@@ -141,22 +145,30 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
           </Selecao>
           {erroDe("tipo")}
         </Campo>
+      </Grade>
+
+      <Grade>
         <Campo>
-          <Rotulo htmlFor="contato-email">E-mail</Rotulo>
-          <Entrada {...propsCampo("email")} type="email" autoComplete="email" />
+          <Rotulo htmlFor="contato-email">
+            E-mail <Opcional>(ou telefone)</Opcional>
+          </Rotulo>
+          <Entrada {...propsCampo("email", true)} type="email" autoComplete="email" />
           {erroDe("email")}
         </Campo>
         <Campo>
-          <Rotulo htmlFor="contato-telefone">Telefone com DDD</Rotulo>
-          <Entrada {...propsCampo("telefone")} type="tel" autoComplete="tel" />
+          <Rotulo htmlFor="contato-telefone">
+            Telefone com DDD <Opcional>(ou e-mail)</Opcional>
+          </Rotulo>
+          <Entrada {...propsCampo("telefone", true)} type="tel" autoComplete="tel" />
           {erroDe("telefone")}
         </Campo>
+        <AvisoDoPar id="contato-aviso">Informe pelo menos um: e-mail ou telefone, para a gente poder responder.</AvisoDoPar>
       </Grade>
 
-      <Aviso>Informe pelo menos um: e-mail ou telefone, para a gente poder responder.</Aviso>
-
       <Campo>
-        <Rotulo htmlFor="contato-mensagem">Mensagem</Rotulo>
+        <Rotulo htmlFor="contato-mensagem">
+          Mensagem <Opcional>(obrigatório)</Opcional>
+        </Rotulo>
         <AreaTexto {...propsCampo("mensagem")} rows={5} required />
         {erroDe("mensagem")}
       </Campo>

@@ -7,7 +7,6 @@ export const Whatsapp = styled.div`
   justify-items: start;
   gap: ${({ theme }) => theme.space[2]}px;
   max-width: 720px;
-  margin-bottom: ${({ theme }) => theme.space[4]}px;
 
   h3 {
     font-size: 20px;
@@ -16,19 +15,12 @@ export const Whatsapp = styled.div`
   p {
     color: ${({ theme }) => theme.colors.nevoa};
   }
-`;
 
-export const Teste = styled(Whatsapp)`
-  padding-bottom: ${({ theme }) => theme.space[4]}px;
-  border-bottom: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
-`;
-
-export const Divisor =styled.p`
-  max-width: 720px;
-  margin-bottom: ${({ theme }) => theme.space[4]}px;
-  padding-top: ${({ theme }) => theme.space[4]}px;
-  border-top: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
-  color: ${({ theme }) => theme.colors.nevoa};
+  a {
+    color: ${({ theme }) => theme.colors.giz};
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 `;
 
 export const Formulario = styled.form`
@@ -131,6 +123,13 @@ export const Aviso = styled.p`
   max-width: 62ch;
   font-size: 14px;
   color: ${({ theme }) => theme.colors.nevoa};
+`;
+
+/* O aviso de "um dos dois" ocupa a largura toda da grade de e-mail e telefone, logo abaixo dos dois campos. */
+export const AvisoDoPar = styled(Aviso)`
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-column: 1 / -1;
+  }
 `;
 
 export const Armadilha = styled.div`
