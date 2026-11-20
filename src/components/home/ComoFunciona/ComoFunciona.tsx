@@ -1,12 +1,17 @@
 import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { Section } from "@/components/ui/Section/Section";
 import {
+  Bifurcacao,
+  Conteudo,
   Descricao,
+  Escolha,
+  Etapa,
   Marcador,
+  Opcoes,
   Passo,
-  Passos,
   Reforco,
   TituloPasso,
+  Trilho,
 } from "./ComoFunciona.styles";
 
 export const passos = [
@@ -37,6 +42,27 @@ export const passos = [
   },
 ];
 
+type DadosDoPasso = (typeof passos)[number];
+
+function CartaoDoPasso({ passo }: { passo: DadosDoPasso }) {
+  return (
+    <Passo>
+      <Marcador>Passo {passo.marcador}</Marcador>
+      <TituloPasso>{passo.titulo}</TituloPasso>
+      <Descricao>{passo.descricao}</Descricao>
+    </Passo>
+  );
+}
+
+// Os passos com o mesmo número (2a e 2b) são alternativas: formam uma só etapa, com duas opções.
+const etapas = passos.reduce<DadosDoPasso[][]>((grupos, passo) => {
+  const numero = Number.parseInt(passo.marcador, 10);
+  const anterior = grupos.at(-1);
+  if (anterior && Number.parseInt(anterior[0].marcador, 10) === numero) anterior.push(passo);
+  else grupos.push([passo]);
+  return grupos;
+}, []);
+
 export function ComoFunciona() {
   return (
     <Section
@@ -45,13 +71,26 @@ export function ComoFunciona() {
       titulo="Do carro que entra ao carro que sai"
       lede="O ticket é 100% digital. O cliente leva de duas formas, a que for mais fácil para ele."
     >
-      <Revelar as={Passos} modo="filhos">
-        {passos.map((passo) => (
-          <Passo key={passo.marcador}>
-            <Marcador>Passo {passo.marcador}</Marcador>
-            <TituloPasso>{passo.titulo}</TituloPasso>
-            <Descricao>{passo.descricao}</Descricao>
-          </Passo>
+      <Revelar as={Trilho} modo="filhos">
+        {etapas.map((grupo) => (
+          <Etapa key={grupo[0].marcador}>
+            <Conteudo>
+              {grupo.length === 1 ? (
+                <CartaoDoPasso passo={grupo[0]} />
+              ) : (
+                <Bifurcacao>
+                  <Escolha>Passo {Number.parseInt(grupo[0].marcador, 10)} · escolha uma</Escolha>
+                  <Opcoes>
+                    {grupo.map((passo) => (
+                      <li key={passo.marcador}>
+                        <CartaoDoPasso passo={passo} />
+                      </li>
+                    ))}
+                  </Opcoes>
+                </Bifurcacao>
+              )}
+            </Conteudo>
+          </Etapa>
         ))}
       </Revelar>
       <Revelar as={Reforco}>Sem impressora. Sem e-mail e sem telefone do cliente.</Revelar>
