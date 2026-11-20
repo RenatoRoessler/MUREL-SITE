@@ -94,3 +94,32 @@ export function montarPerguntas(oferta: OfertaPlanos | null): Pergunta[] {
     },
   ];
 }
+
+export type GrupoDoFaq = {
+  titulo: "Preço e teste" | "Como funciona";
+  perguntas: Pergunta[];
+};
+
+// Cada pergunta pertence a um grupo; o que não está aqui fica em "Como funciona". A ordem de dentro do grupo
+// é a mesma da lista original.
+const perguntasDePreco = new Set([
+  "Quanto custa?",
+  "O que acontece quando o preço de lançamento acaba?",
+  "Preciso de cartão de crédito para começar?",
+  "O mês grátis inclui todas as funcionalidades?",
+  "O que acontece depois do mês grátis?",
+  "Meus cadastros continuam quando eu assinar?",
+  "Posso cancelar quando quiser?",
+]);
+
+export function agruparPerguntas(perguntas: Pergunta[]): GrupoDoFaq[] {
+  return [
+    { titulo: "Preço e teste" as const, perguntas: perguntas.filter((item) => perguntasDePreco.has(item.pergunta)) },
+    { titulo: "Como funciona" as const, perguntas: perguntas.filter((item) => !perguntasDePreco.has(item.pergunta)) },
+  ].filter((grupo) => grupo.perguntas.length > 0);
+}
+
+// Para a busca: sem acento e sem diferença de maiúsculas.
+export function normalizarTexto(texto: string): string {
+  return texto.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import styled, { css } from "styled-components";
-import { comMovimento } from "@/styles/movimento";
+import { aparecer, comMovimento } from "@/styles/movimento";
 
 export const Lista = styled.div`
   display: grid;
@@ -81,4 +81,12 @@ export const Resposta = styled.p`
   max-width: 62ch;
   padding-bottom: ${({ theme }) => theme.space[4]}px;
   color: ${({ theme }) => theme.colors.nevoa};
+
+  /* A resposta aparece com um fade ao abrir, junto da animação de altura. */
+  ${({ theme }) =>
+    comMovimento(css`
+      details[open] > & {
+        animation: ${aparecer} 250ms ${theme.motion.curva.padrao} backwards;
+      }
+    `)}
 `;
