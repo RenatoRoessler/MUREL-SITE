@@ -1,5 +1,6 @@
 import { ComoFunciona } from "@/components/home/ComoFunciona/ComoFunciona";
 import { Contato } from "@/components/home/Contato/Contato";
+import { Destaques } from "@/components/home/Destaques/Destaques";
 import { Diferencial } from "@/components/home/Diferencial/Diferencial";
 import { Faq } from "@/components/home/Faq/Faq";
 import { Hero } from "@/components/home/Hero/Hero";
@@ -35,6 +36,7 @@ export default async function Home() {
       <Header />
       <main id="conteudo">
         <Hero teste={oferta?.teste ?? null} />
+        <Destaques teste={oferta?.teste ?? null} />
         <Diferencial />
         <Sistema />
         <ComoFunciona />

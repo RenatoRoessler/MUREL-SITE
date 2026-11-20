@@ -39,4 +39,17 @@ describe("Hero", () => {
     const lista = screen.getByRole("list", { name: "Condições do mês grátis" });
     expect(within(lista).getAllByRole("listitem")).toHaveLength(3);
   });
+
+  it("mostra duas telas do sistema, com texto alternativo e sem prender o foco do teclado", () => {
+    renderComTema(<Hero teste={ofertaEmPromocao.teste} />);
+    expect(screen.getByRole("img", { name: /Tela do pátio no celular/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Ticket de um veículo no celular/ })).toBeInTheDocument();
+    expect(screen.queryByRole("group", { name: /Tela do pátio/ })).not.toBeInTheDocument();
+  });
+
+  it("só a primeira tela carrega com prioridade", () => {
+    renderComTema(<Hero teste={ofertaEmPromocao.teste} />);
+    expect(screen.getByRole("img", { name: /Tela do pátio no celular/ })).not.toHaveAttribute("loading", "lazy");
+    expect(screen.getByRole("img", { name: /Ticket de um veículo no celular/ })).toHaveAttribute("loading", "lazy");
+  });
 });

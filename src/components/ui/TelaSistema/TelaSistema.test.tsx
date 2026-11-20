@@ -25,4 +25,13 @@ describe("TelaSistema", () => {
     const celular = renderComTema(<TelaSistema imagem={retrato} alt="Tela de celular" />);
     expect(celular.container.querySelector('[aria-hidden="true"]')).toBeNull();
   });
+
+  it("carrega sob demanda, exceto quando recebe prioridade", () => {
+    const normal = renderComTema(<TelaSistema imagem={retrato} alt="Tela comum" />);
+    expect(screen.getByRole("img", { name: "Tela comum" })).toHaveAttribute("loading", "lazy");
+    normal.unmount();
+
+    renderComTema(<TelaSistema imagem={retrato} alt="Tela do topo" prioridade />);
+    expect(screen.getByRole("img", { name: "Tela do topo" })).not.toHaveAttribute("loading", "lazy");
+  });
 });

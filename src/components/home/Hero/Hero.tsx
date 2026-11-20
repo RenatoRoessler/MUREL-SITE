@@ -1,12 +1,17 @@
 import { Simbolo } from "@/components/brand/Simbolo";
+import patio from "@/assets/telas/operador/patio.webp";
+import ticket from "@/assets/telas/operador/ticket.webp";
 import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
+import { TelaSistema } from "@/components/ui/TelaSistema/TelaSistema";
 import { Container } from "@/components/ui/Section/Section.styles";
 import { urlAdesaoTeste } from "@/lib/config";
 import { botaoTeste } from "@/lib/planos/textos";
 import type { TesteGratis } from "@/types/plano";
 import { garantiasTeste, rotuloGarantiasTeste } from "../TesteGratis/TesteGratis.data";
-import { Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
+import { Apoio, Aparelho, Aparelhos, Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
+
+const tamanhosDoAparelho = "(min-width: 1024px) 240px, 170px";
 
 type HeroProps = {
   teste: TesteGratis | null;
@@ -34,7 +39,28 @@ export function Hero({ teste }: HeroProps) {
           <Garantias itens={garantiasTeste} rotulo={rotuloGarantiasTeste} />
         </Texto>
         <Marca>
-          <Simbolo animado />
+          <Aparelhos>
+            <Aparelho $posicao="fundo">
+              <TelaSistema
+                imagem={patio}
+                alt="Tela do pátio no celular, com as vagas ocupadas e a lista de veículos com o tempo de permanência."
+                sizes={tamanhosDoAparelho}
+                focavel={false}
+                prioridade
+              />
+            </Aparelho>
+            <Aparelho $posicao="frente">
+              <TelaSistema
+                imagem={ticket}
+                alt="Ticket de um veículo no celular, com a permanência, o valor até agora e o serviço de lavagem na fila."
+                sizes={tamanhosDoAparelho}
+                focavel={false}
+              />
+            </Aparelho>
+            <Apoio>
+              <Simbolo animado />
+            </Apoio>
+          </Aparelhos>
         </Marca>
       </Topo>
     </Container>

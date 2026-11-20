@@ -94,9 +94,64 @@ export const Chamadas = styled.div`
 export const Marca = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+/* Par de celulares sobrepostos em ângulo leve: o pátio atrás e o ticket na frente. No celular o par entra pela
+   base do Hero, cortado com degradê para sugerir que há mais. */
+export const Aparelhos = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 330px;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 62%, transparent);
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    max-width: 480px;
+    height: 600px;
+    overflow: visible;
+    mask-image: none;
+  }
+
+  ${({ theme }) =>
+    comMovimento(css`
+      animation: ${revelar} ${theme.motion.duracao.lenta}ms ${theme.motion.curva.saida} 300ms backwards;
+    `)}
+`;
+
+export const Aparelho = styled.div<{ $posicao: "fundo" | "frente" }>`
+  position: absolute;
+  top: ${({ $posicao }) => ($posicao === "fundo" ? "52px" : "84px")};
+  left: ${({ $posicao }) => ($posicao === "fundo" ? "6%" : "38%")};
+  width: 170px;
+  transform: rotate(${({ $posicao }) => ($posicao === "fundo" ? "-5deg" : "4deg")});
+  z-index: ${({ $posicao }) => ($posicao === "fundo" ? 1 : 2)};
+  filter: drop-shadow(0 18px 30px rgb(0 0 0 / 0.45));
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    top: ${({ $posicao }) => ($posicao === "fundo" ? "20px" : "64px")};
+    left: ${({ $posicao }) => ($posicao === "fundo" ? "0" : "44%")};
+    width: 240px;
+  }
+`;
+
+/* O símbolo da marca fica como apoio, no canto, sem cobrir as telas. */
+export const Apoio = styled.div`
+  position: absolute;
+  top: 0;
+  left: 6%;
+  z-index: 3;
+  width: 84px;
 
   svg {
-    width: clamp(200px, 60%, 380px);
+    width: 100%;
     height: auto;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    top: auto;
+    bottom: 12px;
+    left: -4%;
+    width: 128px;
   }
 `;
