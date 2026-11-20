@@ -4,7 +4,7 @@ import { urlWhatsapp } from "@/lib/config";
 import { renderComTema } from "@/test/render";
 import { BotaoWhatsapp } from "./BotaoWhatsapp";
 
-type Entrada = { isIntersecting: boolean; boundingClientRect: { top: number } };
+type Entrada = { isIntersecting: boolean; boundingClientRect: { top: number }; target?: Element };
 
 let observadores: ObservadorFalso[] = [];
 
@@ -95,7 +95,6 @@ describe("BotaoWhatsapp", () => {
 
   it("observa a seção #perguntas, que conta como alcançada a 85% da altura da tela", () => {
     const { secao } = renderComSecao();
-    expect(observadores).toHaveLength(1);
     expect(observadores[0].observados).toEqual([secao]);
     expect(observadores[0].opcoes?.rootMargin).toBe("0px 0px -15% 0px");
   });
@@ -123,7 +122,7 @@ describe("BotaoWhatsapp", () => {
   it("fica visível se a seção #perguntas não existir", () => {
     renderComTema(<BotaoWhatsapp />);
     expect(screen.getByRole("link", { name: /WhatsApp/ })).toBeVisible();
-    expect(observadores).toHaveLength(0);
+    expect(observadores.filter((observador) => observador.observados.length > 0)).toHaveLength(0);
   });
 
   it("desconecta o observador ao desmontar", () => {
@@ -145,5 +144,49 @@ describe("BotaoWhatsapp", () => {
       .join("");
     expect(css).toContain("scale(1.7)");
     expect(css).toContain("@media (prefers-reduced-motion: no-preference)");
+  });
+
+  it("some dentro da seção de Contato, que já tem a chamada do WhatsApp, e volta depois", () => {
+    const contato = document.createElement("section");
+    contato.id = "contato";
+    document.body.append(contato);
+    renderComSecao();
+
+    dispararSecao(naTela);
+    expect(screen.getByRole("link", { name: /WhatsApp/ })).toBeVisible();
+
+    act(() => observadores[1].disparar({ ...naTela, target: contato }));
+    expect(screen.queryByRole("link", { name: /WhatsApp/ })).not.toBeInTheDocument();
+
+    act(() => observadores[1].disparar({ ...abaixoDaTela, target: contato }));
+    expect(screen.getByRole("link", { name: /WhatsApp/ })).toBeVisible();
+    contato.remove();
+  });
+
+  it("depois de alguns segundos, o rótulo encolhe e fica só o ícone", () => {
+    vi.useFakeTimers();
+    try {
+      renderComSecao();
+      dispararSecao(naTela);
+      const rotulo = screen.getByText("Estamos online!");
+      const antes = rotulo.className;
+
+      act(() => {
+        vi.advanceTimersByTime(6000);
+      });
+      expect(screen.getByText("Estamos online!").className).not.toBe(antes);
+      expect(getComputedStyle(screen.getByText("Estamos online!")).opacity).toBe("0");
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("sobe acima da barra fixa quando ela está na tela", () => {
+    renderComSecao();
+    dispararSecao(naTela);
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+    expect(css).toMatch(/var\(--barra-fixa,\s*0px\)/);
   });
 });

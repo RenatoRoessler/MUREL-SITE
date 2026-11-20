@@ -1,11 +1,17 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { useSecaoEmVista } from "@/hooks/useSecaoEmVista";
 import { IconeWhatsapp } from "@/components/ui/IconeWhatsapp/IconeWhatsapp";
 import { rotuloWhatsapp, urlWhatsapp } from "@/lib/config";
 import { Circulo, Flutuante, Rotulo } from "./BotaoWhatsapp.styles";
 
 const idSecaoGatilho = "perguntas";
+// No Contato a seção já tem a chamada do WhatsApp: o botão flutuante some.
+const idSecaoContato = "contato";
+// Depois da primeira aparição, o rótulo encolhe e fica só o ícone.
+const ATRASO_PARA_COMPACTAR_MS = 6000;
+const idsContato = [idSecaoContato];
 
 function criarLojaDeVisibilidade() {
   let visivel = false;
@@ -41,17 +47,29 @@ function criarLojaDeVisibilidade() {
 
 export function BotaoWhatsapp() {
   const [loja] = useState(criarLojaDeVisibilidade);
-  const visivel = useSyncExternalStore(loja.assinar, loja.lerVisibilidade, loja.lerVisibilidadeNoServidor);
+  const depoisDoGatilho = useSyncExternalStore(loja.assinar, loja.lerVisibilidade, loja.lerVisibilidadeNoServidor);
+  const noContato = useSecaoEmVista(idsContato);
+  const visivel = depoisDoGatilho && !noContato;
+  const [compacto, setCompacto] = useState(false);
+
+  useEffect(() => {
+    if (!visivel || compacto) return;
+    const temporizador = setTimeout(() => setCompacto(true), ATRASO_PARA_COMPACTAR_MS);
+    return () => clearTimeout(temporizador);
+  }, [visivel, compacto]);
 
   return (
     <Flutuante
       $visivel={visivel}
+      $compacto={compacto}
       href={urlWhatsapp}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${rotuloWhatsapp} Falar com a Murel pelo WhatsApp (abre em nova aba)`}
     >
-      <Rotulo aria-hidden="true">{rotuloWhatsapp}</Rotulo>
+      <Rotulo aria-hidden="true" $compacto={compacto}>
+        {rotuloWhatsapp}
+      </Rotulo>
       <Circulo $visivel={visivel}>
         <IconeWhatsapp />
       </Circulo>

@@ -6,6 +6,7 @@ import { Faq } from "@/components/home/Faq/Faq";
 import { Hero } from "@/components/home/Hero/Hero";
 import { Planos } from "@/components/home/Planos/Planos";
 import { Sistema } from "@/components/home/Sistema/Sistema";
+import { BarraComecar } from "@/components/layout/BarraComecar/BarraComecar";
 import { BotaoWhatsapp } from "@/components/layout/BotaoWhatsapp/BotaoWhatsapp";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
@@ -46,6 +47,7 @@ export default async function Home() {
       </main>
       <Footer />
       <BotaoWhatsapp />
+      <BarraComecar teste={oferta?.teste ?? null} />
     </>
   );
 }

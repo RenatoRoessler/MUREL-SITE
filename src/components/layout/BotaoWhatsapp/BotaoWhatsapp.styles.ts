@@ -6,14 +6,15 @@ import { comMovimento } from "@/styles/movimento";
 const duracaoAparicao = "0.3s";
 
 // Oculto com `visibility: hidden`: sai da ordem de tab e da árvore de acessibilidade sozinho.
-export const Flutuante = styled.a<{ $visivel: boolean }>`
+export const Flutuante = styled.a<{ $visivel: boolean; $compacto: boolean }>`
   position: fixed;
   right: max(${({ theme }) => theme.space[3]}px, env(safe-area-inset-right, 0px));
-  bottom: max(${({ theme }) => theme.space[3]}px, env(safe-area-inset-bottom, 0px));
+  /* Sobe acima da barra fixa de "Começar grátis" quando ela está na tela (--barra-fixa). */
+  bottom: calc(max(${({ theme }) => theme.space[3]}px, env(safe-area-inset-bottom, 0px)) + var(--barra-fixa, 0px));
   z-index: 20;
   display: inline-flex;
   align-items: center;
-  gap: ${({ theme }) => theme.space[2]}px;
+  gap: ${({ theme, $compacto }) => ($compacto ? 0 : theme.space[2])}px;
   color: ${({ theme }) => theme.colors.asfalto};
   opacity: ${({ $visivel }) => ($visivel ? 1 : 0)};
   transform: translateY(${({ $visivel }) => ($visivel ? 0 : 24)}px);
@@ -31,11 +32,11 @@ export const Flutuante = styled.a<{ $visivel: boolean }>`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     right: ${({ theme }) => theme.space[4]}px;
-    bottom: ${({ theme }) => theme.space[4]}px;
+    bottom: calc(${({ theme }) => theme.space[4]}px + var(--barra-fixa, 0px));
   }
 `;
 
-export const Rotulo = styled.span`
+export const Rotulo = styled.span<{ $compacto: boolean }>`
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -47,7 +48,21 @@ export const Rotulo = styled.span`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   line-height: 1.2;
   white-space: nowrap;
+  overflow: hidden;
+  max-width: ${({ $compacto }) => ($compacto ? "0" : "260px")};
+  padding-inline: ${({ $compacto }) => ($compacto ? "0" : "18px")};
+  opacity: ${({ $compacto }) => ($compacto ? 0 : 1)};
   transition: background-color 0.15s ease-out;
+
+  /* Depois do anel, o rótulo encolhe devagar e fica só o círculo. */
+  ${({ theme }) =>
+    comMovimento(css`
+      transition:
+        background-color 0.15s ease-out,
+        max-width ${theme.motion.duracao.media}ms ${theme.motion.curva.saida},
+        padding-inline ${theme.motion.duracao.media}ms ${theme.motion.curva.saida},
+        opacity ${theme.motion.duracao.media}ms ${theme.motion.curva.padrao};
+    `)}
 
   ${Flutuante}:hover & {
     background: ${({ theme }) => theme.colors.whatsappEscuro};
