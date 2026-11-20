@@ -38,6 +38,8 @@ export const theme = {
   layout: {
     contentMaxWidth: "1120px",
     headerHeight: "72px",
+    // Altura da barra fixa de "Começar grátis" no celular (e deslocamento do botão do WhatsApp).
+    barraFixa: "72px",
   },
   // Ritmo único das animações: valores em ms (duracao, intervalo) e em px (distancia).
   motion: {

@@ -35,3 +35,14 @@ export const brilho = keyframes`
     transform: translateX(320%) skewX(-20deg);
   }
 `;
+
+// Entrada só de opacidade (respostas que abrem, por exemplo).
+export const aparecer = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;

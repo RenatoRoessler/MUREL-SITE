@@ -50,4 +50,14 @@ describe("tema", () => {
     expect(theme.motion.intervalo).toBe(70);
     expect(theme.motion.distancia).toBe(16);
   });
+
+  it("expõe a altura da barra fixa", () => {
+    expect(theme.layout.barraFixa).toBe("72px");
+  });
+
+  it("textos névoa e amarelo sobre asfalto2 (fundo alternado) atingem contraste AA", () => {
+    expect(contraste(theme.colors.nevoa, theme.colors.asfalto2)).toBeGreaterThanOrEqual(4.5);
+    expect(contraste(theme.colors.amarelo, theme.colors.asfalto2)).toBeGreaterThanOrEqual(4.5);
+    expect(contraste(theme.colors.giz, theme.colors.asfalto3)).toBeGreaterThanOrEqual(4.5);
+  });
 });
