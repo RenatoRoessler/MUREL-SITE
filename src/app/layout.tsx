@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { FundoVivo } from "@/components/layout/FundoVivo/FundoVivo";
+import { ProgressoDeLeitura } from "@/components/layout/ProgressoDeLeitura/ProgressoDeLeitura";
 import { urlSite } from "@/lib/config";
 import StyledComponentsRegistry from "@/lib/registry";
 import "./globals.css";
@@ -43,7 +46,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={`${plusJakarta.variable} ${jetbrains.variable}`}>
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <FundoVivo />
+          <ProgressoDeLeitura />
+          {/* Troca de página com transição suave: hoje só existe a home, então nada muda de visível. */}
+          <ViewTransition default="auto">{children}</ViewTransition>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
