@@ -42,4 +42,12 @@ describe("tema", () => {
   it("texto giz sobre asfalto2 atinge contraste AA", () => {
     expect(contraste(theme.colors.giz, theme.colors.asfalto2)).toBeGreaterThanOrEqual(4.5);
   });
+
+  it("expõe os tokens de movimento", () => {
+    expect(theme.motion.duracao).toEqual({ rapida: 150, media: 300, lenta: 500 });
+    expect(theme.motion.curva.saida).toBe("cubic-bezier(0.16, 1, 0.3, 1)");
+    expect(theme.motion.curva.padrao).toBe("ease-out");
+    expect(theme.motion.intervalo).toBe(70);
+    expect(theme.motion.distancia).toBe(16);
+  });
 });

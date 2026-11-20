@@ -39,6 +39,16 @@ export const theme = {
     contentMaxWidth: "1120px",
     headerHeight: "72px",
   },
+  // Ritmo único das animações: valores em ms (duracao, intervalo) e em px (distancia).
+  motion: {
+    duracao: { rapida: 150, media: 300, lenta: 500 },
+    curva: {
+      saida: "cubic-bezier(0.16, 1, 0.3, 1)",
+      padrao: "ease-out",
+    },
+    intervalo: 70,
+    distancia: 16,
+  },
   breakpoints: {
     sm: "480px",
     md: "768px",
