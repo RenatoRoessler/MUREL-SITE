@@ -29,6 +29,7 @@ export function Sistema({ dados = perfis }: SistemaProps) {
   return (
     <Section
       id="sistema"
+      fundo="alternado"
       titulo="Tudo o que o pátio precisa, no mesmo sistema."
       lede="Escolha quem você é e veja as telas que essa pessoa usa, uma a uma."
     >

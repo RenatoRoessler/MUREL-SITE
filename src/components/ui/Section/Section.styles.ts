@@ -1,6 +1,6 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -8,9 +8,19 @@ export const Container = styled.div`
   margin-inline: auto;
 `;
 
-export const Faixa = styled.section`
+export const Faixa = styled.section<{ $alternado?: boolean }>`
   padding-block: 56px;
   border-top: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
+
+  /* Fundo alternado de ponta a ponta: a sombra cresce para os lados e o clip-path corta o excesso (em cima e
+     embaixo), sem mexer na largura do conteúdo nem criar rolagem horizontal. */
+  ${({ $alternado, theme }) =>
+    $alternado &&
+    css`
+      background: ${theme.colors.asfalto2};
+      box-shadow: 0 0 0 100vmax ${theme.colors.asfalto2};
+      clip-path: inset(0 -100vmax);
+    `}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     padding-block: 88px;
