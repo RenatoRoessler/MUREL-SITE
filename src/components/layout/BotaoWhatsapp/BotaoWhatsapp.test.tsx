@@ -131,4 +131,19 @@ describe("BotaoWhatsapp", () => {
     unmount();
     expect(observadores[0].desconectado).toBe(true);
   });
+
+  it("só pulsa o anel quando o botão aparece, e só se o aparelho aceita movimento", () => {
+    const { container } = renderComSecao();
+    const circulo = () => container.querySelector("a > span:last-child")!;
+    const classeOculto = circulo().className;
+
+    dispararSecao(naTela);
+    expect(circulo().className).not.toBe(classeOculto);
+
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+    expect(css).toContain("scale(1.7)");
+    expect(css).toContain("@media (prefers-reduced-motion: no-preference)");
+  });
 });

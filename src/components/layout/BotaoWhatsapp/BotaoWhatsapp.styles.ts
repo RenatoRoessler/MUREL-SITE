@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { comMovimento } from "@/styles/movimento";
 
 const duracaoAparicao = "0.3s";
 
@@ -53,7 +54,20 @@ export const Rotulo = styled.span`
   }
 `;
 
-export const Circulo = styled.span`
+const anel = keyframes`
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  to {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+`;
+
+export const Circulo = styled.span<{ $visivel: boolean }>`
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -64,6 +78,22 @@ export const Circulo = styled.span`
   box-shadow: 0 4px 14px rgb(0 0 0 / 0.35);
   font-size: 32px;
   transition: background-color 0.15s ease-out;
+
+  /* Anel que chama atenção quando o botão aparece: 3 pulsos e para (uma vez por aparição). */
+  ${({ theme, $visivel }) =>
+    $visivel &&
+    comMovimento(css`
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px solid ${theme.colors.whatsapp};
+        border-radius: inherit;
+        opacity: 0;
+        pointer-events: none;
+        animation: ${anel} 1.6s ${theme.motion.curva.padrao} 0.6s 3;
+      }
+    `)}
 
   ${Flutuante}:hover & {
     background: ${({ theme }) => theme.colors.whatsappEscuro};

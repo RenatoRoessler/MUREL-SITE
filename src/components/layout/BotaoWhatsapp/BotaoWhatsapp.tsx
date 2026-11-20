@@ -52,7 +52,7 @@ export function BotaoWhatsapp() {
       aria-label={`${rotuloWhatsapp} Falar com a Murel pelo WhatsApp (abre em nova aba)`}
     >
       <Rotulo aria-hidden="true">{rotuloWhatsapp}</Rotulo>
-      <Circulo>
+      <Circulo $visivel={visivel}>
         <IconeWhatsapp />
       </Circulo>
     </Flutuante>
