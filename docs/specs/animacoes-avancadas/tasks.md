@@ -108,31 +108,31 @@ Regras para todas as tasks: seguir `code-best-practices` e `styled-components-be
 
 ## Pacote 3 — RF6, RF9, RF11 a RF15
 
-- [ ] T25 — Hook `useLinhasDoTitulo`
+- [x] T25 — Hook `useLinhasDoTitulo`
   - Arquivos: `src/hooks/useLinhasDoTitulo.ts`, `.test.ts`
   - Pronto quando: após `document.fonts.ready` devolve as linhas visuais de um texto por medição de palavras, recalcula no `resize` com debounce e, se a medição falhar, devolve `null`.
 
-- [ ] T26 — `TituloEmLinhas` e uso em `Section`
+- [x] T26 — `TituloEmLinhas` e uso em `Section`
   - Arquivos: `src/components/ui/TituloEmLinhas/TituloEmLinhas.tsx`, `.styles.ts`, `.test.tsx`, `src/components/ui/Section/Section.tsx`, `Section.styles.ts`
   - Pronto quando: o HTML do servidor segue com o texto corrido; no cliente cada linha sobe de uma máscara; `<h2>` com `aria-label` do título e spans `aria-hidden`; `em` amarelo recebe o sublinhado de `desenhar`; sem medição, o título é o de hoje.
 
-- [ ] T27 — `ProgressoDeLeitura`
+- [x] T27 — `ProgressoDeLeitura`
   - Arquivos: `src/components/layout/ProgressoDeLeitura/ProgressoDeLeitura.tsx`, `.styles.ts`, `.test.tsx`, `src/app/layout.tsx`
   - Pronto quando: linha amarela de 3 px acima do `Header`, `scaleX` 0→1 por `animation-timeline: scroll(root)`; escondida via `@supports not`; `aria-hidden`.
 
-- [ ] T28 — Fundo vivo
+- [x] T28 — Fundo vivo
   - Arquivos: `src/styles/GlobalStyle.ts` (ou `src/components/layout/FundoVivo/*`), `src/app/layout.tsx`
   - Pronto quando: grão a 3% e gradientes que derivam em 40 s, num elemento fixo atrás de tudo; contraste de `nevoa` e `giz` mantido em 4,5:1 conferido no ponto mais claro; parado com "menos movimento" e fora da aba ativa.
 
-- [ ] T29 — Seleção, foco e links do rodapé
+- [x] T29 — Seleção, foco e links do rodapé
   - Arquivos: `src/styles/GlobalStyle.ts`, `src/components/layout/Footer/Footer.styles.ts`
   - Pronto quando: `::selection` em amarelo, `outline-offset` do foco anima, links do rodapé desenham o sublinhado em hover e foco (estático sem movimento); testes do rodapé passam.
 
-- [ ] T30 — Marca-texto da busca do FAQ
+- [x] T30 — Marca-texto da busca do FAQ
   - Arquivos: `src/components/ui/Marcador/Marcador.tsx`, `Marcador.test.tsx`, `src/components/home/Faq/PerguntasFaq.tsx`, `PerguntasFaq.styles.ts`, `PerguntasFaq.test.tsx`
   - Pronto quando: `destacar(texto, termo)` envolve o trecho em `<mark>` respeitando acentos e caixa (via `normalizarTexto`); o destaque se desenha; sem termo o texto é o de hoje; testes da busca passam.
 
-- [ ] T31 — Infraestrutura de transição entre páginas
+- [x] T31 — Infraestrutura de transição entre páginas
   - Arquivos: `src/app/layout.tsx`, `src/styles/GlobalStyle.ts`
   - Pronto quando: `{children}` está dentro de `ViewTransition` (conforme `node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`) e as regras `::view-transition-*` estão sob `comMovimento`; a home continua idêntica e o build passa.
 
