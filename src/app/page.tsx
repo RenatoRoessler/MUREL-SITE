@@ -6,6 +6,7 @@ import { Faq } from "@/components/home/Faq/Faq";
 import { Hero } from "@/components/home/Hero/Hero";
 import { Planos } from "@/components/home/Planos/Planos";
 import { Sistema } from "@/components/home/Sistema/Sistema";
+import { FaixaDePista } from "@/components/layout/FaixaDePista/FaixaDePista";
 import { BarraComecar } from "@/components/layout/BarraComecar/BarraComecar";
 import { BotaoWhatsapp } from "@/components/layout/BotaoWhatsapp/BotaoWhatsapp";
 import { Footer } from "@/components/layout/Footer/Footer";
@@ -34,6 +35,7 @@ export default async function Home() {
           __html: JSON.stringify(dadosEstruturados).replace(/</g, "\\u003c"),
         }}
       />
+      <FaixaDePista />
       <Header />
       <main id="conteudo">
         <Hero teste={oferta?.teste ?? null} />
