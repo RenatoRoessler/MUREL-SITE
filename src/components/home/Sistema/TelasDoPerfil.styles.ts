@@ -48,7 +48,7 @@ export const ItemDaLista = styled.button`
 
   &[aria-current="true"] {
     color: ${({ theme }) => theme.colors.giz};
-    background: ${({ theme }) => theme.colors.asfalto2};
+    background: ${({ theme }) => theme.colors.asfalto3};
     border-color: ${({ theme }) => theme.colors.amarelo};
   }
 `;

@@ -1,6 +1,20 @@
 "use client";
 
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { comMovimento } from "@/styles/movimento";
+
+// A tela que passa a ser a ativa no painel do desktop entra com fade e uma subida curta.
+const entrarNoPainel = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+`;
 
 export const Regiao = styled.div`
   display: grid;
@@ -47,6 +61,24 @@ export const Item = styled.div<{ $estreito: boolean }>`
     &[data-ativo="false"] {
       display: none;
     }
+
+    &[data-ativo="true"] {
+      ${({ theme }) =>
+        comMovimento(css`
+          animation: ${entrarNoPainel} 220ms ${theme.motion.curva.saida} backwards;
+        `)}
+    }
+  }
+`;
+
+/* Título da tela atual e posição ("Pátio · 1 de 7"), só onde o carrossel é a navegação (abaixo de lg). */
+export const Legenda = styled.p`
+  color: ${({ theme }) => theme.colors.nevoa};
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+
+  @media (min-width: 1024px) and (scripting: enabled) {
+    display: none;
   }
 `;
 

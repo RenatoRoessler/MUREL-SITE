@@ -67,4 +67,22 @@ describe("TelasDoPerfil", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Tela 2 de 3");
     expect(within(container.querySelector("nav")!).getAllByRole("button", { hidden: true })[1]).toHaveAttribute("aria-current", "true");
   });
+
+  it("mostra a legenda com o título e a posição da tela atual, e a atualiza", () => {
+    const { container } = renderComTema(<TelasDoPerfil rotulo="Operador" telas={telas} />);
+    const legenda = () => container.querySelector("p[aria-hidden='true']")!;
+    expect(legenda()).toHaveTextContent("Pátio · 1 de 3");
+
+    fireEvent.click(screen.getByRole("button", { name: "Próxima tela" }));
+    expect(legenda()).toHaveTextContent("Entrada · 2 de 3");
+  });
+
+  it("no painel do desktop, a tela ativa entra com fade, só com movimento permitido", () => {
+    renderComTema(<TelasDoPerfil rotulo="Operador" telas={telas} />);
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+    expect(css).toContain("@media (prefers-reduced-motion: no-preference)");
+    expect(css).toMatch(/\[data-ativo="true"\][^{]*\{[^}]*animation:[^;]*220ms/);
+  });
 });

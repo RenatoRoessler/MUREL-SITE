@@ -45,7 +45,7 @@ export function TelasDoPerfil({ rotulo, telas, estreito = false }: TelasDoPerfil
         estreito={estreito}
         atual={atual}
         aoMudar={setAtual}
-        slides={telas.map((tela) => ({ id: tela.id, conteudo: tela.conteudo }))}
+        slides={telas.map((tela) => ({ id: tela.id, titulo: tela.titulo, conteudo: tela.conteudo }))}
       />
     </Conjunto>
   );

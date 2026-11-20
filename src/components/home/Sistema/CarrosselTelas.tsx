@@ -1,10 +1,12 @@
 "use client";
 
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { Controles, Item, Ponto, Pontos, Regiao, Seta, Setas, SoLeitor, Trilho } from "./CarrosselTelas.styles";
+import { Controles, Item, Legenda, Ponto, Pontos, Regiao, Seta, Setas, SoLeitor, Trilho } from "./CarrosselTelas.styles";
 
 export type SlideCarrossel = {
   id: string;
+  // Título da tela, mostrado na legenda ("Título · N de M") abaixo de lg.
+  titulo?: string;
   conteudo: ReactNode;
 };
 
@@ -86,6 +88,12 @@ export function CarrosselTelas({ rotulo, slides, estreito = false, atual: atualC
           </Item>
         ))}
       </Trilho>
+      {total > 1 ? (
+        <Legenda aria-hidden="true">
+          {slides[atual]?.titulo ? `${slides[atual].titulo} · ` : ""}
+          {atual + 1} de {total}
+        </Legenda>
+      ) : null}
       {total > 1 ? (
         <Controles>
           <Pontos aria-hidden="true">
