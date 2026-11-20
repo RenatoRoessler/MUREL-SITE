@@ -1,13 +1,20 @@
 import comprovanteEntrada from "@/assets/telas/cliente/comprovante-entrada.webp";
+import patioConveniada from "@/assets/telas/conveniado/patio.webp";
+import ticketCarimbado from "@/assets/telas/conveniado/ticket-carimbado.webp";
 import caixa from "@/assets/telas/gestor/caixa.webp";
+import catalogoServicos from "@/assets/telas/gestor/catalogo-servicos.webp";
 import conferencia from "@/assets/telas/gestor/conferencia.webp";
+import configuracoes from "@/assets/telas/gestor/configuracoes.webp";
 import conveniadas from "@/assets/telas/gestor/conveniadas.webp";
 import dashboard from "@/assets/telas/gestor/dashboard.webp";
+import faturas from "@/assets/telas/gestor/faturas.webp";
 import financeiro from "@/assets/telas/gestor/financeiro.webp";
 import mensalistas from "@/assets/telas/gestor/mensalistas.webp";
 import patioGestor from "@/assets/telas/gestor/patio.webp";
 import precos from "@/assets/telas/gestor/precos.webp";
 import quadrosChaves from "@/assets/telas/gestor/quadros-chaves.webp";
+import filaNaFila from "@/assets/telas/lavador/fila-na-fila.webp";
+import filaPronto from "@/assets/telas/lavador/fila-pronto.webp";
 import confirmarSaida from "@/assets/telas/operador/confirmar-saida.webp";
 import entradaPreenchida from "@/assets/telas/operador/entrada-preenchida.webp";
 import entradaRegistrada from "@/assets/telas/operador/entrada-registrada.webp";
@@ -19,7 +26,7 @@ import type { IdPerfil, PerfilSistema } from "@/types/sistema";
 
 // Telas capturadas em 06/11/2026 (sistema v1.0.356), com dados fictícios.
 // Cada explicação descreve só o que aparece na tela; revisar a cada versão relevante do sistema.
-export const perfilInicial: IdPerfil = "gestor";
+export const perfilInicial: IdPerfil = "operador";
 
 export const perfis: PerfilSistema[] = [
   {
@@ -69,26 +76,26 @@ export const perfis: PerfilSistema[] = [
       {
         id: "ticket",
         imagem: ticket,
-        alt: "Ticket de entrada de um veículo, com a placa, a permanência, o valor até agora, a tabela de preço e os botões Mostrar QR do ticket, Enviar ao cliente e Registrar saída.",
+        alt: "Ticket de entrada de um veículo, com a placa, a permanência, o valor até agora separado em estadia e serviços, a tabela de preço, a lista de serviços adicionais e os botões Comprovante cliente e Registrar saída.",
         titulo: "Ticket do veículo",
         explicacao:
-          "Cada veículo no pátio tem um ticket com a permanência, o valor até agora e a tabela de preço aplicada. Dali o operador mostra o QR ao cliente, envia o comprovante ou já registra a saída.",
+          "Cada veículo no pátio tem um ticket com a permanência e o valor até agora, com a estadia e os serviços somados à parte, e a tabela de preço aplicada. No lava-rápido, o operador acrescenta serviços ao veículo e vê se estão na fila ou prontos. Dali ele abre o comprovante do cliente ou registra a saída.",
       },
       {
         id: "localizar-veiculo",
         imagem: localizarVeiculo,
-        alt: "Janela Localizar veículo, com a leitura de QR Code pela câmera e os campos Placa, Token e Sequencial.",
+        alt: "Janela Localizar veículo, com a leitura de QR Code pela câmera e a escolha de buscar por Placa, Token ou Sequencial, com o campo da placa.",
         titulo: "Localizar o veículo na saída",
         explicacao:
-          "Na saída, o operador lê o QR Code do cliente com a câmera. Sem QR Code, procura pela placa, pelo token do cupom ou pelo número sequencial do veículo.",
+          "Na saída, o operador lê o QR Code do cliente com a câmera. Sem QR Code, escolhe buscar pela placa, pelo token do cupom ou pelo número sequencial e digita o dado do veículo.",
       },
       {
         id: "confirmar-saida",
         imagem: confirmarSaida,
-        alt: "Janela Confirmar saída, com a placa, a entrada, a permanência, o valor a cobrar, a forma de pagamento e o valor recebido.",
+        alt: "Janela Confirmar saída, com a placa, a entrada, a permanência, o valor a cobrar, as formas de pagamento, os atalhos de valor recebido e o troco a devolver.",
         titulo: "Confirmar a saída",
         explicacao:
-          "O sistema calcula o valor pela tabela de preço. O operador escolhe a forma de pagamento, informa o valor recebido e vê o troco antes de confirmar. Só aparecem os meios de pagamento que a empresa aceita.",
+          "O sistema calcula o valor pela tabela de preço. O operador escolhe a forma de pagamento e, no dinheiro, toca no valor que o cliente entregou (exato, notas redondas ou outro) e vê o troco antes de confirmar. Só aparecem os meios de pagamento que a empresa aceita. Quando não há nada a cobrar, a saída se confirma sem pedir pagamento.",
       },
       {
         id: "saida-registrada",
@@ -96,7 +103,53 @@ export const perfis: PerfilSistema[] = [
         alt: "Recibo de pagamento da saída, com a placa, o veículo, a entrada, a saída, a permanência, a forma de pagamento, o valor pago e um QR Code.",
         titulo: "Recibo da saída",
         explicacao:
-          "Confirmada a saída, o recibo mostra entrada, saída, permanência, tabela, pagamento e total pago. O cliente leva o recibo no celular pelo QR Code.",
+          "Confirmada a saída, o recibo mostra entrada, saída, permanência, tabela, pagamento, valor recebido, troco e total pago. O cliente leva o recibo no celular pelo QR Code.",
+      },
+    ],
+  },
+  {
+    id: "lavador",
+    rotulo: "Lavador",
+    resumo: "O que quem lava o carro vê no celular: a fila de serviços do lava-rápido, sem papel.",
+    telas: [
+      {
+        id: "fila-na-fila",
+        imagem: filaNaFila,
+        alt: "Fila de serviços no celular, com os contadores no topo, a busca por placa ou prisma, as abas Na fila, Em andamento e Pronto e os cartões dos veículos com o serviço pedido e o botão Iniciar.",
+        titulo: "Fila de serviços",
+        explicacao:
+          "O lavador abre direto na fila do lava-rápido. No topo vê quantos serviços estão na fila, em andamento e prontos, e quais passaram da previsão. Cada cartão mostra a placa, o modelo, a cor, a categoria, o serviço pedido, a hora em que o carro entrou e o tempo estimado. Ao começar, ele toca em Iniciar.",
+      },
+      {
+        id: "fila-pronto",
+        imagem: filaPronto,
+        alt: "Aba Pronto da fila de serviços, com o cartão de um veículo, o serviço concluído, o horário em que ficou pronto, há quanto tempo aguarda retirada e o botão Voltar para em andamento.",
+        titulo: "Serviço pronto",
+        explicacao:
+          "Quando o serviço termina, o cartão vai para a aba Pronto com o horário e há quanto tempo o carro espera a retirada. O lavador acha o veículo pela placa ou pelo prisma, e se marcou pronto por engano, toca em Voltar para em andamento.",
+      },
+    ],
+  },
+  {
+    id: "conveniado",
+    rotulo: "Conveniado",
+    resumo: "O que a equipe de uma empresa conveniada usa no celular para carimbar o ticket e acompanhar os carros.",
+    telas: [
+      {
+        id: "ticket-carimbado",
+        imagem: ticketCarimbado,
+        alt: "Tela Ticket carimbado no celular, com o selo Convênio, a placa, o modelo e a cor do carro, o estacionamento, a categoria, a entrada, a tabela aplicada e a hora do carimbo.",
+        titulo: "Carimbar o ticket",
+        explicacao:
+          "A empresa conveniada aponta a câmera para o QR Code do ticket do cliente, ou digita o código do ticket. O sistema confirma o carimbo e mostra a placa, o estacionamento, a categoria, a entrada, a tabela de convênio aplicada e a hora em que foi carimbado.",
+      },
+      {
+        id: "patio-conveniada",
+        imagem: patioConveniada,
+        alt: "Tela Pátio da empresa conveniada no celular, com o total de veículos carimbados, o campo de busca por placa e o cartão de um veículo com permanência, estacionamento, entrada, carimbo e tabela.",
+        titulo: "Pátio da conveniada",
+        explicacao:
+          "Lista os veículos que a empresa carimbou e que ainda estão no estacionamento, com a permanência até agora, a data da entrada, quem carimbou e a tabela de convênio. A empresa busca pela placa e atualiza a lista quando quiser, sem ligar para o estacionamento.",
       },
     ],
   },
@@ -108,10 +161,10 @@ export const perfis: PerfilSistema[] = [
       {
         id: "dashboard",
         imagem: dashboard,
-        alt: "Dashboard com o percentual de vagas ocupadas, os veículos no pátio, a permanência média e gráficos de mensalistas e avulsos, categoria e tempo no pátio.",
-        titulo: "Dashboard",
+        alt: "Visão Geral no computador, com o faturamento do dia, o mês até agora e a projeção, o pátio agora, as saídas, o ticket médio, a permanência média e a lista do que precisa de atenção.",
+        titulo: "Visão Geral",
         explicacao:
-          "O resumo do pátio agora: vagas ocupadas, veículos no pátio, permanência média e quantos estão há três dias ou mais. Gráficos mostram mensalistas e avulsos, as categorias e o tempo no pátio.",
+          "O resumo do dia em uma tela: faturamento, o que já entrou no mês e a projeção até o fim dele, as vagas ocupadas, as saídas, o ticket médio e a permanência média. Um gráfico mostra o faturamento dos últimos 30 dias por origem, e a lista \"Precisa da sua atenção\" avisa de mensalistas inadimplentes, veículos há mais de três dias e faturas abertas. Dá para ver por dia, semana ou mês.",
       },
       {
         id: "patio",
@@ -127,15 +180,23 @@ export const perfis: PerfilSistema[] = [
         alt: "Tela do caixa aberto, com o valor em caixa, o fundo de caixa, o dinheiro na gaveta e o total por forma de pagamento.",
         titulo: "Caixa",
         explicacao:
-          "O caixa aberto com o valor em caixa, o fundo de caixa e o dinheiro na gaveta. Mostra o total recebido por forma de pagamento no turno e permite lançar sangria e despesa. O histórico e os movimentos ficam a um toque.",
+          "O caixa aberto com o valor em caixa, o fundo de caixa e o dinheiro na gaveta. Mostra o total recebido por forma de pagamento no turno, com a quantidade de tickets de cada uma. O histórico e os movimentos ficam a um toque.",
       },
       {
         id: "precos",
         imagem: precos,
-        alt: "Tela de gestão de preços, com a lista de tabelas e a tarifa por tempo de permanência da tabela selecionada.",
+        alt: "Tela de gestão de preços, com as tabelas de preço, a tarifa por tempo de permanência da tabela selecionada e o simulador de cobrança.",
         titulo: "Gestão de preços",
         explicacao:
-          "As tabelas de preço do pátio, com a tarifa por tempo de permanência, a tolerância e as categorias de veículo que cada uma atende. Dá para simular a cobrança antes de usar a tabela.",
+          "As tabelas de preço do pátio, cada uma marcada como padrão ou convênio, com a tarifa por tempo de permanência, a diária, a tolerância e as categorias que atende. O simulador mostra quanto seria cobrado de uma categoria e de uma permanência antes de usar a tabela.",
+      },
+      {
+        id: "catalogo-servicos",
+        imagem: catalogoServicos,
+        alt: "Catálogo de serviços do lava-rápido, com os cartões de cada serviço, a duração, o tempo grátis no pátio e a faixa de preço por categoria de veículo.",
+        titulo: "Catálogo de serviços",
+        explicacao:
+          "Os serviços do lava-rápido, cada um com descrição, duração estimada, tempo de pátio sem cobrança e preço por categoria de veículo. O gestor cadastra um serviço novo, busca pelo nome e vê quantos estão ativos.",
       },
       {
         id: "mensalistas",
@@ -152,6 +213,14 @@ export const perfis: PerfilSistema[] = [
         titulo: "Empresas conveniadas",
         explicacao:
           "As empresas que têm convênio com o pátio, com CNPJ, contato, situação e data de início. O filtro separa os convênios ativos dos encerrados.",
+      },
+      {
+        id: "faturas",
+        imagem: faturas,
+        alt: "Lista de faturas das empresas conveniadas, com o número, a empresa, a data de emissão, o vencimento, a quantidade de saídas, o valor e a situação Paga ou Aberta.",
+        titulo: "Faturas das conveniadas",
+        explicacao:
+          "O estacionamento junta as saídas da empresa conveniada em uma fatura com vencimento e acompanha a situação: aberta, paga ou cancelada. Filtra por conveniada e emite uma fatura nova pelo botão no alto.",
       },
       {
         id: "financeiro",
@@ -176,6 +245,14 @@ export const perfis: PerfilSistema[] = [
         titulo: "Quadros de chaves",
         explicacao:
           "O quadro onde as chaves ficam penduradas no pátio, agora no sistema: cada gancho aparece livre ou ocupado. Na entrada, o sistema sugere o primeiro gancho livre para pendurar a chave do carro.",
+      },
+      {
+        id: "configuracoes",
+        imagem: configuracoes,
+        alt: "Tela de configurações da empresa, com as chaves para tornar obrigatórios o modelo, a cor e o prisma na entrada e para ligar ou desligar os serviços do lava-rápido.",
+        titulo: "Regras da empresa",
+        explicacao:
+          "A empresa escolhe o que o operador precisa preencher na entrada: modelo, cor e prisma. Aqui também liga ou desliga o módulo de serviços do lava-rápido.",
       },
     ],
   },

@@ -10,10 +10,11 @@ export const Abas = styled.div`
 `;
 
 export const Aba = styled.button`
-  /* No celular as três abas dividem a linha; a partir de sm voltam ao tamanho do texto. */
-  flex: 1 1 0;
+  /* No celular as cinco abas quebram em duas linhas e cada linha reparte o espaço; a partir de sm ficam
+     numa linha, no tamanho do texto. */
+  flex: 1 1 auto;
   min-height: 44px;
-  padding: 0 ${({ theme }) => theme.space[2]}px;
+  padding: 0 ${({ theme }) => theme.space[3]}px;
   border: 1px solid ${({ theme }) => theme.colors.bordaControle};
   border-radius: ${({ theme }) => theme.radii.full};
   background: transparent;

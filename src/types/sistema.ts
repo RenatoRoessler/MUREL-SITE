@@ -1,6 +1,6 @@
 import type { StaticImageData } from "next/image";
 
-export type IdPerfil = "cliente" | "operador" | "gestor";
+export type IdPerfil = "cliente" | "operador" | "lavador" | "conveniado" | "gestor";
 
 export type TelaPerfil = {
   id: string;
