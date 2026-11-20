@@ -70,10 +70,43 @@ export const Preco = styled.p`
   gap: ${({ theme }) => theme.space[1]}px ${({ theme }) => theme.space[2]}px;
 `;
 
+const riscar = keyframes`
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+`;
+
 export const Riscado = styled.span`
   color: ${({ theme }) => theme.colors.nevoa};
   font-size: 20px;
   font-variant-numeric: tabular-nums;
+
+  /* Com movimento, a linha do preço antigo se desenha da esquerda para a direita, um instante depois de o bloco
+     aparecer. Sem movimento (ou sem JavaScript), vale o risco normal do <s>. */
+  ${({ theme }) =>
+    comMovimento(css`
+      s {
+        position: relative;
+        text-decoration: none;
+      }
+
+      s::after {
+        content: "";
+        position: absolute;
+        inset: 52% 0 auto;
+        height: 2px;
+        background: currentColor;
+        transform-origin: left center;
+      }
+
+      [data-estado="visivel"] & s::after {
+        animation: ${riscar} 400ms ${theme.motion.curva.saida} 600ms backwards;
+      }
+    `)}
 `;
 
 const varrer = keyframes`

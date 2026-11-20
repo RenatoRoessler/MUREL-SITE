@@ -1,4 +1,6 @@
+import { BotaoMagnetico } from "@/components/ui/Button/BotaoMagnetico";
 import { Button } from "@/components/ui/Button/Button";
+import { ContadorDePreco } from "@/components/ui/ContadorDePreco/ContadorDePreco";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { urlAdesaoComPlano } from "@/lib/config";
 import { formatarDataIso, formatarReais } from "@/lib/planos/formatar";
@@ -44,10 +46,14 @@ export function CartaoPlano({ plano, teste }: CartaoPlanoProps) {
               <s>{tabela}</s>
               <SoLeitor> por </SoLeitor>
             </Riscado>
-            <Valor>{atual}</Valor>
+            <Valor>
+            <ContadorDePreco valor={plano.valorAtual} texto={atual} />
+          </Valor>
           </>
         ) : (
-          <Valor>{atual}</Valor>
+          <Valor>
+            <ContadorDePreco valor={plano.valorAtual} texto={atual} />
+          </Valor>
         )}
         <PorMes>/mês</PorMes>
       </Preco>
@@ -58,7 +64,9 @@ export function CartaoPlano({ plano, teste }: CartaoPlanoProps) {
       ) : null}
       <Garantias itens={montarGarantiasPlano(teste)} rotulo={rotuloGarantiasPlano} />
       <Chamada>
-        <Button href={urlAdesaoComPlano(plano.tipo)} variante="ghost">Assinar o plano {plano.nome.toLowerCase()}</Button>
+        <BotaoMagnetico>
+          <Button href={urlAdesaoComPlano(plano.tipo)} variante="ghost">Assinar o plano {plano.nome.toLowerCase()}</Button>
+        </BotaoMagnetico>
       </Chamada>
     </Cartao>
   );
