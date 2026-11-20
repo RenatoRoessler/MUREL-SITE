@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { LogoMurel, type LogoHandle } from "@/components/brand/LogoMurel";
 import { Button } from "@/components/ui/Button/Button";
 import { urlAcesso, urlAdesaoTeste } from "@/lib/config";
@@ -25,15 +25,28 @@ const secoes = [
   { href: "#contato", rotulo: "Contato" },
 ];
 
+// Quanto a página precisa rolar para o header ganhar fundo.
+const ROLAGEM_PARA_FUNDO_PX = 8;
+
+function assinarRolagem(avisar: () => void) {
+  window.addEventListener("scroll", avisar, { passive: true });
+  return () => window.removeEventListener("scroll", avisar);
+}
+
+// Boolean primitivo: o React só renderiza de novo quando o valor muda, não a cada pixel rolado.
+const lerRolado = () => window.scrollY > ROLAGEM_PARA_FUNDO_PX;
+const lerRoladoNoServidor = () => false;
+
 export function Header() {
   const [aberto, setAberto] = useState(false);
+  const rolado = useSyncExternalStore(assinarRolagem, lerRolado, lerRoladoNoServidor);
   const fechar = () => setAberto(false);
   const logoRef = useRef<LogoHandle>(null);
 
   return (
     <>
       <PularConteudo href="#conteudo">Ir para o conteúdo</PularConteudo>
-      <Barra>
+      <Barra $rolado={rolado}>
         <Linha>
           {/* O logo anima ao abrir a página. Hover e foco param a animação; durante ela, o clique (ou toque) só
               para, sem seguir o link. Parado, o link leva ao topo como sempre. */}
