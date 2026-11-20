@@ -31,3 +31,8 @@ export type AreaDoSistema = {
   titulo: string;
   descricao: string;
 };
+
+export type GrupoDeAreas = {
+  titulo: string;
+  areas: AreaDoSistema[];
+};

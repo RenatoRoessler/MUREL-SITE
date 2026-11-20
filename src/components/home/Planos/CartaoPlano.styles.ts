@@ -3,32 +3,18 @@
 import styled, { css } from "styled-components";
 import { brilho, comMovimento } from "@/styles/movimento";
 
+/* Corpo do bloco do plano: a borda e o fundo são do bloco, não do cartão. */
 export const Cartao = styled.article`
   position: relative;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space[4]}px;
   width: 100%;
-  max-width: 480px;
-  margin-inline: auto;
   padding: ${({ theme }) => theme.space[4]}px;
-  background: ${({ theme }) => theme.colors.asfalto2};
-  border: 2px solid ${({ theme }) => theme.colors.amarelo};
-  border-radius: ${({ theme }) => theme.radii.xl};
 
-  ${({ theme }) =>
-    comMovimento(css`
-      transition:
-        transform ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao},
-        box-shadow ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao};
-
-      @media (hover: hover) {
-        &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 0 0 1px ${theme.colors.amarelo}, 0 16px 36px rgb(255 194 14 / 0.18);
-        }
-      }
-    `)}
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.space[5]}px;
+  }
 `;
 
 export const Topo = styled.div`

@@ -1,5 +1,5 @@
 import { garantiaTestePlano } from "@/lib/planos/textos";
-import type { AreaDoSistema, TesteGratis } from "@/types/plano";
+import type { AreaDoSistema, GrupoDeAreas, TesteGratis } from "@/types/plano";
 
 export const montarGarantiasPlano = (teste: TesteGratis | null) =>
   ["Todas as funcionalidades", "Sem fidelidade", garantiaTestePlano(teste)] as const;
@@ -74,3 +74,20 @@ export const areasDoSistema: AreaDoSistema[] = [
     descricao: "Instalável como aplicativo, com tema claro e escuro.",
   },
 ];
+
+// As mesmas áreas, em quatro grupos para a leitura. Cada área está em um só grupo.
+const areasPorGrupo: Record<string, string[]> = {
+  Pátio: ["Entrada e saída de veículos", "Pátio", "Quadro de chaves"],
+  Dinheiro: ["Preços", "Caixa", "Meios de pagamento", "Financeiro", "Notas fiscais"],
+  Clientes: ["Mensalistas", "Empresas conveniadas", "Faturas das conveniadas", "Serviços do lava-rápido"],
+  "Equipe e empresa": ["Regras da empresa", "Equipe e permissões", "Acesso e empresa", "Celular, tablet e computador"],
+};
+
+export const gruposDeAreas: GrupoDeAreas[] = Object.entries(areasPorGrupo).map(([titulo, titulos]) => ({
+  titulo,
+  areas: titulos.map((nome) => {
+    const area = areasDoSistema.find((candidata) => candidata.titulo === nome);
+    if (!area) throw new Error(`Área do plano sem texto: ${nome}`);
+    return area;
+  }),
+}));

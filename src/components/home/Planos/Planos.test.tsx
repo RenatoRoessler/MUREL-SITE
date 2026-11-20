@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ofertaEmPromocao, ofertaPromocaoSemData, ofertaSemPromocao } from "@/test/oferta";
 import { renderComTema } from "@/test/render";
@@ -73,10 +73,28 @@ describe("Planos", () => {
   it("mostra as 16 áreas do sistema como incluídas no plano", () => {
     renderComTema(<Planos oferta={ofertaEmPromocao} />);
     expect(screen.getByRole("heading", { level: 3, name: "Tudo isso incluso no plano" })).toBeInTheDocument();
+    const nomes = screen.getAllByRole("listitem").map((item) => within(item).queryByText(/./, { selector: "strong" })?.textContent);
     for (const area of areasDoSistema) {
-      expect(screen.getByText(area.titulo)).toBeInTheDocument();
+      expect(nomes).toContain(area.titulo);
     }
     expect(areasDoSistema).toHaveLength(16);
+  });
+
+  it("organiza as áreas em quatro grupos", () => {
+    renderComTema(<Planos oferta={ofertaEmPromocao} />);
+    expect(screen.getAllByRole("heading", { level: 4 }).map((titulo) => titulo.textContent)).toEqual([
+      "Pátio",
+      "Dinheiro",
+      "Clientes",
+      "Equipe e empresa",
+    ]);
+  });
+
+  it("junta o mês grátis e o plano em um só bloco, com um só botão principal", () => {
+    const { container } = renderComTema(<Planos oferta={ofertaEmPromocao} />);
+    const bloco = screen.getByRole("link", { name: "Começar meu mês grátis" }).closest("div");
+    expect(bloco).toContainElement(screen.getByRole("link", { name: "Assinar o plano mensal" }));
+    expect(container.querySelectorAll("aside")).toHaveLength(1);
   });
 
   it("não cita os planos que saíram nem os preços antigos", () => {

@@ -3,7 +3,7 @@
 import styled, { css } from "styled-components";
 import { brilho, comMovimento } from "@/styles/movimento";
 
-export type VarianteBotao = "primary" | "ghost" | "whatsapp";
+export type VarianteBotao = "primary" | "ghost" | "whatsapp" | "escuro";
 export type TamanhoBotao = "md" | "sm";
 
 type EstiloBotao = { $variante: VarianteBotao; $tamanho: TamanhoBotao; $brilho?: boolean };
@@ -69,6 +69,17 @@ export const estiloBotao = css<EstiloBotao>`
           &:hover {
             background: ${theme.colors.amareloEscuro};
             border-color: ${theme.colors.amareloEscuro};
+          }
+        `;
+      case "escuro":
+        return css`
+          background: ${theme.colors.asfalto};
+          color: ${theme.colors.amarelo};
+          border: 1.5px solid ${theme.colors.asfalto};
+
+          &:hover {
+            background: ${theme.colors.asfalto3};
+            border-color: ${theme.colors.asfalto3};
           }
         `;
       case "whatsapp":

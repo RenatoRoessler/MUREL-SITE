@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
-import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { urlAdesaoComPlano } from "@/lib/config";
 import { formatarDataIso, formatarReais } from "@/lib/planos/formatar";
 import type { PlanoPago, TesteGratis } from "@/types/plano";
@@ -30,7 +29,7 @@ export function CartaoPlano({ plano, teste }: CartaoPlanoProps) {
   const fim = plano.promocao?.fim ? formatarDataIso(plano.promocao.fim) : null;
 
   return (
-    <Revelar as={Cartao}>
+    <Cartao>
       <Topo>
         <Nome>{plano.nome}</Nome>
         {plano.promocao ? (
@@ -59,8 +58,8 @@ export function CartaoPlano({ plano, teste }: CartaoPlanoProps) {
       ) : null}
       <Garantias itens={montarGarantiasPlano(teste)} rotulo={rotuloGarantiasPlano} />
       <Chamada>
-        <Button href={urlAdesaoComPlano(plano.tipo)}>Assinar o plano {plano.nome.toLowerCase()}</Button>
+        <Button href={urlAdesaoComPlano(plano.tipo)} variante="ghost">Assinar o plano {plano.nome.toLowerCase()}</Button>
       </Chamada>
-    </Revelar>
+    </Cartao>
   );
 }

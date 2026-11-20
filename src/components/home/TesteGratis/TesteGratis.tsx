@@ -1,4 +1,3 @@
-import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { urlAdesaoTeste } from "@/lib/config";
@@ -13,7 +12,7 @@ type TesteGratisProps = {
 
 export function TesteGratis({ teste }: TesteGratisProps) {
   return (
-    <Revelar as={Faixa} aria-labelledby="teste-gratis-titulo">
+    <Faixa aria-labelledby="teste-gratis-titulo">
       <Texto>
         <Rotulo>Comece sem pagar nada</Rotulo>
         <Titulo id="teste-gratis-titulo">{tituloTeste(teste)}</Titulo>
@@ -23,7 +22,9 @@ export function TesteGratis({ teste }: TesteGratisProps) {
         </Descricao>
         <Garantias itens={garantiasTeste} rotulo={rotuloGarantiasTeste} />
       </Texto>
-      <Button href={urlAdesaoTeste}>Começar meu mês grátis</Button>
-    </Revelar>
+      <Button href={urlAdesaoTeste} variante="escuro">
+        Começar meu mês grátis
+      </Button>
+    </Faixa>
   );
 }

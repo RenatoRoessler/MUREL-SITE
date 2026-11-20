@@ -2,20 +2,21 @@
 
 import styled from "styled-components";
 
+/* Faixa amarela no topo do bloco do plano (o bloco corta as pontas e leva a borda). */
 export const Faixa = styled.aside`
   display: grid;
-  gap: ${({ theme }) => theme.space[4]}px;
-  margin-bottom: ${({ theme }) => theme.space[5]}px;
+  gap: ${({ theme }) => theme.space[3]}px;
   padding: ${({ theme }) => theme.space[4]}px;
-  background: ${({ theme }) => theme.colors.asfalto2};
-  border: 2px solid ${({ theme }) => theme.colors.amarelo};
-  border-radius: ${({ theme }) => theme.radii.xl};
+  background: ${({ theme }) => theme.colors.amarelo};
+  color: ${({ theme }) => theme.colors.asfalto};
+
+  li,
+  li svg {
+    color: ${({ theme }) => theme.colors.asfalto};
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr auto;
-    gap: ${({ theme }) => theme.space[5]}px;
-    align-items: center;
-    padding: ${({ theme }) => theme.space[5]}px;
+    padding: ${({ theme }) => theme.space[4]}px ${({ theme }) => theme.space[5]}px;
   }
 `;
 
@@ -26,7 +27,7 @@ export const Texto = styled.div`
 `;
 
 export const Rotulo = styled.span`
-  color: ${({ theme }) => theme.colors.amarelo};
+  color: ${({ theme }) => theme.colors.asfalto};
   font-family: ${({ theme }) => theme.fontFamilies.mono};
   font-size: 13px;
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
@@ -43,5 +44,5 @@ export const Titulo = styled.h3`
 
 export const Descricao = styled.p`
   max-width: 62ch;
-  color: ${({ theme }) => theme.colors.nevoa};
+  color: ${({ theme }) => theme.colors.asfalto};
 `;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { areasDoSistema, montarGarantiasPlano } from "./Planos.data";
+import { areasDoSistema, gruposDeAreas, montarGarantiasPlano } from "./Planos.data";
 
 describe("montarGarantiasPlano", () => {
   it("lista as três garantias, com a duração do teste do back-end", () => {
@@ -27,5 +27,18 @@ describe("areasDoSistema", () => {
   it("não cita o que o sistema ainda não tem", () => {
     const texto = areasDoSistema.map((area) => `${area.titulo} ${area.descricao}`).join(" ");
     expect(texto).not.toMatch(/relat[óo]rio|nfs-?e|avaria|\btag\b|auditoria|redefini|resetar|reset de senha|permiss[õo]es por m[óo]dulo/i);
+  });
+});
+
+describe("gruposDeAreas", () => {
+  it("tem quatro grupos com título", () => {
+    expect(gruposDeAreas.map((grupo) => grupo.titulo)).toEqual(["Pátio", "Dinheiro", "Clientes", "Equipe e empresa"]);
+  });
+
+  it("traz todas as áreas do plano, cada uma em um só grupo", () => {
+    const nos = gruposDeAreas.flatMap((grupo) => grupo.areas.map((area) => area.titulo));
+    expect(nos).toHaveLength(areasDoSistema.length);
+    expect(new Set(nos).size).toBe(nos.length);
+    expect([...nos].sort()).toEqual(areasDoSistema.map((area) => area.titulo).sort());
   });
 });
