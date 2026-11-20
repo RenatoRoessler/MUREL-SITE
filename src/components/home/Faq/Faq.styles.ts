@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { comMovimento } from "@/styles/movimento";
 
 export const Lista = styled.div`
   display: grid;
@@ -13,6 +14,26 @@ export const Item = styled.details`
   &:first-child {
     border-top: 1px solid ${({ theme }) => theme.colors.faixaCinza};
   }
+
+  /* A altura da resposta anima de 0 até o tamanho natural. Onde o navegador não suporta, abre e fecha direto. */
+  ${({ theme }) =>
+    comMovimento(css`
+      @supports (interpolate-size: allow-keywords) {
+        interpolate-size: allow-keywords;
+
+        &::details-content {
+          height: 0;
+          overflow: clip;
+          transition:
+            height ${theme.motion.duracao.media}ms ${theme.motion.curva.saida},
+            content-visibility ${theme.motion.duracao.media}ms allow-discrete;
+        }
+
+        &[open]::details-content {
+          height: auto;
+        }
+      }
+    `)}
 `;
 
 export const Pergunta = styled.summary`
@@ -39,9 +60,17 @@ export const Pergunta = styled.summary`
     color: ${({ theme }) => theme.colors.amarelo};
   }
 
+  /* O mesmo "+" gira 45° e vira "×" quando aberto. */
   details[open] > &::after {
-    content: "\\2212";
+    transform: rotate(45deg);
   }
+
+  ${({ theme }) =>
+    comMovimento(css`
+      &::after {
+        transition: transform ${theme.motion.duracao.media}ms ${theme.motion.curva.saida};
+      }
+    `)}
 
   &:hover {
     color: ${({ theme }) => theme.colors.amarelo};

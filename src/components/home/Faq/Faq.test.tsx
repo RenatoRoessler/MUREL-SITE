@@ -110,4 +110,16 @@ describe("Faq", () => {
       expect(titulos(null)).not.toContain(pergunta);
     });
   });
+
+  it("anima a altura da resposta e gira o ícone, só quando o aparelho aceita movimento", () => {
+    renderComTema(<Faq oferta={ofertaEmPromocao} />);
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+
+    expect(css).toContain("@media (prefers-reduced-motion: no-preference)");
+    expect(css).toContain("interpolate-size");
+    expect(css).toContain("::details-content");
+    expect(css).toContain("rotate(45deg)");
+  });
 });
