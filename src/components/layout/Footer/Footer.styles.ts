@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { comMovimento } from "@/styles/movimento";
 
 export const Base = styled.footer`
   padding-block: 40px 64px;
@@ -43,29 +44,56 @@ export const Titulo = styled.h2`
   text-transform: uppercase;
 `;
 
+/* Link do rodapé: sublinhado de sempre; ao passar o mouse ou receber foco, o texto vai para o amarelo e uma
+   linha amarela se desenha da esquerda para a direita. Sem movimento, só a troca de cor. */
+const linkDoRodape = css`
+  a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: ${({ theme }) => theme.colors.giz};
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover,
+    &:focus-visible {
+      color: ${({ theme }) => theme.colors.amarelo};
+    }
+  }
+
+  ${({ theme }) =>
+    comMovimento(css`
+      a::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: calc(50% - 0.95em);
+        left: 0;
+        height: 2px;
+        background: ${theme.colors.amarelo};
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform ${theme.motion.duracao.media}ms ${theme.motion.curva.saida};
+        pointer-events: none;
+      }
+
+      a:hover::after,
+      a:focus-visible::after {
+        transform: scaleX(1);
+      }
+    `)}
+`;
+
 export const Links = styled.ul`
   display: grid;
   list-style: none;
 
-  a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    color: ${({ theme }) => theme.colors.giz};
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
+  ${linkDoRodape}
 `;
 
 export const Contato = styled(Coluna)`
-  a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    color: ${({ theme }) => theme.colors.giz};
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
+  ${linkDoRodape}
 `;
 
 export const Acoes = styled.div`
