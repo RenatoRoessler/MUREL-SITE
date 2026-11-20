@@ -122,4 +122,10 @@ describe("Faq", () => {
     expect(css).toContain("::details-content");
     expect(css).toContain("rotate(45deg)");
   });
+
+  it("diz que o lava-rápido tem fila de serviços e que a conveniada carimba o ticket", () => {
+    const texto = resposta(ofertaEmPromocao, "Que tipo de negócio a Murel atende?");
+    expect(texto).toMatch(/fila de serviços/);
+    expect(texto).toMatch(/carimba o ticket/);
+  });
 });

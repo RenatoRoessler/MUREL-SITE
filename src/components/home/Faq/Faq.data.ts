@@ -43,7 +43,7 @@ export function montarPerguntas(oferta: OfertaPlanos | null): Pergunta[] {
     {
       pergunta: "Que tipo de negócio a Murel atende?",
       resposta:
-        "Estacionamentos, valets e lava-rápidos. Avulso, mensalista e conveniado funcionam no mesmo pátio.",
+        "Estacionamentos, valets e lava-rápidos. Avulso, mensalista e conveniado funcionam no mesmo pátio. No lava-rápido, o lavador tem uma fila de serviços no celular, e a empresa conveniada carimba o ticket e acompanha os carros dela.",
     },
     {
       pergunta: "Preciso comprar impressora?",
