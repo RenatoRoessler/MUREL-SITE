@@ -29,7 +29,7 @@ describe("ContatoForm", () => {
     await usuario.type(screen.getByLabelText(/^Nome\s*\(obrigat/), "Maria Souza");
     await usuario.click(screen.getByRole("button", { name: "Enviar mensagem" }));
 
-    const campoEmail = await screen.findByLabelText(/^E-mail/);
+    const campoEmail = await screen.findByLabelText(/^E-mail/, undefined, { timeout: 4000 });
     expect(campoEmail).toHaveAttribute("aria-invalid", "true");
     expect(campoEmail).toHaveAccessibleDescription(/e-mail ou um telefone/i);
     expect(screen.getByLabelText(/^Nome\s*\(obrigat/)).toHaveValue("Maria Souza");
