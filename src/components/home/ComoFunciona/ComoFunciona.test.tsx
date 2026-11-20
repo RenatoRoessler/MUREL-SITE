@@ -33,4 +33,23 @@ describe("ComoFunciona", () => {
     renderComTema(<ComoFunciona />);
     expect(screen.getByText(/Sem impressora\. Sem e-mail e sem telefone do cliente\./)).toBeInTheDocument();
   });
+
+  it("tem um carro decorativo, escondido do leitor de tela, que não entra na lista de passos", () => {
+    const { container } = renderComTema(<ComoFunciona />);
+    const carro = container.querySelector("span[aria-hidden='true'] > svg")!.parentElement!;
+    expect(carro).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelectorAll("ol > li")).toHaveLength(4);
+    expect(within(container as HTMLElement).queryByText(/carro percorre/i)).not.toBeInTheDocument();
+  });
+
+  it("anima a pista só com movimento permitido e onde há unidades de contêiner", () => {
+    renderComTema(<ComoFunciona />);
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+    expect(css).toContain("@media (prefers-reduced-motion: no-preference)");
+    expect(css).toContain("@supports (width: 1cqw)");
+    expect(css).toContain("container-type:inline-size");
+    expect(css).toMatch(/\[data-estado="visivel"\]\s*>[^{]*::before\s*\{[^}]*clip-path:\s*inset\(0\)/);
+  });
 });

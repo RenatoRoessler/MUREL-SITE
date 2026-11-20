@@ -1,7 +1,75 @@
 "use client";
 
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { comMovimento } from "@/styles/movimento";
+
+// Faixa tracejada que se desenha de cima para baixo (celular).
+const desenharNaVertical = keyframes`
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  to {
+    clip-path: inset(0);
+  }
+`;
+
+// O carro percorre a pista e estaciona na última etapa. As posições são frações da largura da pista (100cqw):
+// as quatro etapas têm a mesma largura, então os centros ficam perto de 12,5%, 37,5%, 62,5% e 87,5%.
+const percorrer = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(calc(100cqw * 0.02));
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  20%, 30% {
+    opacity: 1;
+    transform: translateX(calc(100cqw * 0.125 - 16px));
+  }
+
+  50%, 58% {
+    opacity: 1;
+    transform: translateX(calc(100cqw * 0.375 - 16px));
+  }
+
+  78%, 86% {
+    opacity: 1;
+    transform: translateX(calc(100cqw * 0.625 - 16px));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(calc(100cqw * 0.875 - 16px));
+  }
+`;
+
+/* Pista que contém o trilho e o carro. */
+export const Pista = styled.div`
+  position: relative;
+  container-type: inline-size;
+
+  /* A rua do carro, logo abaixo das etapas (só onde o carro existe). */
+  ${({ theme }) =>
+    comMovimento(css`
+      @media (min-width: ${theme.breakpoints.lg}) {
+        @supports (width: 1cqw) {
+          &::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            left: 0;
+            top: calc(100% + 20px);
+            border-top: 2px dashed ${theme.colors.faixaCinza};
+            pointer-events: none;
+          }
+        }
+      }
+    `)}
+`;
 
 /* O fluxo é uma pista: de cima para baixo no celular e da esquerda para a direita no desktop, ligada por uma
    faixa tracejada. O passo 2 é uma escolha: abre em duas opções dentro de uma moldura tracejada. */
@@ -12,6 +80,7 @@ export const Trilho = styled.ol`
   padding-left: ${({ theme }) => theme.space[4]}px;
   border-left: 2px dashed ${({ theme }) => theme.colors.amarelo};
   list-style: none;
+  position: relative;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: flex;
@@ -21,6 +90,61 @@ export const Trilho = styled.ol`
     padding-left: 0;
     border-left: 0;
   }
+
+  /* Com movimento (e JavaScript), a faixa do celular se desenha quando a seção aparece. */
+  ${({ theme }) =>
+    comMovimento(css`
+      @media screen and (scripting: enabled) and (max-width: ${Number.parseInt(theme.breakpoints.lg, 10) - 1}px) {
+        border-left-color: transparent;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: -2px;
+          border-left: 2px dashed ${theme.colors.amarelo};
+          clip-path: inset(0 0 100% 0);
+        }
+
+        &[data-estado="visivel"]::before {
+          animation: ${desenharNaVertical} 900ms ${theme.motion.curva.saida} 200ms forwards;
+        }
+      }
+    `)}
+`;
+
+/* O carro (decorativo) anda na rua abaixo das etapas, sem passar por cima de nenhum texto. Só existe no desktop, com movimento permitido e onde há unidades de contêiner. */
+export const Carro = styled.span`
+  display: none;
+
+  ${({ theme }) =>
+    comMovimento(css`
+      @media (min-width: ${theme.breakpoints.lg}) {
+        @supports (width: 1cqw) {
+          display: block;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 32px;
+          height: 16px;
+          margin-top: 12px;
+          color: ${theme.colors.amarelo};
+          opacity: 0;
+          pointer-events: none;
+
+          svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+
+          ${Trilho}[data-estado="visivel"] + & {
+            animation: ${percorrer} 4000ms ${theme.motion.curva.padrao} 600ms both;
+          }
+        }
+      }
+    `)}
 `;
 
 export const Etapa = styled.li`
@@ -57,6 +181,33 @@ export const Etapa = styled.li`
     &:first-child::before {
       display: none;
     }
+
+    /* Com movimento (e JavaScript), cada trecho da pista se desenha, da esquerda para a direita, em sequência. */
+    ${({ theme }) =>
+      comMovimento(css`
+        @media screen and (scripting: enabled) {
+          &::before {
+            clip-path: inset(0 100% 0 0);
+          }
+
+          [data-estado="visivel"] > &::before {
+            clip-path: inset(0);
+            transition: clip-path 600ms ${theme.motion.curva.saida};
+          }
+
+          [data-estado="visivel"] > &:nth-child(2)::before {
+            transition-delay: 400ms;
+          }
+
+          [data-estado="visivel"] > &:nth-child(3)::before {
+            transition-delay: 1400ms;
+          }
+
+          [data-estado="visivel"] > &:nth-child(4)::before {
+            transition-delay: 2400ms;
+          }
+        }
+      `)}
   }
 `;
 

@@ -2,6 +2,7 @@ import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { Section } from "@/components/ui/Section/Section";
 import {
   Bifurcacao,
+  Carro,
   Conteudo,
   Descricao,
   Escolha,
@@ -9,6 +10,7 @@ import {
   Marcador,
   Opcoes,
   Passo,
+  Pista,
   Reforco,
   TituloPasso,
   Trilho,
@@ -71,28 +73,38 @@ export function ComoFunciona() {
       titulo="Do carro que entra ao carro que sai"
       lede="O ticket é 100% digital. O cliente leva de duas formas, a que for mais fácil para ele."
     >
-      <Revelar as={Trilho} modo="filhos">
-        {etapas.map((grupo) => (
-          <Etapa key={grupo[0].marcador}>
-            <Conteudo>
-              {grupo.length === 1 ? (
-                <CartaoDoPasso passo={grupo[0]} />
-              ) : (
-                <Bifurcacao>
-                  <Escolha>Passo {Number.parseInt(grupo[0].marcador, 10)} · escolha uma</Escolha>
-                  <Opcoes>
-                    {grupo.map((passo) => (
-                      <li key={passo.marcador}>
-                        <CartaoDoPasso passo={passo} />
-                      </li>
-                    ))}
-                  </Opcoes>
-                </Bifurcacao>
-              )}
-            </Conteudo>
-          </Etapa>
-        ))}
-      </Revelar>
+      <Pista>
+        <Revelar as={Trilho} modo="filhos">
+          {etapas.map((grupo) => (
+            <Etapa key={grupo[0].marcador}>
+              <Conteudo>
+                {grupo.length === 1 ? (
+                  <CartaoDoPasso passo={grupo[0]} />
+                ) : (
+                  <Bifurcacao>
+                    <Escolha>Passo {Number.parseInt(grupo[0].marcador, 10)} · escolha uma</Escolha>
+                    <Opcoes>
+                      {grupo.map((passo) => (
+                        <li key={passo.marcador}>
+                          <CartaoDoPasso passo={passo} />
+                        </li>
+                      ))}
+                    </Opcoes>
+                  </Bifurcacao>
+                )}
+              </Conteudo>
+            </Etapa>
+          ))}
+        </Revelar>
+        <Carro aria-hidden="true">
+          <svg viewBox="0 0 32 16" fill="none">
+            <rect x="1" y="1" width="30" height="14" rx="6" fill="currentColor" />
+            <rect x="17" y="3" width="8" height="10" rx="2" fill="#0E1729" />
+            <circle cx="29" cy="4.5" r="1.4" fill="#FFF6CC" />
+            <circle cx="29" cy="11.5" r="1.4" fill="#FFF6CC" />
+          </svg>
+        </Carro>
+      </Pista>
       <Revelar as={Reforco}>Sem impressora. Sem e-mail e sem telefone do cliente.</Revelar>
     </Section>
   );
