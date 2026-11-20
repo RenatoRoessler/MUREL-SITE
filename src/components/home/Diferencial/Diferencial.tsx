@@ -1,4 +1,5 @@
 import { Revelar } from "@/components/ui/Revelar/Revelar";
+import { RoloDeDigitos } from "@/components/ui/RoloDeDigitos/RoloDeDigitos";
 import { Section } from "@/components/ui/Section/Section";
 import {
   Descricao,
@@ -37,7 +38,9 @@ export function Diferencial() {
       <Revelar as={Lista} modo="filhos">
         {diferenciais.map((item) => (
           <Item key={item.titulo}>
-            <Numero aria-hidden="true">{item.numero}</Numero>
+            <Numero aria-hidden="true">
+              <RoloDeDigitos valor={Number(item.numero)} />
+            </Numero>
             <TituloItem>
               {item.numero} {item.titulo.toLowerCase()}
             </TituloItem>

@@ -4,40 +4,30 @@ import styled from "styled-components";
 
 export const Lista = styled.ul`
   display: grid;
+  gap: ${({ theme }) => theme.space[3]}px;
   list-style: none;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: ${({ theme }) => theme.space[4]}px;
   }
 `;
 
+/* Três cartões, com o número grande no topo. */
 export const Item = styled.li`
   display: grid;
   gap: ${({ theme }) => theme.space[2]}px;
   align-content: start;
-  padding-block: ${({ theme }) => theme.space[4]}px;
-  border-top: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
-
-  &:first-child {
-    border-top: 0;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-inline: ${({ theme }) => theme.space[4]}px;
-    border-top: 0;
-    border-left: 2px dashed ${({ theme }) => theme.colors.faixaCinza};
-
-    &:first-child {
-      padding-left: 0;
-      border-left: 0;
-    }
-  }
+  padding: ${({ theme }) => theme.space[4]}px;
+  background: ${({ theme }) => theme.colors.asfalto2};
+  border: 1px solid ${({ theme }) => theme.colors.faixaCinza};
+  border-radius: ${({ theme }) => theme.radii.xl};
 `;
 
 export const Numero = styled.span`
-  font-size: 56px;
+  font-size: clamp(64px, 9vw, 96px);
   font-weight: ${({ theme }) => theme.fontWeights.extrabold};
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
   color: ${({ theme }) => theme.colors.amarelo};
 `;
