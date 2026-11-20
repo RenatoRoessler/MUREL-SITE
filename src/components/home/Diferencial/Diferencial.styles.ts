@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "styled-components";
+import { CartaoComFarol } from "@/components/ui/CartaoComFarol/CartaoComFarol";
 
 export const Lista = styled.ul`
   display: grid;
@@ -14,7 +15,7 @@ export const Lista = styled.ul`
 `;
 
 /* Três cartões, com o número grande no topo. */
-export const Item = styled.li`
+export const Item = styled(CartaoComFarol).attrs({ forwardedAs: "li" })`
   display: grid;
   gap: ${({ theme }) => theme.space[2]}px;
   align-content: start;

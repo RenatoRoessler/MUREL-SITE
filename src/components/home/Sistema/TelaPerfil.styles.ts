@@ -1,8 +1,10 @@
 "use client";
 
 import styled from "styled-components";
+import { CartaoComFarol } from "@/components/ui/CartaoComFarol/CartaoComFarol";
 
-export const Slide = styled.article<{ $retrato: boolean }>`
+export const Slide = styled(CartaoComFarol).attrs({ forwardedAs: "article" })<{ $retrato: boolean }>`
+  border-radius: ${({ theme }) => theme.radii.xl};
   display: grid;
   /* A coluna não cresce com a imagem: a tela larga rola dentro da moldura, não empurra o texto. */
   grid-template-columns: minmax(0, 1fr);

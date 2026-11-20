@@ -1,6 +1,7 @@
 import { Simbolo } from "@/components/brand/Simbolo";
 import patio from "@/assets/telas/operador/patio.webp";
 import ticket from "@/assets/telas/operador/ticket.webp";
+import { BotaoMagnetico } from "@/components/ui/Button/BotaoMagnetico";
 import { Button } from "@/components/ui/Button/Button";
 import { Garantias } from "@/components/ui/Garantias/Garantias";
 import { TelaSistema } from "@/components/ui/TelaSistema/TelaSistema";
@@ -8,8 +9,10 @@ import { Container } from "@/components/ui/Section/Section.styles";
 import { urlAdesaoTeste } from "@/lib/config";
 import { botaoTeste } from "@/lib/planos/textos";
 import type { TesteGratis } from "@/types/plano";
+import { vidaDoPatio, vidaDoTicket } from "../Sistema/Sistema.vida";
 import { garantiasTeste, rotuloGarantiasTeste } from "../TesteGratis/TesteGratis.data";
-import { Apoio, Aparelho, Aparelhos, Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
+import { AparelhosInterativos } from "./AparelhosInterativos";
+import { Apoio, Aparelho, Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
 
 const tamanhosDoAparelho = "(min-width: 1024px) 240px, 170px";
 
@@ -31,7 +34,9 @@ export function Hero({ teste }: HeroProps) {
             telefone do cliente. O ticket é 100% digital.
           </Subtitulo>
           <Chamadas>
-            <Button href={urlAdesaoTeste} brilho>{botaoTeste(teste)}</Button>
+            <BotaoMagnetico>
+              <Button href={urlAdesaoTeste} brilho>{botaoTeste(teste)}</Button>
+            </BotaoMagnetico>
             <Button href="#contato" variante="ghost">
               Falar com a equipe
             </Button>
@@ -39,7 +44,7 @@ export function Hero({ teste }: HeroProps) {
           <Garantias itens={garantiasTeste} rotulo={rotuloGarantiasTeste} />
         </Texto>
         <Marca>
-          <Aparelhos>
+          <AparelhosInterativos>
             <Aparelho $posicao="fundo">
               <TelaSistema
                 imagem={patio}
@@ -47,6 +52,7 @@ export function Hero({ teste }: HeroProps) {
                 sizes={tamanhosDoAparelho}
                 focavel={false}
                 prioridade
+                vida={vidaDoPatio}
               />
             </Aparelho>
             <Aparelho $posicao="frente">
@@ -55,12 +61,13 @@ export function Hero({ teste }: HeroProps) {
                 alt="Ticket de um veículo no celular, com a permanência, o valor até agora e o serviço de lavagem na fila."
                 sizes={tamanhosDoAparelho}
                 focavel={false}
+                vida={vidaDoTicket}
               />
             </Aparelho>
             <Apoio>
               <Simbolo animado />
             </Apoio>
-          </Aparelhos>
+          </AparelhosInterativos>
         </Marca>
       </Topo>
     </Container>

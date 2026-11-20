@@ -1,7 +1,7 @@
 "use client";
 
 import styled, { css, keyframes } from "styled-components";
-import { comMovimento, revelar } from "@/styles/movimento";
+import { comCursorFino, comMovimento, desenhar, revelar } from "@/styles/movimento";
 
 export const Topo = styled.section`
   display: grid;
@@ -14,16 +14,6 @@ export const Topo = styled.section`
     gap: ${({ theme }) => theme.space[7]}px;
     /* Mais justo embaixo: a faixa de diferenciais aparece inteira na primeira tela (1280x800). */
     padding-block: 48px 40px;
-  }
-`;
-
-const desenhar = keyframes`
-  from {
-    background-size: 0% 0.09em;
-  }
-
-  to {
-    background-size: 100% 0.09em;
   }
 `;
 
@@ -128,6 +118,31 @@ export const Aparelhos = styled.div`
     comMovimento(css`
       animation: ${revelar} ${theme.motion.duracao.lenta}ms ${theme.motion.curva.saida} 300ms backwards;
     `)}
+
+  /* Só com mouse e em tela larga: o conjunto inclina até 6° (theme.motion.cursor.inclinacao) para onde o cursor está (--rx e --ry,
+     de -1 a 1) e cada camada fica numa profundidade, então o símbolo, as telas e o brilho se mexem em ritmos
+     diferentes. */
+  ${({ theme }) =>
+    comCursorFino(css`
+      @media (min-width: ${theme.breakpoints.lg}) {
+        transform-style: preserve-3d;
+        transform: perspective(1000px) rotateX(calc(var(--ry, 0) * ${-theme.motion.cursor.inclinacao}deg))
+          rotateY(calc(var(--rx, 0) * ${theme.motion.cursor.inclinacao}deg));
+        transition: transform ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao};
+
+        /* Brilho à frente: uma luz suave que anda no sentido oposto ao do cursor. */
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 8%;
+          border-radius: 50%;
+          background: radial-gradient(closest-side, rgb(255 255 255 / 0.07), transparent);
+          transform: translateZ(90px) translate(calc(var(--rx, 0) * -28px), calc(var(--ry, 0) * -28px));
+          transition: transform ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao};
+          pointer-events: none;
+        }
+      }
+    `)}
 `;
 
 export const Aparelho = styled.div<{ $posicao: "fundo" | "frente" }>`
@@ -144,6 +159,13 @@ export const Aparelho = styled.div<{ $posicao: "fundo" | "frente" }>`
     left: ${({ $posicao }) => ($posicao === "fundo" ? "0" : "44%")};
     width: 200px;
   }
+
+  ${({ $posicao, theme }) =>
+    comCursorFino(css`
+      @media (min-width: ${theme.breakpoints.lg}) {
+        transform: rotate(${$posicao === "fundo" ? "-5deg" : "4deg"}) translateZ(${$posicao === "fundo" ? "-30px" : "40px"});
+      }
+    `)}
 
   /* Profundidade: as duas telas sobem em ritmos diferentes conforme a página rola (a da frente, mais). Só onde o
      navegador sabe ligar animação à rolagem; nos outros, ficam paradas. Usa a propriedade translate, que não
@@ -177,4 +199,12 @@ export const Apoio = styled.div`
     right: 6%;
     width: 96px;
   }
+
+  /* Ao fundo, na profundidade do tilt (só com mouse). */
+  ${({ theme }) =>
+    comCursorFino(css`
+      @media (min-width: ${theme.breakpoints.lg}) {
+        transform: translateZ(-70px);
+      }
+    `)}
 `;
