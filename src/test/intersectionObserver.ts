@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { vi, type Mock } from "vitest";
 
 type Callback = (entradas: Partial<IntersectionObserverEntry>[]) => void;
 
@@ -6,7 +6,7 @@ export interface ObservadorFalso {
   // O último elemento observado (compatibilidade) e todos os observados.
   alvo: Element | null;
   alvos: Element[];
-  desconectar: ReturnType<typeof vi.fn>;
+  desconectar: Mock<() => void>;
   // Avisa que o último elemento observado entrou na tela.
   mostrar: () => void;
   // Avisa que um elemento específico entrou ou saiu da tela.
