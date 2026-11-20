@@ -29,8 +29,10 @@ describe("ContatoForm", () => {
     await usuario.type(screen.getByLabelText(/^Nome\s*\(obrigat/), "Maria Souza");
     await usuario.click(screen.getByRole("button", { name: "Enviar mensagem" }));
 
-    const campoEmail = await screen.findByLabelText(/^E-mail/, undefined, { timeout: 4000 });
-    expect(campoEmail).toHaveAttribute("aria-invalid", "true");
+    // O campo já existe antes da resposta da ação: espera o erro chegar, não o campo aparecer.
+    // O campo com erro é recriado a cada tentativa (para o tremor rodar de novo): busca de novo, sem guardar o antigo.
+    await waitFor(() => expect(screen.getByLabelText(/^E-mail/)).toHaveAttribute("aria-invalid", "true"), { timeout: 4000 });
+    const campoEmail = screen.getByLabelText(/^E-mail/);
     expect(campoEmail).toHaveAccessibleDescription(/e-mail ou um telefone/i);
     expect(screen.getByLabelText(/^Nome\s*\(obrigat/)).toHaveValue("Maria Souza");
     expect(screen.getByLabelText(/Mensagem/)).toHaveValue("Quero conhecer o sistema.");
@@ -98,5 +100,37 @@ describe("ContatoForm", () => {
     expect(aviso).toHaveAttribute("id", "contato-aviso");
     expect(screen.getByLabelText(/^E-mail/)).toHaveAccessibleDescription(aviso.textContent ?? "");
     expect(screen.getByLabelText(/^Telefone com DDD/)).toHaveAccessibleDescription(aviso.textContent ?? "");
+  });
+});
+
+describe("ContatoForm: retorno visual", () => {
+  it("recria o campo com erro a cada nova tentativa, para o tremor rodar de novo", async () => {
+    const acao = vi.fn(
+      async (): Promise<EstadoContato> => ({
+        status: "erro-validacao",
+        erros: { email: "Informe um e-mail ou um telefone para a gente responder." },
+        valores,
+      }),
+    );
+    const usuario = userEvent.setup();
+    renderComTema(<ContatoForm acao={acao} />);
+
+    await usuario.click(screen.getByRole("button", { name: "Enviar mensagem" }));
+    await waitFor(() => expect(screen.getByLabelText(/^E-mail/)).toHaveAttribute("aria-invalid", "true"), { timeout: 4000 });
+    const primeiro = screen.getByLabelText(/^E-mail/);
+
+    await usuario.click(screen.getByRole("button", { name: "Enviar mensagem" }));
+    await waitFor(() => expect(screen.getByLabelText(/^E-mail/)).not.toBe(primeiro), { timeout: 4000 });
+    expect(screen.getByLabelText(/^E-mail/)).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("mostra o selo de sucesso, sem esconder o texto, ao enviar", async () => {
+    const acao = vi.fn(async (): Promise<EstadoContato> => ({ status: "enviado" }));
+    const usuario = userEvent.setup();
+    const { container } = renderComTema(<ContatoForm acao={acao} />);
+
+    await usuario.click(screen.getByRole("button", { name: "Enviar mensagem" }));
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Mensagem enviada."), { timeout: 4000 });
+    expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   });
 });

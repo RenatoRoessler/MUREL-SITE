@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css, type DefaultTheme, keyframes } from "styled-components";
+import { comMovimento, girar, tremor } from "@/styles/movimento";
 
 export const Whatsapp = styled.div`
   display: grid;
@@ -38,10 +39,45 @@ export const Grade = styled.div`
   }
 `;
 
-export const Campo = styled.div`
+/* Campos de texto ($flutuante): com movimento, o rótulo descansa dentro do campo e sobe para a faixa de cima ao
+   receber foco ou ter conteúdo. O espaço do rótulo é o mesmo nos dois estados (a faixa de cima fica reservada),
+   então o formulário não muda de altura. Sem movimento, o rótulo fica sempre em cima, como sempre foi. */
+export const Campo = styled.div<{ $flutuante?: boolean }>`
+  position: relative;
   display: grid;
   gap: ${({ theme }) => theme.space[1]}px;
   align-content: start;
+
+  ${({ $flutuante, theme }) =>
+    $flutuante &&
+    comMovimento(css`
+      label {
+        position: absolute;
+        top: 0;
+        left: 14px;
+        z-index: 1;
+        max-width: calc(100% - 28px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        pointer-events: none;
+        transform: translateY(39px);
+        transition:
+          transform ${theme.motion.duracao.media}ms ${theme.motion.curva.saida},
+          font-size ${theme.motion.duracao.media}ms ${theme.motion.curva.saida};
+      }
+
+      /* A faixa do rótulo fica reservada acima do campo. */
+      padding-top: 26px;
+
+      &:focus-within label,
+      &:has(input:not(:placeholder-shown)) label,
+      &:has(input:-webkit-autofill) label {
+        left: 0;
+        max-width: 100%;
+        transform: none;
+      }
+    `)}
 `;
 
 export const Rotulo = styled.label`
@@ -61,8 +97,17 @@ const baseEntrada = `
   font: inherit;
 `;
 
+/* Campo com erro treme uma vez (3 idas e vindas curtas) quando o erro aparece. */
+const tremerAoErrar = ({ theme }: { theme: DefaultTheme }) =>
+  comMovimento(css`
+    &[aria-invalid="true"] {
+      animation: ${tremor} ${theme.motion.duracao.media}ms ease-in-out 1;
+    }
+  `);
+
 export const Entrada = styled.input<{ $invalido?: boolean }>`
   ${baseEntrada}
+  ${tremerAoErrar}
   color: ${({ theme }) => theme.colors.giz};
   background: ${({ theme }) => theme.colors.asfalto2};
   border: 1px solid
@@ -76,6 +121,7 @@ export const Entrada = styled.input<{ $invalido?: boolean }>`
 
 export const Selecao = styled.select<{ $invalido?: boolean }>`
   ${baseEntrada}
+  ${tremerAoErrar}
   color: ${({ theme }) => theme.colors.giz};
   background: ${({ theme }) => theme.colors.asfalto2};
   border: 1px solid
@@ -85,6 +131,7 @@ export const Selecao = styled.select<{ $invalido?: boolean }>`
 
 export const AreaTexto = styled.textarea<{ $invalido?: boolean }>`
   ${baseEntrada}
+  ${tremerAoErrar}
   min-height: 140px;
   resize: vertical;
   color: ${({ theme }) => theme.colors.giz};
@@ -145,6 +192,73 @@ export const Rodape = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: ${({ theme }) => theme.space[3]}px;
+`;
+
+/* Indicador de carregamento do botão de enviar. */
+export const Carregando = styled.span`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: ${({ theme }) => theme.space[2]}px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+
+  ${comMovimento(css`
+    animation: ${girar} 700ms linear infinite;
+  `)}
+`;
+
+const desenharTraco = keyframes`
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+`;
+
+const surgirSelo = keyframes`
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+`;
+
+/* Círculo com check que se desenha ao confirmar o envio. Sem movimento, já aparece pronto. */
+export const SeloOk = styled.svg`
+  width: 48px;
+  height: 48px;
+  fill: none;
+  stroke: ${({ theme }) => theme.colors.ok};
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  circle,
+  path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  ${({ theme }) =>
+    comMovimento(css`
+      animation: ${surgirSelo} ${theme.motion.duracao.lenta}ms ${theme.motion.curva.elastica} backwards;
+
+      circle {
+        animation: ${desenharTraco} 600ms ${theme.motion.curva.saida} backwards;
+      }
+
+      path {
+        animation: ${desenharTraco} 400ms ${theme.motion.curva.saida} 400ms backwards;
+      }
+    `)}
 `;
 
 export const Confirmacao = styled.div`

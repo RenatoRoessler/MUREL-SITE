@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
+import { BotaoMagnetico } from "@/components/ui/Button/BotaoMagnetico";
 import { Button } from "@/components/ui/Button/Button";
 import type { CamposContato, EstadoContato, ErrosContato } from "@/types/contato";
 import {
@@ -10,6 +11,7 @@ import {
   Aviso,
   AvisoDoPar,
   Campo,
+  Carregando,
   Confirmacao,
   Entrada,
   Formulario,
@@ -20,9 +22,12 @@ import {
   Rodape,
   Rotulo,
   Selecao,
+  SeloOk,
 } from "./Contato.styles";
 
 type AcaoContato = (estado: EstadoContato, formData: FormData) => Promise<EstadoContato>;
+
+type EstadoComTentativa = EstadoContato & { tentativa: number };
 
 const valoresVazios: CamposContato = {
   nome: "",
@@ -47,14 +52,30 @@ const rotulos: Record<keyof CamposContato, string> = {
 function BotaoEnviar() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending} aria-disabled={pending}>
-      {pending ? "Enviando..." : "Enviar mensagem"}
-    </Button>
+    <BotaoMagnetico>
+      <Button type="submit" disabled={pending} aria-disabled={pending}>
+        {pending ? (
+          <>
+            <Carregando aria-hidden="true" />
+            Enviando...
+          </>
+        ) : (
+          "Enviar mensagem"
+        )}
+      </Button>
+    </BotaoMagnetico>
   );
 }
 
 export function ContatoForm({ acao }: { acao: AcaoContato }) {
-  const [estado, formAction] = useActionState(acao, { status: "inicial" } as EstadoContato);
+  // `tentativa` conta os envios: com ela o campo com erro é recriado e o tremor roda de novo a cada tentativa.
+  const [estado, formAction] = useActionState(
+    async (anterior: EstadoComTentativa, dados: FormData): Promise<EstadoComTentativa> => ({
+      ...(await acao(anterior, dados)),
+      tentativa: anterior.tentativa + 1,
+    }),
+    { status: "inicial", tentativa: 0 } as EstadoComTentativa,
+  );
   const resumoRef = useRef<HTMLDivElement>(null);
 
   const valores = "valores" in estado ? estado.valores : valoresVazios;
@@ -69,6 +90,10 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
   if (estado.status === "enviado") {
     return (
       <Confirmacao role="status">
+        <SeloOk viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" pathLength={1} />
+          <path d="M14 25l7 7 13-15" pathLength={1} />
+        </SeloOk>
         <h3>Mensagem enviada.</h3>
         <p>Recebemos o seu contato e a equipe da Murel responde por e-mail ou telefone, conforme você informou.</p>
       </Confirmacao>
@@ -84,6 +109,9 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
     "aria-describedby": [erros[campo] ? `contato-${campo}-erro` : null, ligadoAoAviso ? "contato-aviso" : null].filter(Boolean).join(" ") || undefined,
     $invalido: Boolean(erros[campo]),
   });
+
+  // Recria o campo a cada tentativa com erro, para o tremor rodar de novo.
+  const chave = (campo: keyof CamposContato) => `${campo}-${erros[campo] ? estado.tentativa : 0}`;
 
   const erroDe = (campo: keyof CamposContato) =>
     erros[campo] ? <MensagemErro id={`contato-${campo}-erro`}>{erros[campo]}</MensagemErro> : null;
@@ -118,25 +146,25 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
       ) : null}
 
       <Grade>
-        <Campo>
+        <Campo $flutuante>
           <Rotulo htmlFor="contato-nome">
             Nome <Opcional>(obrigatório)</Opcional>
           </Rotulo>
-          <Entrada {...propsCampo("nome")} type="text" autoComplete="name" required />
+          <Entrada key={chave("nome")} placeholder=" " {...propsCampo("nome")} type="text" autoComplete="name" required />
           {erroDe("nome")}
         </Campo>
-        <Campo>
+        <Campo $flutuante>
           <Rotulo htmlFor="contato-patio">
             Nome do pátio <Opcional>(opcional)</Opcional>
           </Rotulo>
-          <Entrada {...propsCampo("patio")} type="text" autoComplete="organization" />
+          <Entrada key={chave("patio")} placeholder=" " {...propsCampo("patio")} type="text" autoComplete="organization" />
           {erroDe("patio")}
         </Campo>
         <Campo>
           <Rotulo htmlFor="contato-tipo">
             Tipo de negócio <Opcional>(opcional)</Opcional>
           </Rotulo>
-          <Selecao {...propsCampo("tipo")}>
+          <Selecao key={chave("tipo")} {...propsCampo("tipo")}>
             <option value="">Escolha uma opção</option>
             <option value="estacionamento">Estacionamento</option>
             <option value="valet">Valet</option>
@@ -148,18 +176,18 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
       </Grade>
 
       <Grade>
-        <Campo>
+        <Campo $flutuante>
           <Rotulo htmlFor="contato-email">
             E-mail <Opcional>(ou telefone)</Opcional>
           </Rotulo>
-          <Entrada {...propsCampo("email", true)} type="email" autoComplete="email" />
+          <Entrada key={chave("email")} placeholder=" " {...propsCampo("email", true)} type="email" autoComplete="email" />
           {erroDe("email")}
         </Campo>
-        <Campo>
+        <Campo $flutuante>
           <Rotulo htmlFor="contato-telefone">
             Telefone com DDD <Opcional>(ou e-mail)</Opcional>
           </Rotulo>
-          <Entrada {...propsCampo("telefone", true)} type="tel" autoComplete="tel" />
+          <Entrada key={chave("telefone")} placeholder=" " {...propsCampo("telefone", true)} type="tel" autoComplete="tel" />
           {erroDe("telefone")}
         </Campo>
         <AvisoDoPar id="contato-aviso">Informe pelo menos um: e-mail ou telefone, para a gente poder responder.</AvisoDoPar>
@@ -169,7 +197,7 @@ export function ContatoForm({ acao }: { acao: AcaoContato }) {
         <Rotulo htmlFor="contato-mensagem">
           Mensagem <Opcional>(obrigatório)</Opcional>
         </Rotulo>
-        <AreaTexto {...propsCampo("mensagem")} rows={5} required />
+        <AreaTexto key={chave("mensagem")} {...propsCampo("mensagem")} rows={5} required />
         {erroDe("mensagem")}
       </Campo>
 
