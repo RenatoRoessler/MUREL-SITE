@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { brilho, comMovimento } from "@/styles/movimento";
 
 export const Cartao = styled.article`
   position: relative;
@@ -14,6 +15,20 @@ export const Cartao = styled.article`
   background: ${({ theme }) => theme.colors.asfalto2};
   border: 2px solid ${({ theme }) => theme.colors.amarelo};
   border-radius: ${({ theme }) => theme.radii.xl};
+
+  ${({ theme }) =>
+    comMovimento(css`
+      transition:
+        transform ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao},
+        box-shadow ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao};
+
+      @media (hover: hover) {
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 0 0 1px ${theme.colors.amarelo}, 0 16px 36px rgb(255 194 14 / 0.18);
+        }
+      }
+    `)}
 `;
 
 export const Topo = styled.div`
@@ -41,6 +56,25 @@ export const Selo = styled.span`
   letter-spacing: 0.1em;
   line-height: 16px;
   text-transform: uppercase;
+
+  /* Mesmo brilho dos botões: cruza o selo 3 vezes e para. */
+  ${({ theme }) =>
+    comMovimento(css`
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        z-index: -1;
+        width: 40%;
+        background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.5), transparent);
+        animation: ${brilho} 6s ${theme.motion.curva.padrao} 1.5s 3 backwards;
+        pointer-events: none;
+      }
+    `)}
 `;
 
 export const Preco = styled.p`

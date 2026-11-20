@@ -1,6 +1,7 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { comMovimento } from "@/styles/movimento";
 
 export const Passos = styled.ol`
   display: grid;
@@ -23,6 +24,22 @@ export const Passo = styled.li`
   padding: ${({ theme }) => theme.space[3]}px ${({ theme }) => theme.space[4]}px;
   border: 1px solid ${({ theme }) => theme.colors.faixaCinza};
   border-radius: ${({ theme }) => theme.radii.lg};
+
+  ${({ theme }) =>
+    comMovimento(css`
+      transition:
+        transform ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao},
+        border-color ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao},
+        box-shadow ${theme.motion.duracao.rapida}ms ${theme.motion.curva.padrao};
+
+      @media (hover: hover) {
+        &:hover {
+          transform: translateY(-4px);
+          border-color: ${theme.colors.amarelo};
+          box-shadow: 0 12px 28px rgb(0 0 0 / 0.35);
+        }
+      }
+    `)}
 `;
 
 export const Marcador = styled.span`
