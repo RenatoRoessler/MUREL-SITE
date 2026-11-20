@@ -17,6 +17,13 @@ export const Slide = styled.article<{ $retrato: boolean }>`
     grid-template-columns: ${({ $retrato }) => ($retrato ? "minmax(0, 300px) minmax(0, 1fr)" : "minmax(0, 7fr) minmax(0, 5fr)")};
     gap: ${({ theme }) => theme.space[5]}px;
   }
+
+  /* No painel do desktop (lista de telas ao lado), a tela cresce: o celular chega a 360 px e a tela larga ocupa
+     a coluna toda, com o texto embaixo. */
+  @media (min-width: 1024px) and (scripting: enabled) {
+    grid-template-columns: ${({ $retrato }) => ($retrato ? "minmax(0, 360px) minmax(0, 1fr)" : "minmax(0, 1fr)")};
+    align-items: ${({ $retrato }) => ($retrato ? "center" : "start")};
+  }
 `;
 
 /* Em retrato, a tela do celular ocupa uma coluna estreita e centralizada no celular. */
@@ -24,6 +31,10 @@ export const Imagem = styled.div<{ $retrato: boolean }>`
   width: 100%;
   max-width: ${({ $retrato }) => ($retrato ? "300px" : "none")};
   margin-inline: ${({ $retrato }) => ($retrato ? "auto" : "0")};
+
+  @media (min-width: 1024px) and (scripting: enabled) {
+    max-width: ${({ $retrato }) => ($retrato ? "360px" : "none")};
+  }
 `;
 
 export const Texto = styled.div`

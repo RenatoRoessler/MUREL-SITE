@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/Button/Button";
 import { Section } from "@/components/ui/Section/Section";
 import { urlAdesaoTeste } from "@/lib/config";
 import type { PerfilSistema } from "@/types/sistema";
-import { CarrosselTelas } from "./CarrosselTelas";
 import { SeletorPerfil } from "./SeletorPerfil";
 import { perfilInicial, perfis } from "./Sistema.data";
 import { Chamada } from "./Sistema.styles";
 import { TelaPerfil } from "./TelaPerfil";
+import { TelasDoPerfil } from "./TelasDoPerfil";
 
 type SistemaProps = {
   dados?: PerfilSistema[];
@@ -18,10 +18,10 @@ export function Sistema({ dados = perfis }: SistemaProps) {
     rotulo: perfil.rotulo,
     resumo: perfil.resumo,
     conteudo: (
-      <CarrosselTelas
-        rotulo={`Telas do perfil ${perfil.rotulo}`}
+      <TelasDoPerfil
+        rotulo={perfil.rotulo}
         estreito={perfil.telas[0].imagem.height > perfil.telas[0].imagem.width}
-        slides={perfil.telas.map((tela) => ({ id: tela.id, conteudo: <TelaPerfil tela={tela} /> }))}
+        telas={perfil.telas.map((tela) => ({ id: tela.id, titulo: tela.titulo, conteudo: <TelaPerfil tela={tela} /> }))}
       />
     ),
   }));

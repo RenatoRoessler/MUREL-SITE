@@ -1,6 +1,7 @@
 "use client";
 
-import { type KeyboardEvent, type ReactNode, useId, useRef, useState } from "react";
+import { type ReactNode, useId, useState } from "react";
+import { useNavegacaoPorSetas } from "@/hooks/useNavegacaoPorSetas";
 import type { IdPerfil } from "@/types/sistema";
 import { Aba, Abas, Painel, Resumo } from "./SeletorPerfil.styles";
 
@@ -19,26 +20,8 @@ type SeletorPerfilProps = {
 
 export function SeletorPerfil({ perfis, inicial, rotulo }: SeletorPerfilProps) {
   const base = useId();
-  const abas = useRef<(HTMLButtonElement | null)[]>([]);
   const [ativo, setAtivo] = useState<IdPerfil>(inicial);
-
-  const selecionar = (indice: number) => {
-    const alvo = (indice + perfis.length) % perfis.length;
-    setAtivo(perfis[alvo].id);
-    abas.current[alvo]?.focus();
-  };
-
-  const aoTeclar = (evento: KeyboardEvent<HTMLButtonElement>, indice: number) => {
-    const destinos: Record<string, number> = {
-      ArrowRight: indice + 1,
-      ArrowLeft: indice - 1,
-      Home: 0,
-      End: perfis.length - 1,
-    };
-    if (!(evento.key in destinos)) return;
-    evento.preventDefault();
-    selecionar(destinos[evento.key]);
-  };
+  const { registrar, aoTeclar } = useNavegacaoPorSetas<HTMLButtonElement>(perfis.length, (indice) => setAtivo(perfis[indice].id));
 
   return (
     <div>
@@ -46,9 +29,7 @@ export function SeletorPerfil({ perfis, inicial, rotulo }: SeletorPerfilProps) {
         {perfis.map((perfil, indice) => (
           <Aba
             key={perfil.id}
-            ref={(el) => {
-              abas.current[indice] = el;
-            }}
+            ref={registrar(indice)}
             type="button"
             role="tab"
             id={`${base}-aba-${perfil.id}`}

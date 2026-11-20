@@ -20,6 +20,14 @@ export const Trilho = styled.div`
   @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
+
+  /* No desktop com JavaScript, o trilho vira um painel: só a tela ativa aparece e a lista de telas a troca. */
+  @media (min-width: 1024px) and (scripting: enabled) {
+    display: block;
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
 `;
 
 export const Item = styled.div<{ $estreito: boolean }>`
@@ -31,12 +39,26 @@ export const Item = styled.div<{ $estreito: boolean }>`
     flex-basis: ${({ $estreito }) => ($estreito ? "620px" : "82%")};
     max-width: ${({ $estreito }) => ($estreito ? "620px" : "880px")};
   }
+
+  @media (min-width: 1024px) and (scripting: enabled) {
+    flex-basis: auto;
+    max-width: none;
+
+    &[data-ativo="false"] {
+      display: none;
+    }
+  }
 `;
 
 export const Controles = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.space[3]}px;
+
+  /* No desktop com JavaScript, a lista de telas faz o papel dos pontos e das setas. */
+  @media (min-width: 1024px) and (scripting: enabled) {
+    display: none;
+  }
 `;
 
 export const Pontos = styled.div`

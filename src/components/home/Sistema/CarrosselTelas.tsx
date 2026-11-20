@@ -12,13 +12,25 @@ type CarrosselTelasProps = {
   rotulo: string;
   slides: SlideCarrossel[];
   estreito?: boolean;
+  // Tela ativa, quando quem usa controla o estado (ex.: a lista de telas do desktop). Sem isso, o carrossel
+  // guarda a própria posição.
+  atual?: number;
+  aoMudar?: (indice: number) => void;
 };
 
-export function CarrosselTelas({ rotulo, slides, estreito = false }: CarrosselTelasProps) {
+export function CarrosselTelas({ rotulo, slides, estreito = false, atual: atualControlado, aoMudar }: CarrosselTelasProps) {
   const trilho = useRef<HTMLDivElement>(null);
   const itens = useRef<(HTMLDivElement | null)[]>([]);
   const quadro = useRef(0);
-  const [atual, setAtual] = useState(0);
+  const [atualInterno, setAtualInterno] = useState(0);
+  const atual = atualControlado ?? atualInterno;
+  const setAtual = useCallback(
+    (indice: number) => {
+      setAtualInterno(indice);
+      aoMudar?.(indice);
+    },
+    [aoMudar],
+  );
   const total = slides.length;
 
   const calcularAtual = useCallback(() => {
@@ -39,7 +51,7 @@ export function CarrosselTelas({ rotulo, slides, estreito = false }: CarrosselTe
       }
     });
     setAtual(maisPerto);
-  }, [total]);
+  }, [total, setAtual]);
 
   useEffect(() => () => cancelAnimationFrame(quadro.current), []);
 
@@ -68,6 +80,7 @@ export function CarrosselTelas({ rotulo, slides, estreito = false }: CarrosselTe
             aria-roledescription="slide"
             aria-label={`Tela ${indice + 1} de ${total}`}
             $estreito={estreito}
+            data-ativo={indice === atual}
           >
             {slide.conteudo}
           </Item>
