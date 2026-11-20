@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { Button } from "@/components/ui/Button/Button";
+import { Marcador } from "@/components/ui/Marcador/Marcador";
 import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { type GrupoDoFaq, normalizarTexto } from "./Faq.data";
 import { Item, Lista, Pergunta, Resposta } from "./Faq.styles";
@@ -93,8 +94,12 @@ export function PerguntasFaq({ grupos }: PerguntasFaqProps) {
                     open={abertas.has(item.pergunta)}
                     onToggle={(evento) => alternar(item.pergunta, evento.currentTarget.open)}
                   >
-                    <Pergunta>{item.pergunta}</Pergunta>
-                    <Resposta>{item.resposta}</Resposta>
+                    <Pergunta>
+                      <Marcador texto={item.pergunta} termo={busca} />
+                    </Pergunta>
+                    <Resposta>
+                      <Marcador texto={item.resposta} termo={busca} />
+                    </Resposta>
                   </Item>
                 ))}
               </Lista>
