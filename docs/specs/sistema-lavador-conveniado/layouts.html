@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seletor de cinco perfis: 3 modelos</title>
+<style>
+:root{--asfalto:#0E1729;--asfalto2:#16223A;--faixa:#3A4C6B;--borda:#6B80A4;--amarelo:#FFC20E;--giz:#F4F1E8;--nevoa:#9AA3B5}
+*{box-sizing:border-box;margin:0}
+body{background:#070d1a;color:var(--giz);font:16px/1.5 system-ui,sans-serif;padding:24px}
+h1{font-size:22px;margin-bottom:4px}p.sub{color:var(--nevoa);margin-bottom:24px}
+.modelo{margin-bottom:40px}
+.modelo h2{font-size:18px;color:var(--amarelo);margin-bottom:2px}
+.modelo .nota{color:var(--nevoa);font-size:14px;margin-bottom:12px;max-width:80ch}
+.pares{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+.tela{background:var(--asfalto);border:1px solid var(--faixa);border-radius:12px;padding:16px}
+.tela.m{width:360px}.tela.d{width:820px}
+.tela small{display:block;color:var(--nevoa);font-size:12px;margin-bottom:10px}
+.abas{display:flex;gap:8px;margin-bottom:12px}
+.aba{min-height:44px;padding:0 16px;border:1px solid var(--borda);border-radius:9999px;background:transparent;color:var(--giz);font:600 16px system-ui;white-space:nowrap}
+.aba.on{background:var(--amarelo);border-color:var(--amarelo);color:var(--asfalto)}
+.m .abas.a{flex-wrap:wrap}.m .abas.a .aba{flex:1 1 auto}
+.abas.b{overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(90deg,#000 85%,transparent)}
+.grupo{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.grupo .rot{font:600 11px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--nevoa);width:100%}
+.d .grupo{flex-wrap:nowrap}.d .grupo .rot{width:auto;min-width:110px}
+.resumo{color:var(--nevoa);font-size:15px;margin-top:6px}
+.fake{margin-top:12px;height:90px;border:1px dashed var(--faixa);border-radius:10px;display:grid;place-items:center;color:var(--faixa);font-size:13px}
+.m .fake{height:130px}
+</style>
+<h1>Seletor de cinco perfis: três modelos</h1>
+<p class="sub">Perfil aberto por padrão: Operador. Ordem: Cliente, Operador, Lavador, Conveniado, Gestor.</p>
+
+<section class="modelo"><h2>Modelo A: abas em duas linhas no celular (recomendado)</h2>
+<p class="nota">As abas quebram de linha quando faltam espaço (3 + 2 em 360 px) e ficam numa linha só no desktop. Tudo visível, sem gesto.</p>
+<div class="pares">
+ <div class="tela m"><small>Celular, 360 px</small><div class="abas a"><span class="aba">Cliente</span><span class="aba on">Operador</span><span class="aba">Lavador</span><span class="aba">Conveniado</span><span class="aba">Gestor</span></div><p class="resumo">O que a equipe do pátio usa na entrada e na saída, pelo celular.</p><div class="fake">telas do perfil</div></div>
+ <div class="tela d"><small>Desktop</small><div class="abas"><span class="aba">Cliente</span><span class="aba on">Operador</span><span class="aba">Lavador</span><span class="aba">Conveniado</span><span class="aba">Gestor</span></div><p class="resumo">O que a equipe do pátio usa na entrada e na saída, pelo celular.</p><div class="fake">telas do perfil</div></div>
+</div></section>
+
+<section class="modelo"><h2>Modelo B: uma linha com rolagem horizontal</h2>
+<p class="nota">Uma linha só, rolável, com a aba ativa sempre trazida para a vista. Quem não rola não vê "Conveniado" e "Gestor" (a máscara na borda sugere que há mais).</p>
+<div class="pares">
+ <div class="tela m"><small>Celular, 360 px</small><div class="abas b"><span class="aba">Cliente</span><span class="aba on">Operador</span><span class="aba">Lavador</span><span class="aba">Conveniado</span><span class="aba">Gestor</span></div><p class="resumo">O que a equipe do pátio usa na entrada e na saída, pelo celular.</p><div class="fake">telas do perfil</div></div>
+ <div class="tela d"><small>Desktop</small><div class="abas"><span class="aba">Cliente</span><span class="aba on">Operador</span><span class="aba">Lavador</span><span class="aba">Conveniado</span><span class="aba">Gestor</span></div><p class="resumo">O que a equipe do pátio usa na entrada e na saída, pelo celular.</p><div class="fake">telas do perfil</div></div>
+</div></section>
+
+<section class="modelo"><h2>Modelo C: dois grupos com rótulo</h2>
+<p class="nota">Explica a divisão: quem usa no dia a dia do pátio e quem administra. Mais interface para uma escolha simples.</p>
+<div class="pares">
+ <div class="tela m"><small>Celular, 360 px</small>
+  <div class="grupo"><span class="rot">No pátio</span><span class="aba">Cliente</span><span class="aba on">Operador</span><span class="aba">Lavador</span><span class="aba">Conveniado</span></div>
+  <div class="grupo"><span class="rot">Administração</span><span class="aba">Gestor</span></div>
+  <p class="resumo">O que a equipe do pátio usa na entrada e na saída, pelo celular.</p><div class="fake">telas do perfil</div></div>
+ <div class="tela d"><small>Desktop</small>
+  <div class="grupo"><span class="rot">No pátio</span><span class="aba">Cliente</span><span class="aba on">Operador</span><span class="aba">Lavador</span><span class="aba">Conveniado</span></div>
+  <div class="grupo"><span class="rot">Administração</span><span class="aba">Gestor</span></div>
+  <p class="resumo">O que a equipe do pátio usa na entrada e na saída, pelo celular.</p><div class="fake">telas do perfil</div></div>
+</div></section>
+</html>
