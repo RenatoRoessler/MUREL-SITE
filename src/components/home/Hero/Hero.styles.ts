@@ -12,7 +12,8 @@ export const Topo = styled.section`
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1.15fr 0.85fr;
     gap: ${({ theme }) => theme.space[7]}px;
-    padding-block: 88px 104px;
+    /* Mais justo embaixo: a faixa de diferenciais aparece inteira na primeira tela (1280x800). */
+    padding-block: 48px 40px;
   }
 `;
 
@@ -96,6 +97,16 @@ export const Marca = styled.div`
   justify-content: center;
 `;
 
+const flutuar = keyframes`
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: 0 var(--deslocamento);
+  }
+`;
+
 /* Par de celulares sobrepostos em ângulo leve: o pátio atrás e o ticket na frente. No celular o par entra pela
    base do Hero, cortado com degradê para sugerir que há mais. */
 export const Aparelhos = styled.div`
@@ -108,7 +119,7 @@ export const Aparelhos = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     max-width: 480px;
-    height: 600px;
+    height: 540px;
     overflow: visible;
     mask-image: none;
   }
@@ -129,13 +140,26 @@ export const Aparelho = styled.div<{ $posicao: "fundo" | "frente" }>`
   filter: drop-shadow(0 18px 30px rgb(0 0 0 / 0.45));
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    top: ${({ $posicao }) => ($posicao === "fundo" ? "20px" : "64px")};
+    top: ${({ $posicao }) => ($posicao === "fundo" ? "16px" : "80px")};
     left: ${({ $posicao }) => ($posicao === "fundo" ? "0" : "44%")};
-    width: 240px;
+    width: 200px;
   }
+
+  /* Profundidade: as duas telas sobem em ritmos diferentes conforme a página rola (a da frente, mais). Só onde o
+     navegador sabe ligar animação à rolagem; nos outros, ficam paradas. Usa a propriedade translate, que não
+     briga com o transform da rotação. */
+  ${({ $posicao }) =>
+    comMovimento(css`
+      @supports (animation-timeline: scroll()) {
+        --deslocamento: ${$posicao === "fundo" ? "-20px" : "-50px"};
+        animation: ${flutuar} linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 600px;
+      }
+    `)}
 `;
 
-/* O símbolo da marca fica como apoio, no canto, sem cobrir as telas. */
+/* O símbolo da marca fica como apoio, no canto de cima, sem cobrir as telas. */
 export const Apoio = styled.div`
   position: absolute;
   top: 0;
@@ -149,9 +173,8 @@ export const Apoio = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    top: auto;
-    bottom: 12px;
-    left: -4%;
-    width: 128px;
+    left: auto;
+    right: 6%;
+    width: 96px;
   }
 `;

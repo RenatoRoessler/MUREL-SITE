@@ -52,4 +52,14 @@ describe("Hero", () => {
     expect(screen.getByRole("img", { name: /Tela do pátio no celular/ })).not.toHaveAttribute("loading", "lazy");
     expect(screen.getByRole("img", { name: /Ticket de um veículo no celular/ })).toHaveAttribute("loading", "lazy");
   });
+
+  it("liga o movimento das telas à rolagem só onde há suporte, e só com movimento permitido", () => {
+    renderComTema(<Hero teste={ofertaEmPromocao.teste} />);
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+    expect(css).toMatch(/@supports \(animation-timeline:\s*scroll\(\)\)/);
+    expect(css).toContain("animation-timeline:scroll(root)");
+    expect(css).toContain("translate:0 var(--deslocamento)");
+  });
 });
