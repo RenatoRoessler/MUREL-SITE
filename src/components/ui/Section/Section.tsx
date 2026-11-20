@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Revelar } from "@/components/ui/Revelar/Revelar";
-import { Cabecalho, Container, Faixa, Lede, Titulo } from "./Section.styles";
+import { TituloEmLinhas } from "@/components/ui/TituloEmLinhas/TituloEmLinhas";
+import { Cabecalho, Container, Faixa, Lede } from "./Section.styles";
 
 type SectionProps = {
   id: string;
@@ -17,7 +18,7 @@ export function Section({ id, titulo, lede, revelar = false, fundo, children }: 
   const idTitulo = `${id}-titulo`;
   const textos = (
     <>
-      <Titulo id={idTitulo}>{titulo}</Titulo>
+      <TituloEmLinhas id={idTitulo} texto={titulo} />
       {lede ? <Lede>{lede}</Lede> : null}
     </>
   );
