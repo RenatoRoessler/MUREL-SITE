@@ -43,6 +43,12 @@ export const Acordeao = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.faixaCinza};
 `;
 
+export const Contagem = styled.span`
+  color: ${({ theme }) => theme.colors.nevoa};
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
+`;
+
 export const Detalhe = styled.details`
   border-bottom: 1px solid ${({ theme }) => theme.colors.faixaCinza};
 
@@ -65,6 +71,10 @@ export const Resumo = styled.summary`
 
   &::-webkit-details-marker {
     display: none;
+  }
+
+  & > span:first-child {
+    margin-right: auto;
   }
 
   &::after {

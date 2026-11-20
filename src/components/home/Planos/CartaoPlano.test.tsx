@@ -79,4 +79,13 @@ describe("CartaoPlano", () => {
       unmount();
     }
   });
+
+  it("passa uma faixa de luz sobre o preço, uma vez, só com movimento permitido", () => {
+    renderComTema(<CartaoPlano plano={planoMensalEmPromocao} teste={teste} />);
+    const css = Array.from(document.querySelectorAll("style"))
+      .map((estilo) => estilo.textContent)
+      .join("");
+    expect(css).toContain("@media (prefers-reduced-motion: no-preference)");
+    expect(css).toMatch(/\[data-estado="visivel"\][^{]*::after\{[^}]*animation:[^;]*1 backwards/);
+  });
 });

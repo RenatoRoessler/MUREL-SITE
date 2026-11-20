@@ -3,7 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import type { GrupoDeAreas } from "@/types/plano";
 import { Area, DescricaoArea, NomeArea } from "./Planos.styles";
-import { Acordeao, Detalhe, Grade, Grupo, ListaAreas, Resumo, TituloGrupo } from "./GruposDoPlano.styles";
+import { Acordeao, Contagem, Detalhe, Grade, Grupo, ListaAreas, Resumo, TituloGrupo } from "./GruposDoPlano.styles";
 
 const CONSULTA_TELA_LARGA = "(min-width: 768px)";
 
@@ -81,7 +81,10 @@ export function GruposDoPlano({ grupos }: GruposDoPlanoProps) {
           open={abertos.has(grupo.titulo)}
           onToggle={(evento) => alternar(grupo.titulo, evento.currentTarget.open)}
         >
-          <Resumo>{grupo.titulo}</Resumo>
+          <Resumo>
+            <span>{grupo.titulo}</span>
+            <Contagem>{grupo.areas.length === 1 ? "1 área" : `${grupo.areas.length} áreas`}</Contagem>
+          </Resumo>
           <Areas grupo={grupo} />
         </Detalhe>
       ))}

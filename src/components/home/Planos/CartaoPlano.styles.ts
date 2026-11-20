@@ -1,6 +1,6 @@
 "use client";
 
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { brilho, comMovimento } from "@/styles/movimento";
 
 /* Corpo do bloco do plano: a borda e o fundo são do bloco, não do cartão. */
@@ -76,12 +76,43 @@ export const Riscado = styled.span`
   font-variant-numeric: tabular-nums;
 `;
 
+const varrer = keyframes`
+  from {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+
+  to {
+    transform: translateX(320%) skewX(-20deg);
+  }
+`;
+
 export const Valor = styled.span`
+  position: relative;
+  overflow: hidden;
   font-size: 44px;
   font-weight: ${({ theme }) => theme.fontWeights.extrabold};
   letter-spacing: -0.03em;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
+
+  /* Uma faixa de luz atravessa o preço uma vez, um instante depois de o bloco do plano aparecer. */
+  ${({ theme }) =>
+    comMovimento(css`
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 40%;
+        background: linear-gradient(90deg, transparent, rgb(255 194 14 / 0.35), transparent);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      [data-estado="visivel"] &::after {
+        opacity: 1;
+        animation: ${varrer} 1000ms ${theme.motion.curva.padrao} 600ms 1 backwards;
+      }
+    `)}
 `;
 
 export const PorMes = styled.span`

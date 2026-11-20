@@ -64,4 +64,17 @@ describe("GruposDoPlano", () => {
       .join("");
     expect(css).toMatch(/content:"\+"/);
   });
+
+  it("no celular, cada grupo mostra quantas áreas tem", () => {
+    simularTela(false);
+    const { container } = renderComTema(<GruposDoPlano grupos={gruposDeAreas} />);
+    const resumos = Array.from(container.querySelectorAll("summary")).map((resumo) => resumo.textContent);
+    expect(resumos).toEqual(["Pátio3 áreas", "Dinheiro5 áreas", "Clientes4 áreas", "Equipe e empresa4 áreas"]);
+  });
+
+  it("usa o singular quando o grupo tem uma área só", () => {
+    simularTela(false);
+    const { container } = renderComTema(<GruposDoPlano grupos={[{ titulo: "Único", areas: [areasDoSistema[0]] }]} />);
+    expect(container.querySelector("summary")).toHaveTextContent("Único1 área");
+  });
 });
