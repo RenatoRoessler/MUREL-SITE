@@ -1,3 +1,4 @@
+import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { Section } from "@/components/ui/Section/Section";
 import type { OfertaPlanos } from "@/types/plano";
 import { montarPerguntas } from "./Faq.data";
@@ -9,15 +10,15 @@ type FaqProps = {
 
 export function Faq({ oferta }: FaqProps) {
   return (
-    <Section id="perguntas" titulo="Perguntas frequentes">
-      <Lista>
+    <Section id="perguntas" revelar titulo="Perguntas frequentes">
+      <Revelar as={Lista} modo="filhos">
         {montarPerguntas(oferta).map((item) => (
           <Item key={item.pergunta}>
             <Pergunta>{item.pergunta}</Pergunta>
             <Resposta>{item.resposta}</Resposta>
           </Item>
         ))}
-      </Lista>
+      </Revelar>
     </Section>
   );
 }

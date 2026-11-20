@@ -43,6 +43,7 @@ export function Planos({ oferta }: PlanosProps) {
   return (
     <Section
       id="planos"
+      revelar
       titulo="Um plano, tudo incluso, sem fidelidade."
       lede="Sem módulo extra, sem limite de vagas e sem multa para cancelar."
     >

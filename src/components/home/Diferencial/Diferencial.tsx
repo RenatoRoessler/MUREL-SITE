@@ -1,3 +1,4 @@
+import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { Section } from "@/components/ui/Section/Section";
 import {
   Descricao,
@@ -29,10 +30,11 @@ export function Diferencial() {
   return (
     <Section
       id="diferencial"
+      revelar
       titulo="Sem papel e sem cadastro do cliente."
       lede="Na entrada, o operador registra só os dados do carro: placa, modelo e cor. O ticket é digital e fica com o cliente."
     >
-      <Lista>
+      <Revelar as={Lista} modo="filhos">
         {diferenciais.map((item) => (
           <Item key={item.titulo}>
             <Numero aria-hidden="true">{item.numero}</Numero>
@@ -42,7 +44,7 @@ export function Diferencial() {
             <Descricao>{item.descricao}</Descricao>
           </Item>
         ))}
-      </Lista>
+      </Revelar>
     </Section>
   );
 }

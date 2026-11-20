@@ -1,3 +1,4 @@
+import { Revelar } from "@/components/ui/Revelar/Revelar";
 import { Section } from "@/components/ui/Section/Section";
 import {
   Descricao,
@@ -40,10 +41,11 @@ export function ComoFunciona() {
   return (
     <Section
       id="como-funciona"
+      revelar
       titulo="Do carro que entra ao carro que sai"
       lede="O ticket é 100% digital. O cliente leva de duas formas, a que for mais fácil para ele."
     >
-      <Passos>
+      <Revelar as={Passos} modo="filhos">
         {passos.map((passo) => (
           <Passo key={passo.marcador}>
             <Marcador>Passo {passo.marcador}</Marcador>
@@ -51,8 +53,8 @@ export function ComoFunciona() {
             <Descricao>{passo.descricao}</Descricao>
           </Passo>
         ))}
-      </Passos>
-      <Reforco>Sem impressora. Sem e-mail e sem telefone do cliente.</Reforco>
+      </Revelar>
+      <Revelar as={Reforco}>Sem impressora. Sem e-mail e sem telefone do cliente.</Revelar>
     </Section>
   );
 }
