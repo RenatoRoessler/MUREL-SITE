@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8">
+<title>Redesenho da home: 9 modelos</title>
+<style>
+:root{--asfalto:#0E1729;--asfalto2:#16223A;--asfalto3:#22304B;--faixa:#3A4C6B;--borda:#6B80A4;--amarelo:#FFC20E;--giz:#F4F1E8;--nevoa:#9AA3B5}
+*{box-sizing:border-box;margin:0}
+body{background:#050a14;color:var(--giz);font:16px/1.5 system-ui,Segoe UI,sans-serif;padding:24px}
+h1{font-size:24px}.sub{color:var(--nevoa);margin:4px 0 28px}
+h2.bloco{font-size:20px;border-bottom:2px solid var(--amarelo);padding-bottom:6px;margin:36px 0 18px}
+.modelo{margin-bottom:34px}.modelo h3{color:var(--amarelo);font-size:17px}.nota{color:var(--nevoa);font-size:14px;margin:2px 0 12px;max-width:90ch}
+.par{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+.f{background:var(--asfalto);border:1px solid var(--faixa);border-radius:12px;padding:18px;overflow:hidden}
+.f small{display:block;color:var(--nevoa);font-size:12px;margin-bottom:10px}
+.m{width:360px}.d{width:980px}
+h4{font-size:34px;line-height:1.02;letter-spacing:-.03em;font-weight:800}.m h4{font-size:30px}h4 em{color:var(--amarelo);font-style:normal}
+p.l{color:var(--nevoa);font-size:15px;margin:10px 0}
+.btn{display:inline-block;padding:11px 20px;border-radius:14px;font-weight:800;font-size:15px;background:var(--amarelo);color:var(--asfalto);border:1.5px solid var(--amarelo)}
+.btn.g{background:transparent;color:var(--giz);border-color:var(--borda)}
+.chk{color:var(--nevoa);font-size:13px;margin-top:10px}.chk b{color:var(--amarelo)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center}.m .hero{grid-template-columns:1fr}
+.fone{background:var(--asfalto3);border-radius:34px;padding:9px;box-shadow:0 0 0 1px var(--borda),0 24px 50px rgba(0,0,0,.45);width:270px}
+.fone img{display:block;width:100%;border-radius:26px}
+.sym{width:110px;height:auto}
+.m .corte{height:300px;overflow:hidden;position:relative;margin-top:14px;display:flex;justify-content:center}
+.m .corte::after{content:"";position:absolute;inset:auto 0 0 0;height:90px;background:linear-gradient(transparent,var(--asfalto))}
+.m .fone{width:230px}
+.camadas{position:relative;height:430px;display:grid;place-items:center}
+.camadas .sym{position:absolute;width:300px;right:-10px;top:10px;opacity:.95}.camadas .fone{position:absolute;bottom:-110px;right:50px;width:250px}
+.m .camadas{height:380px}.m .camadas .sym{width:220px;right:-20px}.m .camadas .fone{width:210px;right:60px}
+.duplo{position:relative;height:430px}.duplo .fone{position:absolute;width:225px}.duplo .fone:nth-child(1){left:20px;top:30px;transform:rotate(-5deg)}.duplo .fone:nth-child(2){left:200px;top:70px;transform:rotate(4deg)}
+.m .duplo{height:330px}.m .duplo .fone{width:170px}.m .duplo .fone:nth-child(2){left:150px}
+.apoio{position:absolute;left:-10px;bottom:20px;background:var(--asfalto);padding:8px;border-radius:14px}
+.rel{position:relative}
+.oferta{border:2px solid var(--amarelo);border-radius:18px;background:var(--asfalto2);overflow:hidden}
+.selo{display:inline-block;background:var(--amarelo);color:var(--asfalto);font:600 11px ui-monospace,monospace;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.preco{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:8px 0}.ponto>div{min-width:0;flex:1}.m .preco b{font-size:36px}.preco s{color:var(--nevoa)}.preco b{font-size:42px;letter-spacing:-.03em}
+.cols{display:grid;grid-template-columns:1fr 1fr}.m .cols{grid-template-columns:1fr}
+.cols>div{padding:22px}.cols>div+div{border-left:1.5px dashed var(--faixa)}.m .cols>div+div{border-left:0;border-top:1.5px dashed var(--faixa)}
+.faixaTopo{background:var(--amarelo);color:var(--asfalto);padding:10px 20px;font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.faixaTopo .btn{background:var(--asfalto);color:var(--amarelo);border-color:var(--asfalto)}
+.corpo{padding:22px}
+.tempo{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;padding:24px}.m .tempo{grid-template-columns:1fr;gap:6px}
+.ponto{display:flex;gap:12px;align-items:flex-start}.ponto i{width:14px;height:14px;border-radius:50%;background:var(--amarelo);margin-top:6px;flex:none}
+.lin{border-top:2px dashed var(--faixa)}.m .lin{border-top:0;border-left:2px dashed var(--faixa);height:28px;margin-left:6px}
+.grupos{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:22px}.m .grupos{grid-template-columns:1fr;gap:0}
+.grupos h5{font-size:15px;margin-bottom:6px}.grupos li{color:var(--nevoa);font-size:13px;margin-left:16px}
+.m .grupos div{border-top:1px solid var(--faixa);padding:12px 0}
+.nodo{background:var(--asfalto2);border:1px solid var(--faixa);border-radius:14px;padding:12px 14px;font-size:14px}.nodo b{display:block;font-size:15px;color:var(--giz)}.nodo span{color:var(--amarelo);font:600 11px ui-monospace,monospace;letter-spacing:.06em}
+.pista{display:flex;align-items:center;gap:0}.pista .lin2{width:34px;border-top:2px dashed var(--amarelo);flex:none}
+.fork{display:grid;gap:8px;position:relative;padding:8px 14px;border-left:2px dashed var(--amarelo);border-right:2px dashed var(--amarelo);border-radius:12px}
+.rot{font:600 11px ui-monospace,monospace;letter-spacing:.08em;color:var(--amarelo);text-transform:uppercase;text-align:center}
+.vert{display:grid;gap:0;margin-left:14px;border-left:2px dashed var(--amarelo);padding-left:20px}.vert>*{margin:7px 0;position:relative}.vert>*::before{content:"";position:absolute;left:-29px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--amarelo)}
+.par2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ou{text-align:center;color:var(--amarelo);font:600 11px ui-monospace,monospace}
+.setas{display:flex;align-items:stretch;gap:8px}.setas>div.sg{display:flex;align-items:center;color:var(--amarelo);font-size:20px}
+.m .setas{flex-direction:column}.m .setas>div.sg{justify-content:center;transform:rotate(90deg);height:22px}
+.mini{display:grid;gap:8px}
+</style>
+<body>
+<h1>Redesenho da home: 9 modelos</h1>
+<p class="sub">Três modelos para cada bloco: Hero, Plano e Como funciona. Dados e textos atuais do site. Celular 360 px e desktop.</p>
+<template id="sym"><svg class="sym" viewBox="0 0 240 160"><g fill="#FFC20E"><rect x="14" y="14" width="212" height="16" rx="8"/><rect x="14" y="20" width="16" height="120" rx="8"/><rect x="80" y="20" width="16" height="120" rx="8"/><rect x="144" y="20" width="16" height="120" rx="8"/><rect x="210" y="20" width="16" height="120" rx="8"/><rect x="104" y="64" width="34" height="62" rx="14"/></g><rect x="112" y="78" width="18" height="22" rx="6" fill="#0E1729"/></svg></template>
+<template id="fone"><div class="fone"><img src="../../../src/assets/telas/operador/patio.webp" alt=""></div></template>
+<template id="fone2"><div class="fone"><img src="../../../src/assets/telas/operador/ticket.webp" alt=""></div></template>
+
+<h2 class="bloco">1. Hero com a tela do produto</h2>
+
+<div class="modelo"><h3>Hero A: moldura grande à direita, símbolo de apoio (recomendado)</h3><p class="nota">Texto como hoje; à direita o celular com a tela do pátio. O símbolo vira apoio, menor, encostado na base. No celular a moldura entra logo abaixo dos botões, cortada com degradê.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><h4>Seu pátio <em>sob controle.</em></h4><p class="l">O sistema de quem cuida de carro: estacionamentos, valets e lava-rápidos.</p><span class="btn">Comece com 1 mês grátis</span><div class="chk"><b>✓</b> Todas as funcionalidades · <b>✓</b> Sem cartão</div><div class="corte" data-fone></div></div>
+ <div class="f d"><small>Desktop</small><div class="hero"><div><h4>Seu pátio <em>sob controle.</em></h4><p class="l">O sistema de quem cuida de carro: estacionamentos, valets e lava-rápidos. Avulso, mensalista e conveniado no mesmo pátio, sem impressora.</p><span class="btn">Comece com 1 mês grátis</span> <span class="btn g">Falar com a equipe</span><div class="chk"><b>✓</b> Todas as funcionalidades · <b>✓</b> Sem cartão de crédito · <b>✓</b> Sem compromisso</div></div><div class="rel" style="display:grid;place-items:center" data-fone data-apoio></div></div></div>
+</div></div>
+
+<div class="modelo"><h3>Hero B: duas molduras sobrepostas, pátio e ticket</h3><p class="nota">Mostra duas telas, em ângulo leve. Mais produto por pixel, mas mais pesado de carregar.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><h4>Seu pátio <em>sob controle.</em></h4><span class="btn" style="margin-top:12px">Comece com 1 mês grátis</span><div class="duplo" style="margin-top:14px"><span data-fone-solto></span><span data-fone2-solto></span></div></div>
+ <div class="f d"><small>Desktop</small><div class="hero"><div><h4>Seu pátio <em>sob controle.</em></h4><p class="l">O sistema de quem cuida de carro: estacionamentos, valets e lava-rápidos.</p><span class="btn">Comece com 1 mês grátis</span> <span class="btn g">Falar com a equipe</span></div><div class="duplo"><span data-fone-solto></span><span data-fone2-solto></span></div></div></div>
+</div></div>
+
+<div class="modelo"><h3>Hero C: símbolo grande com o celular nascendo por baixo</h3><p class="nota">O símbolo da marca continua protagonista e o celular sobe por trás dele, em camadas. Mais próximo do Hero de hoje, com menos produto visível.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><h4>Seu pátio <em>sob controle.</em></h4><span class="btn" style="margin-top:12px">Comece com 1 mês grátis</span><div class="camadas" data-camadas></div></div>
+ <div class="f d"><small>Desktop</small><div class="hero"><div><h4>Seu pátio <em>sob controle.</em></h4><p class="l">O sistema de quem cuida de carro: estacionamentos, valets e lava-rápidos.</p><span class="btn">Comece com 1 mês grátis</span> <span class="btn g">Falar com a equipe</span></div><div class="camadas" data-camadas></div></div></div>
+</div></div>
+
+<h2 class="bloco">2. Bloco do plano (teste grátis + preço)</h2>
+
+<div class="modelo"><h3>Plano A: duas colunas, mês grátis e preço</h3><p class="nota">Mês grátis à esquerda (botão principal), plano à direita (botão de contorno), separados por linha tracejada. No celular, empilha.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><div class="oferta"><div class="cols"><div><span class="selo">Comece sem pagar nada</span><h4 style="font-size:24px;margin-top:8px">1 mês grátis, com o sistema completo</h4><p class="l">Sem cartão. Nada é cobrado automaticamente.</p><span class="btn">Começar meu mês grátis</span></div><div><b>Mensal</b> <span class="selo">Lançamento · até 30/06/2027</span><div class="preco"><s>R$ 99,90</s><b>R$ 69,90</b><span>/mês</span></div><span class="btn g">Assinar o plano mensal</span></div></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="oferta"><div class="cols"><div><span class="selo">Comece sem pagar nada</span><h4 style="font-size:28px;margin-top:8px">1 mês grátis, com o sistema completo</h4><p class="l">Use o sistema no seu pátio, sem cadastrar cartão. Nada é cobrado automaticamente: depois de 30 dias, você decide.</p><span class="btn">Começar meu mês grátis</span></div><div><b>Mensal</b> <span class="selo">Preço de lançamento · assine até 30/06/2027</span><div class="preco"><s>R$ 99,90</s><b>R$ 69,90</b><span>/mês</span></div><p class="l">R$ 69,90/mês até 30/06/2027; depois, R$ 99,90/mês.</p><span class="btn g">Assinar o plano mensal</span></div></div></div></div>
+</div></div>
+
+<div class="modelo"><h3>Plano B: cartão do plano com faixa do mês grátis no topo</h3><p class="nota">A faixa amarela no topo chama o mês grátis; o corpo traz o plano e o preço.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><div class="oferta"><div class="faixaTopo"><span>1 mês grátis, sem cartão</span><span class="btn">Começar grátis</span></div><div class="corpo"><b>Mensal</b><div class="preco"><s>R$ 99,90</s><b>R$ 69,90</b><span>/mês</span></div><p class="l">Preço de lançamento até 30/06/2027.</p><span class="btn g">Assinar o plano mensal</span></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="oferta" style="max-width:560px;margin:auto"><div class="faixaTopo"><span>1 mês grátis, com o sistema completo, sem cartão</span><span class="btn">Começar meu mês grátis</span></div><div class="corpo"><b>Mensal</b> <span class="selo">Preço de lançamento · assine até 30/06/2027</span><div class="preco"><s>R$ 99,90</s><b>R$ 69,90</b><span>/mês</span></div><p class="l">R$ 69,90/mês até 30/06/2027; depois, R$ 99,90/mês.</p><span class="btn g">Assinar o plano mensal</span></div></div></div>
+</div></div>
+
+<div class="modelo"><h3>Plano C: linha do tempo "Hoje, depois" (recomendado)</h3><p class="nota">Mostra o dinheiro em um olhar: hoje o mês grátis, depois o preço. O botão principal fica sob o primeiro ponto. Abaixo, "Tudo isso incluso" em 4 grupos (acordeão no celular).</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><div class="oferta"><div class="tempo"><div class="ponto"><i></i><div><span class="selo">Hoje</span><h4 style="font-size:24px;margin:6px 0">1 mês grátis</h4><p class="l" style="margin-top:0">Sistema completo, sem cartão.</p><span class="btn">Começar meu mês grátis</span></div></div><div class="lin"></div><div class="ponto"><i style="background:var(--borda)"></i><div><span class="selo" style="background:var(--borda)">Depois</span><div class="preco"><s>R$ 99,90</s><b>R$ 69,90</b><span>/mês</span></div><p class="l" style="margin-top:0">Preço de lançamento até 30/06/2027.</p><span class="btn g">Assinar o plano mensal</span></div></div></div></div>
+  <div class="grupos"><div><h5>Pátio ▾</h5><ul><li>Entrada e saída de veículos</li><li>Pátio</li><li>Quadro de chaves</li></ul></div><div><h5>Dinheiro ▸</h5></div><div><h5>Clientes ▸</h5></div><div><h5>Equipe e empresa ▸</h5></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="oferta"><div class="tempo"><div class="ponto"><i></i><div><span class="selo">Hoje</span><h4 style="font-size:30px;margin:6px 0">1 mês grátis, com o sistema completo</h4><p class="l" style="margin-top:0">Sem cartão. Nada é cobrado automaticamente.</p><span class="btn">Começar meu mês grátis</span></div></div><div class="lin"></div><div class="ponto"><i style="background:var(--borda)"></i><div><span class="selo" style="background:var(--borda)">Depois do mês grátis</span><div class="preco"><s>R$ 99,90</s><b>R$ 69,90</b><span>/mês</span></div><p class="l" style="margin-top:0">Preço de lançamento até 30/06/2027; depois, R$ 99,90/mês.</p><span class="btn g">Assinar o plano mensal</span></div></div></div></div>
+ <div class="grupos"><div><h5>Pátio</h5><ul><li>Entrada e saída de veículos</li><li>Pátio</li><li>Quadro de chaves</li></ul></div><div><h5>Dinheiro</h5><ul><li>Preços</li><li>Caixa</li><li>Meios de pagamento</li><li>Financeiro</li><li>Notas fiscais</li></ul></div><div><h5>Clientes</h5><ul><li>Mensalistas</li><li>Empresas conveniadas</li><li>Faturas das conveniadas</li><li>Serviços do lava-rápido</li></ul></div><div><h5>Equipe e empresa</h5><ul><li>Regras da empresa</li><li>Equipe e permissões</li><li>Acesso e empresa</li><li>Celular, tablet e computador</li></ul></div></div></div>
+</div></div>
+
+<h2 class="bloco">3. Como funciona</h2>
+
+<div class="modelo"><h3>Como A: pista horizontal com bifurcação (recomendado)</h3><p class="nota">Desktop: nós ao longo de uma faixa tracejada; o passo 2 abre em dois ramos ("Escolha uma") que voltam a se juntar. Celular: a mesma pista na vertical.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><div class="vert"><div class="nodo"><span>PASSO 1</span><b>Entrada</b>Registra placa, modelo e cor.</div><div class="mini"><div class="rot">Passo 2 · escolha uma</div><div class="nodo"><span>2A</span><b>Foto da tela</b>O cliente fotografa a tela.</div><div class="ou">ou</div><div class="nodo"><span>2B</span><b>Aponta a câmera</b>O QR Code abre o ticket.</div></div><div class="nodo"><span>PASSO 3</span><b>Acompanha</b>Tempo e valor até agora.</div><div class="nodo"><span>PASSO 4</span><b>Saída</b>Lê o QR e dá baixa.</div></div></div>
+ <div class="f d"><small>Desktop</small><div class="pista"><div class="nodo" style="width:190px"><span>PASSO 1</span><b>Entrada</b>Registra placa, modelo e cor.</div><div class="lin2"></div><div class="fork"><div class="rot">Passo 2 · escolha uma</div><div class="nodo"><span>2A</span><b>Foto da tela</b>O cliente fotografa a tela.</div><div class="nodo"><span>2B</span><b>Aponta a câmera</b>O QR Code abre o ticket.</div></div><div class="lin2"></div><div class="nodo" style="width:170px"><span>PASSO 3</span><b>Acompanha</b>Tempo e valor até agora.</div><div class="lin2"></div><div class="nodo" style="width:150px"><span>PASSO 4</span><b>Saída</b>Lê o QR e dá baixa.</div></div></div>
+</div></div>
+
+<div class="modelo"><h3>Como B: trilho vertical único</h3><p class="nota">Um trilho vertical em todas as larguras; a bifurcação é um par de cartões ligados por "ou". Simples de manter, mas ocupa altura no desktop.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><div class="vert"><div class="nodo"><span>PASSO 1</span><b>Entrada</b>Registra placa, modelo e cor.</div><div class="par2"><div class="nodo"><span>2A</span><b>Foto da tela</b></div><div class="nodo"><span>2B</span><b>Câmera</b></div></div><div class="nodo"><span>PASSO 3</span><b>Acompanha</b></div><div class="nodo"><span>PASSO 4</span><b>Saída</b></div></div></div>
+ <div class="f d" style="width:520px"><small>Desktop</small><div class="vert"><div class="nodo"><span>PASSO 1</span><b>Entrada</b>O operador registra placa, modelo e cor do carro.</div><div class="par2"><div class="nodo"><span>2A</span><b>Foto da tela</b>O cliente fotografa a tela.</div><div class="nodo"><span>2B</span><b>Aponta a câmera</b>O QR Code abre o ticket.</div></div><div class="nodo"><span>PASSO 3</span><b>Acompanha</b>Tempo e valor até agora.</div><div class="nodo"><span>PASSO 4</span><b>Saída</b>O operador lê o QR Code e dá baixa.</div></div></div>
+</div></div>
+
+<div class="modelo"><h3>Como C: cartões com setas, passo 2 como par "ou"</h3><p class="nota">Cartões em sequência com setas; o passo 2 é um par lado a lado com selo "ou". Mais próximo do layout de hoje.</p>
+<div class="par">
+ <div class="f m"><small>Celular, 360 px</small><div class="setas"><div class="nodo"><span>PASSO 1</span><b>Entrada</b></div><div class="sg">→</div><div class="par2" style="flex:1"><div class="nodo"><span>2A</span><b>Foto</b></div><div class="nodo"><span>2B</span><b>Câmera</b></div></div><div class="sg">→</div><div class="nodo"><span>PASSO 3</span><b>Acompanha</b></div><div class="sg">→</div><div class="nodo"><span>PASSO 4</span><b>Saída</b></div></div></div>
+ <div class="f d"><small>Desktop</small><div class="setas"><div class="nodo" style="flex:1"><span>PASSO 1</span><b>Entrada</b>Registra placa, modelo e cor.</div><div class="sg">→</div><div style="flex:2;display:grid;gap:6px"><div class="ou">PASSO 2 · ESCOLHA UMA</div><div class="par2"><div class="nodo"><span>2A</span><b>Foto da tela</b>Fotografa a tela.</div><div class="nodo"><span>2B</span><b>Aponta a câmera</b>QR Code abre o ticket.</div></div></div><div class="sg">→</div><div class="nodo" style="flex:1"><span>PASSO 3</span><b>Acompanha</b>Tempo e valor.</div><div class="sg">→</div><div class="nodo" style="flex:1"><span>PASSO 4</span><b>Saída</b>Lê o QR e dá baixa.</div></div></div>
+</div></div>
+
+<script>
+const t=id=>document.getElementById(id).content.firstElementChild;
+document.querySelectorAll('[data-fone]').forEach(el=>{const f=t('fone').cloneNode(true);el.appendChild(f);if(el.hasAttribute('data-apoio')){const a=document.createElement('div');a.className='apoio';const s=t('sym').cloneNode(true);s.style.width='90px';a.appendChild(s);el.style.position='relative';el.appendChild(a);}});
+document.querySelectorAll('[data-fone-solto]').forEach(el=>el.replaceWith(t('fone').cloneNode(true)));
+document.querySelectorAll('[data-fone2-solto]').forEach(el=>el.replaceWith(t('fone2').cloneNode(true)));
+document.querySelectorAll('[data-camadas]').forEach(el=>{el.appendChild(t('sym').cloneNode(true));el.appendChild(t('fone').cloneNode(true));});
+</script>
+</html>
