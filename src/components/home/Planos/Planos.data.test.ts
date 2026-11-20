@@ -16,8 +16,8 @@ describe("montarGarantiasPlano", () => {
 });
 
 describe("areasDoSistema", () => {
-  it("tem as 13 áreas, cada uma com título e descrição", () => {
-    expect(areasDoSistema).toHaveLength(13);
+  it("tem as 16 áreas, cada uma com título e descrição", () => {
+    expect(areasDoSistema).toHaveLength(16);
     for (const area of areasDoSistema) {
       expect(area.titulo.trim()).not.toBe("");
       expect(area.descricao.trim()).not.toBe("");

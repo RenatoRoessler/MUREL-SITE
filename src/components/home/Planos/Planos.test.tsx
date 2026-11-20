@@ -70,13 +70,13 @@ describe("Planos", () => {
     });
   });
 
-  it("mostra as 13 áreas do sistema como incluídas no plano", () => {
+  it("mostra as 16 áreas do sistema como incluídas no plano", () => {
     renderComTema(<Planos oferta={ofertaEmPromocao} />);
     expect(screen.getByRole("heading", { level: 3, name: "Tudo isso incluso no plano" })).toBeInTheDocument();
     for (const area of areasDoSistema) {
       expect(screen.getByText(area.titulo)).toBeInTheDocument();
     }
-    expect(areasDoSistema).toHaveLength(13);
+    expect(areasDoSistema).toHaveLength(16);
   });
 
   it("não cita os planos que saíram nem os preços antigos", () => {

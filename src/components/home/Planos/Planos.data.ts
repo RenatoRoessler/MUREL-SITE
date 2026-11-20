@@ -6,7 +6,7 @@ export const montarGarantiasPlano = (teste: TesteGratis | null) =>
 
 export const rotuloGarantiasPlano = "O que o plano inclui";
 
-// Conteúdo conferido no código do GIPE (relatório de 23/10/2026 e histórico até a versão 1.0.333).
+// Conteúdo conferido no código do GIPE (relatório de 23/10/2026 e histórico) e no sistema em uso (v1.0.486, 20/11/2026).
 // Fica de fora o que o sistema ainda não tem: relatórios, tela de permissões por módulo e emissão de NFS-e.
 export const areasDoSistema: AreaDoSistema[] = [
   {
@@ -39,7 +39,19 @@ export const areasDoSistema: AreaDoSistema[] = [
   },
   {
     titulo: "Empresas conveniadas",
-    descricao: "Convênio com tabela própria e carimbo do ticket pelo QR Code.",
+    descricao: "Convênio com tabela própria, carimbo do ticket pelo QR Code e pátio da conveniada com os carros que ela carimbou.",
+  },
+  {
+    titulo: "Faturas das conveniadas",
+    descricao: "Junta as saídas da conveniada em uma fatura com vencimento e registra o pagamento.",
+  },
+  {
+    titulo: "Serviços do lava-rápido",
+    descricao: "Catálogo com preço por categoria de veículo, serviços no ticket e fila do lavador por status.",
+  },
+  {
+    titulo: "Regras da empresa",
+    descricao: "Escolha o que a entrada exige (modelo, cor e prisma) e ligue ou desligue os serviços.",
   },
   {
     titulo: "Financeiro",
@@ -51,11 +63,11 @@ export const areasDoSistema: AreaDoSistema[] = [
   },
   {
     titulo: "Equipe e permissões",
-    descricao: "Perfis de administrador, gerente, caixa, manobrista e financeiro, cada um com o seu menu.",
+    descricao: "Perfis de administrador, gerente, caixa, manobrista, financeiro e lavador, cada um com o seu menu.",
   },
   {
     titulo: "Acesso e empresa",
-    descricao: "Login por CPF, várias empresas na mesma conta e recuperação de senha por e-mail.",
+    descricao: "Login por CPF, tour no primeiro acesso, várias empresas na mesma conta e recuperação de senha por e-mail.",
   },
   {
     titulo: "Celular, tablet e computador",
