@@ -23,3 +23,13 @@ export const rotuloWhatsapp = "Estamos online!";
 export const mensagemWhatsapp = "Olá! Vim pelo site da Murel e quero conhecer o sistema.";
 
 export const urlWhatsapp = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensagemWhatsapp)}`;
+
+// Páginas de termos de uso e de política de privacidade. Opcionais: sem a variável, o rodapé não mostra o link.
+const urlOpcional = (valor: string | undefined) => {
+  const limpo = valor?.trim();
+  return limpo ? limpo : null;
+};
+
+export const urlTermos = urlOpcional(process.env.NEXT_PUBLIC_URL_TERMOS);
+
+export const urlPrivacidade = urlOpcional(process.env.NEXT_PUBLIC_URL_PRIVACIDADE);

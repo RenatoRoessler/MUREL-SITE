@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { urlAcesso, urlAdesao, urlWhatsapp } from "@/lib/config";
 import { renderComTema } from "@/test/render";
@@ -29,5 +29,36 @@ describe("Footer", () => {
   it("repete a chamada para a adesão", () => {
     renderComTema(<Footer />);
     expect(screen.getByRole("link", { name: "Ir para adesão" })).toHaveAttribute("href", urlAdesao);
+  });
+
+  it("traz os atalhos das seções da página", () => {
+    renderComTema(<Footer />);
+    const nav = screen.getByRole("navigation", { name: "Seções da página no rodapé" });
+    expect(within(nav).getAllByRole("link").map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
+      ["Sistema", "#sistema"],
+      ["Como funciona", "#como-funciona"],
+      ["Planos", "#planos"],
+      ["Perguntas", "#perguntas"],
+      ["Contato", "#contato"],
+    ]);
+  });
+
+  it("sem os endereços de termos e privacidade, não mostra a coluna Legal", () => {
+    renderComTema(<Footer enderecoDosTermos={null} enderecoDaPrivacidade={null} />);
+    expect(screen.queryByRole("navigation", { name: "Documentos legais" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Termos de uso")).not.toBeInTheDocument();
+  });
+
+  it("com os endereços, mostra termos de uso e política de privacidade", () => {
+    renderComTema(<Footer enderecoDosTermos="https://murel.com.br/termos" enderecoDaPrivacidade="https://murel.com.br/privacidade" />);
+    const nav = screen.getByRole("navigation", { name: "Documentos legais" });
+    expect(within(nav).getByRole("link", { name: "Termos de uso" })).toHaveAttribute("href", "https://murel.com.br/termos");
+    expect(within(nav).getByRole("link", { name: "Política de privacidade" })).toHaveAttribute("href", "https://murel.com.br/privacidade");
+  });
+
+  it("mostra só o documento que tem endereço", () => {
+    renderComTema(<Footer enderecoDosTermos="https://murel.com.br/termos" enderecoDaPrivacidade={null} />);
+    expect(screen.getByRole("link", { name: "Termos de uso" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Política de privacidade" })).not.toBeInTheDocument();
   });
 });

@@ -79,4 +79,20 @@ describe("config", () => {
     expect(numeroWhatsappExibicao).toBe("(19) 99221-5384");
     expect(rotuloWhatsapp).toBe("Estamos online!");
   });
+
+  it("lê os endereços de termos e privacidade, sem espaços nas pontas", async () => {
+    vi.stubEnv("NEXT_PUBLIC_URL_TERMOS", " https://murel.com.br/termos ");
+    vi.stubEnv("NEXT_PUBLIC_URL_PRIVACIDADE", "https://murel.com.br/privacidade");
+    const { urlTermos, urlPrivacidade } = await carregar();
+    expect(urlTermos).toBe("https://murel.com.br/termos");
+    expect(urlPrivacidade).toBe("https://murel.com.br/privacidade");
+  });
+
+  it("devolve null para termos e privacidade quando as variáveis não existem ou estão vazias", async () => {
+    vi.stubEnv("NEXT_PUBLIC_URL_TERMOS", "");
+    vi.stubEnv("NEXT_PUBLIC_URL_PRIVACIDADE", "   ");
+    const { urlTermos, urlPrivacidade } = await carregar();
+    expect(urlTermos).toBeNull();
+    expect(urlPrivacidade).toBeNull();
+  });
 });
