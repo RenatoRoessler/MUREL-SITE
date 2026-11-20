@@ -120,7 +120,7 @@ export const Aparelhos = styled.div`
     `)}
 
   /* Só com mouse e em tela larga: o conjunto inclina até 6° (theme.motion.cursor.inclinacao) para onde o cursor está (--rx e --ry,
-     de -1 a 1) e cada camada fica numa profundidade, então o símbolo, as telas e o brilho se mexem em ritmos
+     de -1 a 1) e cada camada fica numa profundidade, então as telas e o brilho se mexem em ritmos
      diferentes. */
   ${({ theme }) =>
     comCursorFino(css`
@@ -177,34 +177,6 @@ export const Aparelho = styled.div<{ $posicao: "fundo" | "frente" }>`
         animation: ${flutuar} linear both;
         animation-timeline: scroll(root);
         animation-range: 0 600px;
-      }
-    `)}
-`;
-
-/* O símbolo da marca fica como apoio, no canto de cima, sem cobrir as telas. */
-export const Apoio = styled.div`
-  position: absolute;
-  top: 0;
-  left: 6%;
-  z-index: 3;
-  width: 84px;
-
-  svg {
-    width: 100%;
-    height: auto;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    left: auto;
-    right: 6%;
-    width: 96px;
-  }
-
-  /* Ao fundo, na profundidade do tilt (só com mouse). */
-  ${({ theme }) =>
-    comCursorFino(css`
-      @media (min-width: ${theme.breakpoints.lg}) {
-        transform: translateZ(-70px);
       }
     `)}
 `;

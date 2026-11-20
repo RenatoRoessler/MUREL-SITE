@@ -1,4 +1,3 @@
-import { Simbolo } from "@/components/brand/Simbolo";
 import patio from "@/assets/telas/operador/patio.webp";
 import ticket from "@/assets/telas/operador/ticket.webp";
 import { BotaoMagnetico } from "@/components/ui/Button/BotaoMagnetico";
@@ -12,7 +11,7 @@ import type { TesteGratis } from "@/types/plano";
 import { vidaDoPatio, vidaDoTicket } from "../Sistema/Sistema.vida";
 import { garantiasTeste, rotuloGarantiasTeste } from "../TesteGratis/TesteGratis.data";
 import { AparelhosInterativos } from "./AparelhosInterativos";
-import { Apoio, Aparelho, Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
+import { Aparelho, Chamadas, Marca, Subtitulo, Texto, Titulo, Topo } from "./Hero.styles";
 
 const tamanhosDoAparelho = "(min-width: 1024px) 240px, 170px";
 
@@ -64,9 +63,6 @@ export function Hero({ teste }: HeroProps) {
                 vida={vidaDoTicket}
               />
             </Aparelho>
-            <Apoio>
-              <Simbolo animado />
-            </Apoio>
           </AparelhosInterativos>
         </Marca>
       </Topo>
